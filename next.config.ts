@@ -4,6 +4,9 @@ import createNextIntlPlugin from 'next-intl/plugin';
 const withNextIntl = createNextIntlPlugin('./i18n/request.ts');
 
 const nextConfig: NextConfig = {
+  // Standalone output → leanest production image. The Dockerfile copies
+  // .next/standalone and runs `node server.js` directly.
+  output: 'standalone',
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'images.unsplash.com' },
