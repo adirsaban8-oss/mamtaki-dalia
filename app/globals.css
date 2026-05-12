@@ -1,26 +1,168 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Custom variants — both locales render RTL. The `rtl:` variant flips
+   directional ornaments (arrows, chevrons) when explicitly applied. */
+@custom-variant rtl (&:where([dir="rtl"], [dir="rtl"] *));
+@custom-variant ltr (&:where([dir="ltr"], [dir="ltr"] *));
+
+/* ==================================================================
+   Mamtaki Dalia — Ultra-Luxury Design Tokens
+   Calibrated against Patchi · Bateel · Hafiz Mustafa Dubai.
+   ================================================================== */
+
+@theme {
+  /* ── Palette ─────────────────────────────────────────────────────
+     Surfaces are always warm cream; no #FFFFFF. Dark sections lean
+     on cedar + burgundy. Gold is the antique-leaf hue, not neon. */
+
+  --color-ivory: #F5EDE0;          /* main page background — parchment */
+  --color-sand: #EBE0CF;           /* section variation — sand */
+  --color-cream-card: #FFFBF5;     /* pure cream — elevated cards on ivory */
+
+  --color-cedar: #1C3A2E;          /* deep forest — header / dark sections */
+  --color-cedar-light: #2D5244;    /* sage on dark backgrounds */
+
+  --color-gold: #C9A66B;           /* antique gold — primary accent */
+  --color-gold-light: #E3D5B7;     /* champagne — hover / highlights */
+  --color-gold-deep: #9D7E54;      /* bronze — borders */
+
+  --color-burgundy: #6B2735;       /* deep wine — primary CTA */
+  --color-burgundy-deep: #4A1B25;  /* mahogany — pressed / hover */
+
+  --color-pistachio: #9FAF88;      /* muted green accent */
+  --color-copper: #B87654;         /* rose gold detail */
+
+  --color-coffee: #2A1F15;         /* body text on cream */
+  --color-coffee-muted: #6B5A47;   /* muted body on cream */
+  --color-hairline: #DCC9A5;       /* warm hairline borders on cream */
+
+  /* ── Shadows ─────────────────────────────────────────────────────
+     Tuned exactly to the spec. Card hover lifts with burgundy ghost. */
+  --shadow-card: 0 16px 40px rgba(28, 58, 46, 0.08);
+  --shadow-hover: 0 24px 56px rgba(107, 39, 53, 0.12);
+  --shadow-text: 0 2px 12px rgba(0, 0, 0, 0.40);
+  --shadow-soft: 0 8px 24px rgba(28, 58, 46, 0.06);
+  --shadow-deep: 0 24px 60px rgba(28, 58, 46, 0.18);
+
+  /* ── Easing ──────────────────────────────────────────────────────
+     ease-out-quad — the spec curve. Slow, deliberate, never bouncy. */
+  --ease-luxe: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+
+  /* ── Radii ───────────────────────────────────────────────────────
+     Sharp corners only. 0–2px max. */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+
+  /* ── Container ───────────────────────────────────────────────────
+     Luxury sites run wide. 1400px feels generous on 4K. */
+  --container-7xl: 1400px;
+
+  /* ── Animation utilities ─────────────────────────────────────────
+     Tailwind v4 picks up `--animate-*` tokens and bundles any matching
+     `@keyframes` blocks declared anywhere in the stylesheet. */
+  --animate-ticker: ticker-scroll 40s linear infinite;
+  --animate-ticker-rtl: ticker-scroll-rtl 40s linear infinite;
 }
 
+@keyframes ticker-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes ticker-scroll-rtl {
+  from { transform: translateX(0); }
+  to   { transform: translateX(50%); }
+}
+
+/* Bridge Next/font CSS variables into Tailwind's font scale so we
+   get `font-display-he`, `font-body-ar`, etc. */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-display-he: var(--font-frank);
+  --font-body-he: var(--font-heebo);
+  --font-display-ar: var(--font-reem);
+  --font-body-ar: var(--font-tajawal);
+  --font-display-en: var(--font-cormorant);
+  --font-body-en: var(--font-inter);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ==================================================================
+   Base — parchment-cream surfaces, deep-coffee body, RTL-first.
+   ================================================================== */
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  background-color: var(--color-ivory);
+  color: var(--color-coffee);
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html[lang="he"] body {
+  font-family: var(--font-body-he), system-ui, sans-serif;
+}
+html[lang="ar"] body {
+  font-family: var(--font-body-ar), system-ui, sans-serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--color-ivory);
+  color: var(--color-coffee);
+  min-height: 100dvh;
+  font-feature-settings: "ss01", "ss02", "kern";
+  line-height: 1.7;
 }
+
+/* Selection — burgundy on parchment */
+::selection {
+  background-color: var(--color-burgundy);
+  color: var(--color-ivory);
+}
+
+/* Crisp focus ring in gold — accessible and on-brand */
+:where(a, button, [role="button"], input, select, textarea):focus-visible {
+  outline: 1px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* Reduce motion when the user asks for it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==================================================================
+   Brand utilities — small set of helpers Tailwind can't express cleanly.
+   ================================================================== */
+
+@utility text-balance { text-wrap: balance; }
+@utility text-pretty { text-wrap: pretty; }
+
+@utility hairline {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, var(--color-gold) 50%, transparent 100%);
+  opacity: 0.6;
+}
+
+@utility tracking-eyebrow { letter-spacing: 0.20em; }
+@utility tracking-display { letter-spacing: -0.02em; }
+
+/* Headline drop-shadow used on Hero text over imagery */
+@utility text-shadow-hero {
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.40), 0 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+/* Hide horizontal scrollbar on mobile carousels — they have snap so
+   the bar is visual noise. WebKit needs a real selector, not @utility. */
+.scrollbar-hide { scrollbar-width: none; }
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+
