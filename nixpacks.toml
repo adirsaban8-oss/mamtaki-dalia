@@ -1,0 +1,14 @@
+# Nixpacks config for Railway / similar platforms.
+# Next.js 16 requires Node 20.9+; we pin to 22 LTS for safety.
+
+[phases.setup]
+nixPkgs = ["nodejs_22", "npm-10_x"]
+
+[phases.install]
+cmds = ["npm ci"]
+
+[phases.build]
+cmds = ["npm run build"]
+
+[start]
+cmd = "npm start"
