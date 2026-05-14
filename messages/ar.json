@@ -108,7 +108,8 @@
       "kosher": "كوشير",
       "bestseller": "الأكثر مبيعاً",
       "new": "جديد",
-      "vegan": "نباتي"
+      "vegan": "نباتي",
+      "seasonal": "موسمي"
     },
     "sort": {
       "popular": "الأكثر شعبية",
@@ -124,8 +125,10 @@
     "weightMin": "الحد الأدنى للطلب: ٥٠٠ غرام",
     "weightKg": "كغ",
     "priceKgNote": "السعر للكيلو الواحد",
+    "priceUnitNote": "السعر للوحدة",
     "totalLabel": "المجموع",
     "totalNote": "احتساب تلقائي حسب الوزن الذي اخترتموه",
+    "totalNoteFixed": "سعر ثابت للوحدة",
     "addToCart": "أضف إلى السلة",
     "ingredients": "المكونات",
     "allergens": "مسببات الحساسية",

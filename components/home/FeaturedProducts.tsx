@@ -2,12 +2,16 @@ import { getTranslations } from 'next-intl/server';
 import type { Locale } from '@/i18n/locales';
 import { featuredProducts } from '@/lib/mockData';
 import { SectionHeading } from './SectionHeading';
-import { ProductCard } from '@/components/product/ProductCard';
+import { MenuCard } from '@/components/product/MenuCard';
 import { Link } from '@/i18n/navigation';
 import { ArabesquePattern } from '@/components/ornaments/ArabesquePattern';
 
 type Props = { locale: Locale };
 
+/**
+ * Featured Products — four signature picks rendered as text-led
+ * MenuCards (Pattern A from the catalog-without-photos blueprint).
+ */
 export async function FeaturedProducts({ locale }: Props) {
   const t = await getTranslations({ locale, namespace: 'FeaturedProducts' });
 
@@ -16,7 +20,6 @@ export async function FeaturedProducts({ locale }: Props) {
       className="relative overflow-hidden bg-ivory py-16 md:py-[120px]"
       aria-labelledby="featured-heading"
     >
-      {/* Arabesque corner at 4% opacity — barely there, sets the tone */}
       <div
         aria-hidden
         className="absolute -top-20 -end-20 w-[600px] h-[600px] text-gold pointer-events-none"
@@ -41,24 +44,22 @@ export async function FeaturedProducts({ locale }: Props) {
           id="featured-heading"
         />
 
-        {/* Grid · 4 cols desktop / 2 tablet / 1.2 mobile w/ scroll-snap peek */}
         <div className="mt-16 md:mt-24">
-          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
             {featuredProducts.map((product, idx) => (
-              <ProductCard key={product.id} product={product} index={idx} />
+              <MenuCard key={product.id} product={product} index={idx} />
             ))}
           </div>
 
-          <div className="md:hidden -mx-5 px-5 overflow-x-auto snap-x snap-mandatory flex gap-5 pb-4 scroll-pl-5 scrollbar-hide">
+          <div className="md:hidden -mx-5 px-5 overflow-x-auto snap-x snap-mandatory flex gap-5 pb-4 scrollbar-hide">
             {featuredProducts.map((product, idx) => (
               <div key={product.id} className="snap-start shrink-0 w-[82%]">
-                <ProductCard product={product} index={idx} />
+                <MenuCard product={product} index={idx} />
               </div>
             ))}
           </div>
         </div>
 
-        {/* View-all link */}
         <div className="mt-16 md:mt-24 flex justify-center">
           <Link
             href="/shop"

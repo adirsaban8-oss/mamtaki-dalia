@@ -1,7 +1,6 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import type { Locale } from '@/i18n/locales';
@@ -9,7 +8,7 @@ import { products, type Product } from '@/lib/mockData';
 import { useCart } from '@/store/cart';
 import { Link } from '@/i18n/navigation';
 import { WeightSelector } from './WeightSelector';
-import { ProductCard } from './ProductCard';
+import { MenuCard } from './MenuCard';
 import { buttonClasses } from '@/components/ui/Button';
 import { ArabesquePattern } from '@/components/ornaments/ArabesquePattern';
 
@@ -17,27 +16,41 @@ const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 
 type Props = { product: Product; locale: Locale };
 
+/**
+ * Product Detail — text-led, no gallery. The product's identity is
+ * carried by:
+ *  – the SKU monogram, displayed as a typographic seal at large scale
+ *  – an arabesque rosette ornament centered behind the monogram
+ *  – the tasting note and full description
+ *
+ * The right-hand panel keeps the WeightSelector / price / add-to-cart.
+ */
 export function ProductDetail({ product, locale }: Props) {
   const t = useTranslations('Product');
   const displayFont = locale === 'ar' ? 'font-display-ar' : 'font-display-he';
 
-  const [weight, setWeight] = useState(product.minWeight);
-  const [activeImage, setActiveImage] = useState(product.image);
+  const isWeighted = product.unit === 'per_kg';
+  const [weight, setWeight] = useState(product.minWeight ?? 0.5);
   const [openSection, setOpenSection] = useState<string | null>('ingredients');
 
   const add = useCart((s) => s.add);
 
-  const total = useMemo(() => product.pricePerKg * weight, [product.pricePerKg, weight]);
+  const total = useMemo(() => {
+    if (!isWeighted) return product.price;
+    return product.price * weight;
+  }, [product, weight, isWeighted]);
 
   const related = useMemo(
     () =>
       products
-        .filter((p) => p.id !== product.id && (p.category === product.category || p.badges.includes('bestseller')))
+        .filter(
+          (p) =>
+            p.id !== product.id &&
+            (p.category === product.category || p.badges.includes('bestseller'))
+        )
         .slice(0, 4),
     [product]
   );
-
-  const gallery = product.gallery.length > 0 ? product.gallery : [product.image];
 
   const sections = [
     { key: 'ingredients', title: t('ingredients'), body: product.ingredients[locale] },
@@ -46,9 +59,15 @@ export function ProductDetail({ product, locale }: Props) {
     { key: 'prepTime', title: t('prepTime'), body: t('prepTimeBody') },
   ] as const;
 
+  const priceSuffix =
+    product.unit === 'per_kg'
+      ? locale === 'ar' ? '/ كغ' : '/ ק״ג'
+      : product.unit === 'per_piece'
+        ? locale === 'ar' ? '/ قطعة' : '/ מנה'
+        : locale === 'ar' ? '/ علبة' : '/ מארז';
+
   return (
     <article className="relative bg-ivory">
-      {/* Decorative top-end arabesque */}
       <div
         aria-hidden
         className="absolute -top-12 -end-24 w-[500px] h-[500px] text-gold pointer-events-none"
@@ -67,36 +86,32 @@ export function ProductDetail({ product, locale }: Props) {
           <li aria-hidden>·</li>
           <li>
             <Link href="/shop" className="hover:text-burgundy transition-colors duration-500">
-              {locale === 'ar' ? 'المتجر' : 'החנות'}
+              {locale === 'ar' ? 'القائمة' : 'הקטלוג'}
             </Link>
           </li>
           <li aria-hidden>·</li>
-          <li className="text-cedar">{product.name[locale]}</li>
+          <li className="text-cedar truncate">{product.name[locale]}</li>
         </ol>
       </nav>
 
       {/* Hero — 2 column desktop */}
       <div className="relative mx-auto max-w-7xl px-5 md:px-10 pt-10 md:pt-14 pb-16 md:pb-24 grid lg:grid-cols-12 gap-10 lg:gap-16">
-        {/* Gallery */}
-        <div className="lg:col-span-7 order-1">
-          <Gallery
-            images={gallery}
-            activeImage={activeImage}
-            onSelect={setActiveImage}
-            alt={product.name[locale]}
-          />
+        {/* Left — Monogram seal in place of a photo */}
+        <div className="lg:col-span-6 order-1">
+          <MonogramSeal product={product} />
         </div>
 
-        {/* Details panel */}
-        <div className="lg:col-span-5 order-2 flex flex-col">
-          {/* Badges row */}
+        {/* Right — details panel */}
+        <div className="lg:col-span-6 order-2 flex flex-col">
+          {/* Badges */}
           <div className="flex flex-wrap gap-2 mb-5">
-            {product.badges.includes('bestseller') && (
-              <Pill>{t('bestsellerBadge')}</Pill>
-            )}
+            {product.badges.includes('bestseller') && <Pill>{t('bestsellerBadge')}</Pill>}
             {product.badges.includes('kosher') && <Pill>{t('kosherBadge')}</Pill>}
             <Pill>{t('freshBadge')}</Pill>
             {product.badges.includes('vegan') && <Pill>{t('veganBadge')}</Pill>}
+            {product.badges.includes('seasonal') && (
+              <Pill>{locale === 'ar' ? 'موسمي' : 'עונתי'}</Pill>
+            )}
           </div>
 
           <h1
@@ -105,30 +120,44 @@ export function ProductDetail({ product, locale }: Props) {
             {product.name[locale]}
           </h1>
 
-          <p className="mt-5 text-base md:text-lg leading-relaxed text-coffee-muted text-pretty">
-            {product.shortDescription[locale]}
+          {/* Tasting note — italic gold-deep, the poetic line */}
+          <p
+            className={`mt-5 italic ${displayFont} text-lg md:text-xl leading-[1.5] text-gold-deep text-pretty`}
+          >
+            {product.tastingNote[locale]}
           </p>
 
-          {/* Price per kg */}
-          <div className="mt-8 flex items-baseline gap-3">
+          {/* Full description */}
+          <p className="mt-6 text-base md:text-[17px] leading-relaxed text-ink/80 text-pretty">
+            {product.description[locale]}
+          </p>
+
+          {/* Hairline */}
+          <span aria-hidden className="block h-px w-full bg-hairline mt-8 mb-8" />
+
+          {/* Price label */}
+          <div className="flex items-baseline gap-3">
             <span className="font-display-en text-[11px] tracking-eyebrow uppercase text-coffee-muted">
-              {t('priceKgNote')}
+              {isWeighted ? t('priceKgNote') : t('priceUnitNote')}
             </span>
             <span className={`${displayFont} text-2xl text-burgundy font-medium`}>
-              ₪{product.pricePerKg}
+              ₪{product.price}
             </span>
           </div>
 
-          <span aria-hidden className="block h-px w-full bg-hairline mt-8 mb-8" />
-
-          {/* Weight selector */}
-          <WeightSelector
-            weight={weight}
-            onChange={setWeight}
-            min={product.minWeight}
-            max={5}
-            step={product.weightStep}
-          />
+          {/* Weight selector — only when sold per kg */}
+          {isWeighted && product.minWeight !== undefined && product.weightStep !== undefined && (
+            <>
+              <span aria-hidden className="block h-px w-full bg-hairline mt-8 mb-8" />
+              <WeightSelector
+                weight={weight}
+                onChange={setWeight}
+                min={product.minWeight}
+                max={5}
+                step={product.weightStep}
+              />
+            </>
+          )}
 
           {/* Live total */}
           <div className="mt-8 flex items-baseline justify-between">
@@ -137,7 +166,7 @@ export function ProductDetail({ product, locale }: Props) {
                 {t('totalLabel')}
               </p>
               <p className="font-display-en text-[10px] tracking-eyebrow uppercase text-coffee-muted/70 mt-1">
-                {t('totalNote')}
+                {isWeighted ? t('totalNote') : t('totalNoteFixed')}
               </p>
             </div>
             <motion.span
@@ -154,7 +183,7 @@ export function ProductDetail({ product, locale }: Props) {
           {/* Add to cart */}
           <button
             type="button"
-            onClick={() => add(product.id, weight)}
+            onClick={() => add(product.id, isWeighted ? weight : 1)}
             className={buttonClasses({ variant: 'primary', size: 'lg', className: 'w-full mt-8 h-16' })}
           >
             {t('addToCart')}
@@ -183,24 +212,8 @@ export function ProductDetail({ product, locale }: Props) {
         </div>
       </div>
 
-      {/* Story block — colored panel with product narrative */}
-      <section className="relative bg-sand py-16 md:py-24">
-        <div className="mx-auto max-w-3xl px-5 md:px-10">
-          <div className="flex items-center justify-center gap-5 text-gold-deep">
-            <span aria-hidden className="block h-px w-12 bg-gold" />
-            <span className="font-display-en text-[12px] tracking-eyebrow uppercase">
-              {locale === 'ar' ? 'القصة' : 'הסיפור'}
-            </span>
-            <span aria-hidden className="block h-px w-12 bg-gold" />
-          </div>
-          <p className={`mt-8 ${displayFont} text-xl md:text-2xl leading-[1.55] text-cedar text-pretty text-center`}>
-            {product.description[locale]}
-          </p>
-        </div>
-      </section>
-
-      {/* Related products */}
-      <section className="relative bg-ivory py-16 md:py-[120px]">
+      {/* Related */}
+      <section className="relative bg-ivory py-16 md:py-[120px] border-t border-hairline/60">
         <div className="mx-auto max-w-7xl px-5 md:px-10">
           <header className="flex flex-col items-center text-center mb-12 md:mb-16">
             <div className="flex items-center gap-5 text-gold-deep">
@@ -215,15 +228,15 @@ export function ProductDetail({ product, locale }: Props) {
             </h2>
           </header>
 
-          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
             {related.map((p, idx) => (
-              <ProductCard key={p.id} product={p} index={idx} />
+              <MenuCard key={p.id} product={p} index={idx} />
             ))}
           </div>
           <div className="md:hidden -mx-5 px-5 overflow-x-auto snap-x snap-mandatory flex gap-5 pb-4 scrollbar-hide">
             {related.map((p, idx) => (
               <div key={p.id} className="snap-start shrink-0 w-[82%]">
-                <ProductCard product={p} index={idx} />
+                <MenuCard product={p} index={idx} />
               </div>
             ))}
           </div>
@@ -233,68 +246,58 @@ export function ProductDetail({ product, locale }: Props) {
   );
 }
 
-/* ── Gallery ──────────────────────────────────────────────────────── */
+/* ── Monogram seal — the photo-less product identity ─────────────── */
 
-function Gallery({
-  images,
-  activeImage,
-  onSelect,
-  alt,
-}: {
-  images: string[];
-  activeImage: string;
-  onSelect: (src: string) => void;
-  alt: string;
-}) {
+function MonogramSeal({ product }: { product: Product }) {
   return (
-    <div className="flex flex-col gap-4">
-      {/* Main image */}
-      <div className="relative aspect-square overflow-hidden bg-cream-card border border-hairline shadow-card rounded-[2px]">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeImage}
-            initial={{ opacity: 0, scale: 1.02 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.8, ease: easeLuxe }}
-            className="absolute inset-0"
-          >
-            <Image
-              src={activeImage}
-              alt={alt}
-              fill
-              priority
-              sizes="(min-width: 1024px) 50vw, 90vw"
-              className="object-cover"
-              quality={85}
-            />
-          </motion.div>
-        </AnimatePresence>
+    <div className="relative aspect-square max-w-md mx-auto lg:max-w-none">
+      {/* Outer parchment surface */}
+      <div className="absolute inset-0 bg-cream-card border border-gold-deep/40 rounded-[2px] shadow-soft" />
+
+      {/* Inner hairline frame (16px inset) */}
+      <span aria-hidden className="absolute inset-4 border border-gold/30 rounded-[2px] pointer-events-none" />
+
+      {/* Decorative rosette behind the monogram */}
+      <div className="absolute inset-12 flex items-center justify-center pointer-events-none">
+        <Rosette />
       </div>
 
-      {/* Thumbs */}
-      {images.length > 1 && (
-        <div className="grid grid-cols-4 gap-3">
-          {images.slice(0, 4).map((src, idx) => {
-            const active = src === activeImage;
-            return (
-              <button
-                key={`${src}-${idx}`}
-                type="button"
-                onClick={() => onSelect(src)}
-                aria-label={`Image ${idx + 1}`}
-                className={`relative aspect-square overflow-hidden bg-cream-card border transition-colors duration-500 rounded-[2px] ${active ? 'border-gold' : 'border-hairline hover:border-gold-deep'}`}
-              >
-                <Image src={src} alt="" fill sizes="(min-width: 1024px) 12vw, 25vw" className="object-cover" />
-                {active && (
-                  <span aria-hidden className="absolute inset-0 border-2 border-gold pointer-events-none" />
-                )}
-              </button>
-            );
-          })}
-        </div>
-      )}
+      {/* Monogram — typographic seal */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-8">
+        <span className="font-display-en text-[10px] tracking-[0.4em] uppercase text-gold-deep/70">
+          Maison Dalia · Est. 1985
+        </span>
+        <span className="mt-6 font-display-en text-[26px] md:text-[32px] tracking-[0.45em] text-gold uppercase">
+          {product.monogram}
+        </span>
+        <span className="mt-6 block h-px w-16 bg-gold-deep/50" aria-hidden />
+        <span className="mt-6 font-display-en text-[10px] tracking-[0.4em] uppercase text-gold-deep/70">
+          {product.category.replace(/-/g, ' ')}
+        </span>
+      </div>
     </div>
+  );
+}
+
+function Rosette() {
+  return (
+    <svg
+      width="100%"
+      height="100%"
+      viewBox="0 0 240 240"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="0.7"
+      className="text-gold-deep/30"
+      aria-hidden
+    >
+      {/* Eight-pointed star */}
+      <path d="M 120 20 L 145 95 L 220 95 L 160 140 L 185 215 L 120 170 L 55 215 L 80 140 L 20 95 L 95 95 Z" />
+      <path d="M 120 50 L 138 100 L 190 100 L 148 132 L 165 185 L 120 154 L 75 185 L 92 132 L 50 100 L 102 100 Z" />
+      <circle cx="120" cy="120" r="30" />
+      <circle cx="120" cy="120" r="6" fill="currentColor" />
+      <path d="M 120 90 L 120 150 M 90 120 L 150 120" opacity="0.4" />
+    </svg>
   );
 }
 
@@ -339,15 +342,11 @@ function AccordionItem({
         transition={{ duration: 0.6, ease: easeLuxe }}
         className="overflow-hidden"
       >
-        <p className="pb-5 text-[15px] leading-relaxed text-coffee-muted text-pretty">
-          {body}
-        </p>
+        <p className="pb-5 text-[15px] leading-relaxed text-ink/70 text-pretty">{body}</p>
       </motion.div>
     </div>
   );
 }
-
-/* ── Pill / icons ─────────────────────────────────────────────────── */
 
 function Pill({ children }: { children: React.ReactNode }) {
   return (

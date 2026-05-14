@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect } from 'react';
-import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useLocale, useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
@@ -148,16 +147,27 @@ export function CartDrawer() {
 function CartLineItem({ item, locale }: { item: CartItem; locale: Locale }) {
   const product = getProductForItem(item);
   const t = useTranslations('Cart');
-  const setWeight = useCart((s) => s.setWeight);
+  const setQuantity = useCart((s) => s.setQuantity);
   const remove = useCart((s) => s.remove);
   const displayFont = locale === 'ar' ? 'font-display-ar' : 'font-display-he';
 
   if (!product) return null;
 
-  const lineTotal = product.pricePerKg * item.weight;
-  const step = product.weightStep;
-  const min = product.minWeight;
-  const max = 5;
+  const isWeighted = product.unit === 'per_kg';
+  const lineTotal = product.price * item.quantity;
+  const step = isWeighted ? (product.weightStep ?? 0.25) : 1;
+  const min = isWeighted ? (product.minWeight ?? 0.5) : 1;
+  const max = isWeighted ? 5 : 20;
+
+  const qtyLabel = isWeighted
+    ? `${item.quantity.toFixed(2)}${locale === 'ar' ? 'كغ' : 'ק״ג'}`
+    : `${item.quantity}`;
+  const unitSuffix =
+    product.unit === 'per_kg'
+      ? locale === 'ar' ? '/ كغ' : '/ ק״ג'
+      : product.unit === 'per_piece'
+        ? locale === 'ar' ? '/ قطعة' : '/ מנה'
+        : locale === 'ar' ? '/ علبة' : '/ מארז';
 
   return (
     <motion.li
@@ -168,13 +178,16 @@ function CartLineItem({ item, locale }: { item: CartItem; locale: Locale }) {
       transition={{ duration: 0.5, ease: easeLuxe }}
       className="flex gap-3 sm:gap-4"
     >
-      {/* Thumb */}
-      <div className="relative shrink-0 w-20 h-20 overflow-hidden bg-ivory border border-hairline">
-        <Image src={product.image} alt="" fill sizes="80px" className="object-cover" />
+      {/* Monogram thumb — text-only stand-in for product photo */}
+      <div
+        className="relative shrink-0 w-20 h-20 overflow-hidden bg-cream-card border border-gold-deep/40 rounded-[2px] flex items-center justify-center"
+        aria-hidden
+      >
+        <span className="font-display-en text-[10px] tracking-[0.3em] text-gold leading-tight text-center px-1">
+          {product.monogram}
+        </span>
       </div>
 
-      {/* Details — name + total share the top row so the stepper can use
-          the FULL content width below. Critical for fitting on 320px. */}
       <div className="flex-1 min-w-0">
         <div className="flex items-start justify-between gap-3">
           <h3 className={`${displayFont} text-base font-black text-cedar leading-tight min-w-0`}>
@@ -185,28 +198,27 @@ function CartLineItem({ item, locale }: { item: CartItem; locale: Locale }) {
           </span>
         </div>
         <p className="font-display-en text-[11px] tracking-eyebrow uppercase text-coffee-muted mt-1">
-          ₪{product.pricePerKg} {locale === 'ar' ? '/ كغ' : '/ ק״ג'}
+          ₪{product.price} {unitSuffix}
         </p>
 
-        {/* Stepper row — gets the full width since the total moved up */}
         <div className="mt-3 flex items-center gap-3">
           <div className="inline-flex items-center border border-hairline">
             <button
               type="button"
-              onClick={() => setWeight(product.id, item.weight - step)}
-              disabled={item.weight <= min}
+              onClick={() => setQuantity(product.id, item.quantity - step)}
+              disabled={item.quantity <= min}
               aria-label={t('decreaseWeight')}
               className="w-8 h-8 inline-flex items-center justify-center text-cedar hover:bg-sand disabled:opacity-30 transition-colors duration-300"
             >
               <svg width="10" height="2" viewBox="0 0 10 2" aria-hidden><path d="M 0 1 L 10 1" stroke="currentColor" strokeWidth="1.2" /></svg>
             </button>
             <span className="px-2.5 font-display-en text-sm text-cedar tabular-nums min-w-[3rem] text-center">
-              {item.weight.toFixed(2)}{locale === 'ar' ? 'كغ' : 'ק״ג'}
+              {qtyLabel}
             </span>
             <button
               type="button"
-              onClick={() => setWeight(product.id, item.weight + step)}
-              disabled={item.weight >= max}
+              onClick={() => setQuantity(product.id, item.quantity + step)}
+              disabled={item.quantity >= max}
               aria-label={t('increaseWeight')}
               className="w-8 h-8 inline-flex items-center justify-center text-cedar hover:bg-sand disabled:opacity-30 transition-colors duration-300"
             >

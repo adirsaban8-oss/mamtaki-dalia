@@ -20,7 +20,9 @@
   --color-cream-card: #FFFBF5;     /* pure cream — elevated cards on ivory */
 
   --color-cedar: #1C3A2E;          /* deep forest — header / dark sections */
+  --color-cedar-deep: #12251C;     /* hero photo edge stop, deepest grade */
   --color-cedar-light: #2D5244;    /* sage on dark backgrounds */
+  --color-ink: #2A2622;            /* body paragraph on cream (lower chroma) */
 
   --color-gold: #C9A66B;           /* antique gold — primary accent */
   --color-gold-light: #E3D5B7;     /* champagne — hover / highlights */

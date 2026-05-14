@@ -3,72 +3,87 @@
 import { create } from 'zustand';
 import { products, type Product } from '@/lib/mockData';
 
+/**
+ * `quantity` is interpreted by product unit:
+ *  – per_kg    → weight in kilograms (clamped to product.minWeight)
+ *  – per_piece → integer count
+ *  – per_box   → integer count
+ *
+ * The field is still named `quantity` everywhere; for kg products the
+ * UI labels it as a weight in the unit suffix.
+ */
 export type CartItem = {
   productId: string;
-  weight: number; // in kg
+  quantity: number;
 };
 
 type CartState = {
   items: CartItem[];
   isOpen: boolean;
 
-  // actions
-  add: (productId: string, weight: number) => void;
+  add: (productId: string, quantity: number) => void;
   remove: (productId: string) => void;
-  setWeight: (productId: string, weight: number) => void;
+  setQuantity: (productId: string, quantity: number) => void;
   open: () => void;
   close: () => void;
   toggle: () => void;
 
-  // selectors
   count: () => number;
   subtotal: () => number;
 };
 
-/**
- * Cart store — Zustand, visual-only for Phase 1/2.
- *  – Pre-seeded with two items so the drawer never starts empty in demos.
- *    Remove the seed for production by setting initial `items: []`.
- *  – `weight` is stored in kilograms; price = product.pricePerKg * weight.
- */
+function clamp(product: Product | undefined, qty: number): number {
+  if (Number.isNaN(qty)) return product?.minWeight ?? 1;
+  if (!product) return Math.max(1, qty);
+  if (product.unit === 'per_kg') {
+    const min = product.minWeight ?? 0.5;
+    const max = 5;
+    return Math.max(min, Math.min(max, Math.round(qty * 4) / 4));
+  }
+  return Math.max(1, Math.min(20, Math.round(qty)));
+}
+
 export const useCart = create<CartState>((set, get) => ({
-  // Demo seed — two items so the drawer is rich on first open
+  // Pre-seeded so the drawer is never empty in client demos.
   items: [
-    { productId: 'p_kanafeh_classic', weight: 1.0 },
-    { productId: 'p_baklava_pistachio', weight: 0.5 },
+    { productId: 'p_kanafeh_classic', quantity: 1.0 },
+    { productId: 'p_baklava_pistachio', quantity: 0.5 },
+    { productId: 'p_gift_box_signature', quantity: 1 },
   ],
   isOpen: false,
 
-  add: (productId, weight) =>
+  add: (productId, quantity) =>
     set((state) => {
+      const product = products.find((p) => p.id === productId);
       const existing = state.items.find((it) => it.productId === productId);
       if (existing) {
         return {
           items: state.items.map((it) =>
             it.productId === productId
-              ? { ...it, weight: clampWeight(it.weight + weight) }
+              ? { ...it, quantity: clamp(product, it.quantity + quantity) }
               : it
           ),
           isOpen: true,
         };
       }
       return {
-        items: [...state.items, { productId, weight: clampWeight(weight) }],
+        items: [...state.items, { productId, quantity: clamp(product, quantity) }],
         isOpen: true,
       };
     }),
 
   remove: (productId) =>
-    set((state) => ({
-      items: state.items.filter((it) => it.productId !== productId),
-    })),
+    set((state) => ({ items: state.items.filter((it) => it.productId !== productId) })),
 
-  setWeight: (productId, weight) =>
-    set((state) => ({
-      items: state.items.map((it) =>
-        it.productId === productId ? { ...it, weight: clampWeight(weight) } : it
-      ),
-    })),
+  setQuantity: (productId, quantity) =>
+    set((state) => {
+      const product = products.find((p) => p.id === productId);
+      return {
+        items: state.items.map((it) =>
+          it.productId === productId ? { ...it, quantity: clamp(product, quantity) } : it
+        ),
+      };
+    }),
 
   open: () => set({ isOpen: true }),
   close: () => set({ isOpen: false }),
@@ -79,18 +94,10 @@ export const useCart = create<CartState>((set, get) => ({
     get().items.reduce((sum, it) => {
       const product = products.find((p) => p.id === it.productId);
       if (!product) return sum;
-      return sum + product.pricePerKg * it.weight;
+      return sum + product.price * it.quantity;
     }, 0),
 }));
 
-function clampWeight(w: number): number {
-  if (Number.isNaN(w)) return 0.5;
-  const min = 0.5;
-  const max = 5;
-  return Math.max(min, Math.min(max, Math.round(w * 4) / 4));
-}
-
-/** Convenience: look up the full Product for a cart item. */
 export function getProductForItem(item: CartItem): Product | undefined {
   return products.find((p) => p.id === item.productId);
 }

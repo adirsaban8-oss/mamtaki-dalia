@@ -108,7 +108,8 @@
       "kosher": "כשר",
       "bestseller": "מומלץ",
       "new": "חדש",
-      "vegan": "טבעוני"
+      "vegan": "טבעוני",
+      "seasonal": "עונתי"
     },
     "sort": {
       "popular": "פופולרי",
@@ -124,8 +125,10 @@
     "weightMin": "מינימום הזמנה: 500 גרם",
     "weightKg": "ק״ג",
     "priceKgNote": "מחיר ל-1 ק״ג",
+    "priceUnitNote": "מחיר ליחידה",
     "totalLabel": "סה״כ",
     "totalNote": "חישוב אוטומטי לפי המשקל שבחרתם",
+    "totalNoteFixed": "מחיר קבוע לפריט",
     "addToCart": "הוסף לסל",
     "ingredients": "מרכיבים",
     "allergens": "אלרגנים",
