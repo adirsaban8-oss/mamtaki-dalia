@@ -1,17 +1,9 @@
 'use client';
 
 import { create } from 'zustand';
-import { products, type Product } from '@/lib/mockData';
+import { useCatalog } from './catalog';
+import type { Product } from '@/lib/mockData';
 
-/**
- * `quantity` is interpreted by product unit:
- *  – per_kg    → weight in kilograms (clamped to product.minWeight)
- *  – per_piece → integer count
- *  – per_box   → integer count
- *
- * The field is still named `quantity` everywhere; for kg products the
- * UI labels it as a weight in the unit suffix.
- */
 export type CartItem = {
   productId: string;
   quantity: number;
@@ -43,18 +35,19 @@ function clamp(product: Product | undefined, qty: number): number {
   return Math.max(1, Math.min(20, Math.round(qty)));
 }
 
+/** Resolve products from the live catalog store. */
+function getProductSafe(id: string): Product | undefined {
+  return useCatalog.getState().findById(id);
+}
+
 export const useCart = create<CartState>((set, get) => ({
-  // Pre-seeded so the drawer is never empty in client demos.
-  items: [
-    { productId: 'p_kanafeh_classic', quantity: 1.0 },
-    { productId: 'p_baklava_pistachio', quantity: 0.5 },
-    { productId: 'p_gift_box_signature', quantity: 1 },
-  ],
+  // Empty by default — catalog is empty, owner adds products via admin.
+  items: [],
   isOpen: false,
 
   add: (productId, quantity) =>
     set((state) => {
-      const product = products.find((p) => p.id === productId);
+      const product = getProductSafe(productId);
       const existing = state.items.find((it) => it.productId === productId);
       if (existing) {
         return {
@@ -77,7 +70,7 @@ export const useCart = create<CartState>((set, get) => ({
 
   setQuantity: (productId, quantity) =>
     set((state) => {
-      const product = products.find((p) => p.id === productId);
+      const product = getProductSafe(productId);
       return {
         items: state.items.map((it) =>
           it.productId === productId ? { ...it, quantity: clamp(product, quantity) } : it
@@ -92,12 +85,12 @@ export const useCart = create<CartState>((set, get) => ({
   count: () => get().items.length,
   subtotal: () =>
     get().items.reduce((sum, it) => {
-      const product = products.find((p) => p.id === it.productId);
+      const product = getProductSafe(it.productId);
       if (!product) return sum;
       return sum + product.price * it.quantity;
     }, 0),
 }));
 
 export function getProductForItem(item: CartItem): Product | undefined {
-  return products.find((p) => p.id === item.productId);
+  return getProductSafe(item.productId);
 }

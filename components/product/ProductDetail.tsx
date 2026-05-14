@@ -4,8 +4,9 @@ import { useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import type { Locale } from '@/i18n/locales';
-import { products, type Product } from '@/lib/mockData';
+import type { Product } from '@/lib/mockData';
 import { useCart } from '@/store/cart';
+import { useCatalog } from '@/store/catalog';
 import { Link } from '@/i18n/navigation';
 import { WeightSelector } from './WeightSelector';
 import { MenuCard } from './MenuCard';
@@ -40,16 +41,18 @@ export function ProductDetail({ product, locale }: Props) {
     return product.price * weight;
   }, [product, weight, isWeighted]);
 
+  const allProducts = useCatalog((s) => s.products);
   const related = useMemo(
     () =>
-      products
+      allProducts
         .filter(
           (p) =>
             p.id !== product.id &&
+            p.visible !== false &&
             (p.category === product.category || p.badges.includes('bestseller'))
         )
         .slice(0, 4),
-    [product]
+    [product, allProducts]
   );
 
   const sections = [

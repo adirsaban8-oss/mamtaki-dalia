@@ -4,14 +4,14 @@ import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import {
-  products,
-  productsByCategory,
   orderedCategories,
   categoryLabels,
   categoryEyebrow,
   type ProductCategory,
   type ProductBadge,
+  type Product,
 } from '@/lib/mockData';
+import { useCatalog } from '@/store/catalog';
 import type { Locale } from '@/i18n/locales';
 import { MenuCard } from '@/components/product/MenuCard';
 import { ArabesquePattern } from '@/components/ornaments/ArabesquePattern';
@@ -36,18 +36,21 @@ export function ShopContent({ locale }: Props) {
   const displayFont = locale === 'ar' ? 'font-display-ar' : 'font-display-he';
 
   const [activeBadges, setActiveBadges] = useState<ProductBadge[]>([]);
+  const allProducts = useCatalog((s) => s.products);
 
   const filteredByCategory = useMemo(() => {
-    const map = new Map<ProductCategory, typeof products>();
+    const map = new Map<ProductCategory, Product[]>();
     for (const category of orderedCategories) {
-      const list = productsByCategory(category).filter((p) => {
-        if (activeBadges.length === 0) return true;
-        return activeBadges.some((b) => p.badges.includes(b));
-      });
+      const list = allProducts
+        .filter((p) => p.category === category && p.visible !== false)
+        .filter((p) => {
+          if (activeBadges.length === 0) return true;
+          return activeBadges.some((b) => p.badges.includes(b));
+        });
       if (list.length > 0) map.set(category, list);
     }
     return map;
-  }, [activeBadges]);
+  }, [activeBadges, allProducts]);
 
   const totalCount = useMemo(
     () => Array.from(filteredByCategory.values()).reduce((sum, l) => sum + l.length, 0),
@@ -133,7 +136,10 @@ export function ShopContent({ locale }: Props) {
 
       {/* Catalog body */}
       <div className="relative mx-auto max-w-5xl px-5 md:px-10">
-        {totalCount === 0 ? (
+        {allProducts.length === 0 ? (
+          // Catalog empty — the owner hasn't added any products yet.
+          <CatalogEmptyState locale={locale} displayFont={displayFont} />
+        ) : totalCount === 0 ? (
           <div className="py-24 text-center">
             <p className={`${displayFont} text-2xl text-cedar`}>
               {locale === 'ar' ? 'لا توجد نتائج' : 'אין מוצרים שתואמים את הסינון'}
@@ -166,10 +172,39 @@ export function ShopContent({ locale }: Props) {
 
 type SectionProps = {
   category: ProductCategory;
-  items: typeof products;
+  items: Product[];
   locale: Locale;
   displayFont: string;
 };
+
+function CatalogEmptyState({ locale, displayFont }: { locale: Locale; displayFont: string }) {
+  return (
+    <div className="py-24 md:py-32 flex flex-col items-center text-center max-w-xl mx-auto">
+      <svg width="80" height="80" viewBox="0 0 80 80" fill="none" stroke="currentColor" strokeWidth="0.8" className="text-gold-deep/50" aria-hidden>
+        <circle cx="40" cy="40" r="38" />
+        <circle cx="40" cy="40" r="28" opacity="0.4" />
+        <path d="M 40 18 L 47 30 L 60 32 L 50 42 L 53 56 L 40 50 L 27 56 L 30 42 L 20 32 L 33 30 Z" />
+      </svg>
+      <p className={`mt-8 ${displayFont} font-black text-2xl md:text-3xl text-cedar tracking-display leading-tight text-balance`}>
+        {locale === 'ar' ? 'القائمة قيد التحضير' : 'התפריט בהכנה'}
+      </p>
+      <p className="mt-4 text-base text-ink/70 leading-relaxed text-pretty">
+        {locale === 'ar'
+          ? 'نقوم بإضافة المنتجات قريباً. تابعونا على إنستغرام للتحديثات.'
+          : 'אנחנו מוסיפים מוצרים בקרוב. עקבו אחרינו באינסטגרם לעדכונים.'}
+      </p>
+      <a
+        href="https://www.instagram.com/mamtaki_dalia/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="mt-8 inline-flex items-center gap-3 font-display-en text-[12px] tracking-eyebrow uppercase text-cedar hover:text-burgundy transition-colors duration-500"
+      >
+        <span>@mamtaki_dalia</span>
+        <span aria-hidden className="h-px w-12 bg-current" />
+      </a>
+    </div>
+  );
+}
 
 function CategorySection({ category, items, locale, displayFont }: SectionProps) {
   return (
