@@ -11,9 +11,14 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       { protocol: 'https', hostname: 'images.unsplash.com' },
       { protocol: 'https', hostname: 'plus.unsplash.com' },
+      { protocol: 'http', hostname: 'mamtaki-dalia.local' },
+      { protocol: 'https', hostname: 'mamtaki-dalia.local' },
     ],
     qualities: [75, 85, 90],
     formats: ['image/avif', 'image/webp'],
+    // Allow Next/Image to fetch from the local WordPress dev instance
+    // (Local by Flywheel maps mamtaki-dalia.local → 127.0.0.1).
+    dangerouslyAllowLocalIP: true,
   },
   experimental: {
     optimizePackageImports: ['framer-motion'],

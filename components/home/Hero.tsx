@@ -43,9 +43,9 @@ export function Hero({ useLocalImage = false }: { useLocalImage?: boolean }) {
       {/* ── Photographic background ─────────────────────────────────
          Slow Ken Burns drift — 22s, ease-in-out, reversing. */}
       <motion.div
-        initial={{ scale: 1.08 }}
-        animate={{ scale: 1.20 }}
-        transition={{ duration: 22, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' }}
+        initial={{ scale: 1.08, x: '1%', y: '1%' }}
+        animate={{ scale: 1.18, x: '-2%', y: '-1%' }}
+        transition={{ duration: 24, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' }}
         className="absolute inset-0 -z-30"
       >
         <Image

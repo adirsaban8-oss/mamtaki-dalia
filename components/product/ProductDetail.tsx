@@ -1,6 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
+import Image from 'next/image';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import type { Locale } from '@/i18n/locales';
@@ -251,20 +252,39 @@ export function ProductDetail({ product, locale }: Props) {
 /* ── Monogram seal — the photo-less product identity ─────────────── */
 
 function MonogramSeal({ product }: { product: Product }) {
+  // When the product has a featured image, show it inside the gold frame
+  // (overrides the typographic seal). Falls back to the monogram seal when
+  // no image is uploaded yet.
+  if (product.image) {
+    return (
+      <div className="relative aspect-square max-w-md mx-auto lg:max-w-none">
+        <div className="relative w-full h-full overflow-hidden bg-cream-card border border-gold-deep/40 rounded-[2px] shadow-soft">
+          <Image
+            src={product.image}
+            alt=""
+            fill
+            priority
+            sizes="(min-width: 1024px) 50vw, 90vw"
+            className="object-cover"
+            quality={85}
+          />
+        </div>
+        {/* Inner hairline 16px inset — keeps the gold frame language */}
+        <span
+          aria-hidden
+          className="absolute inset-4 border border-gold/40 rounded-[2px] pointer-events-none"
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="relative aspect-square max-w-md mx-auto lg:max-w-none">
-      {/* Outer parchment surface */}
       <div className="absolute inset-0 bg-cream-card border border-gold-deep/40 rounded-[2px] shadow-soft" />
-
-      {/* Inner hairline frame (16px inset) */}
       <span aria-hidden className="absolute inset-4 border border-gold/30 rounded-[2px] pointer-events-none" />
-
-      {/* Decorative rosette behind the monogram */}
       <div className="absolute inset-12 flex items-center justify-center pointer-events-none">
         <Rosette />
       </div>
-
-      {/* Monogram — typographic seal */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-8">
         <span className="font-display-en text-[10px] tracking-[0.4em] uppercase text-gold-deep/70">
           Maison Dalia · Est. 1985

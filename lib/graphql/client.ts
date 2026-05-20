@@ -26,10 +26,8 @@ export function getApolloClient(): ApolloClient {
       credentials: 'omit',
     }),
     cache: new InMemoryCache({
-      typePolicies: {
-        Product: { keyFields: ['databaseId'] },
-        SimpleProduct: { keyFields: ['databaseId'] },
-        VariableProduct: { keyFields: ['databaseId'] },
+      possibleTypes: {
+        Product: ['SimpleProduct', 'VariableProduct', 'GroupProduct', 'ExternalProduct'],
       },
     }),
     defaultOptions: {

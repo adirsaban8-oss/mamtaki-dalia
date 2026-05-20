@@ -36,7 +36,7 @@ export function ShopContent({ locale }: Props) {
   const displayFont = locale === 'ar' ? 'font-display-ar' : 'font-display-he';
 
   const [activeBadges, setActiveBadges] = useState<ProductBadge[]>([]);
-  const { products: allProducts } = useProducts();
+  const { products: allProducts, loading } = useProducts();
 
   const filteredByCategory = useMemo(() => {
     const map = new Map<ProductCategory, Product[]>();
@@ -136,7 +136,9 @@ export function ShopContent({ locale }: Props) {
 
       {/* Catalog body */}
       <div className="relative mx-auto max-w-5xl px-5 md:px-10">
-        {allProducts.length === 0 ? (
+        {loading && allProducts.length === 0 ? (
+          <CatalogSkeleton />
+        ) : allProducts.length === 0 ? (
           // Catalog empty — the owner hasn't added any products yet.
           <CatalogEmptyState locale={locale} displayFont={displayFont} />
         ) : totalCount === 0 ? (
@@ -176,6 +178,38 @@ type SectionProps = {
   locale: Locale;
   displayFont: string;
 };
+
+function CatalogSkeleton() {
+  return (
+    <div className="space-y-12 py-8" aria-hidden>
+      {[0, 1].map((cat) => (
+        <div key={cat} className="space-y-6">
+          {/* Category header skeleton */}
+          <div className="flex flex-col items-center gap-4">
+            <div className="h-3 w-40 bg-sand/70 rounded-[2px] animate-pulse" />
+            <div className="h-10 w-56 bg-sand rounded-[2px] animate-pulse" />
+          </div>
+          {/* Row skeletons */}
+          <div className="border-t border-gold-deep/15">
+            {[0, 1, 2].map((row) => (
+              <div
+                key={row}
+                className="grid grid-cols-[auto_1fr_auto] items-center gap-x-5 md:gap-x-8 py-6 md:py-7 border-b border-gold-deep/15"
+              >
+                <div className="w-20 h-20 md:w-24 md:h-24 bg-sand/70 rounded-[2px] animate-pulse" />
+                <div className="space-y-2.5">
+                  <div className="h-5 w-2/3 bg-sand rounded-[2px] animate-pulse" />
+                  <div className="h-3 w-1/2 bg-sand/60 rounded-[2px] animate-pulse" />
+                </div>
+                <div className="h-5 w-14 bg-sand rounded-[2px] animate-pulse" />
+              </div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
 
 function CatalogEmptyState({ locale, displayFont }: { locale: Locale; displayFont: string }) {
   return (

@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { useLocale } from 'next-intl';
 import { Link } from '@/i18n/navigation';
@@ -65,42 +66,57 @@ export function MenuCard({ product, index = 0, variant = 'card' }: Props) {
           initial={false}
           whileHover={{ y: -4 }}
           transition={{ duration: 0.7, ease: easeLuxe }}
-          className="relative bg-cream-card border border-gold-deep/40 group-hover:border-gold transition-[border-color] duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] rounded-[2px] p-7 md:p-10 min-h-[320px] flex flex-col"
+          className="relative bg-cream-card border border-gold-deep/40 group-hover:border-gold transition-[border-color] duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] rounded-[2px] overflow-hidden flex flex-col min-h-[320px]"
         >
-          {/* Header row: monogram + badge */}
-          <div className="flex items-start justify-between gap-4 mb-8 md:mb-10">
-            <span className="font-display-en text-[10px] md:text-[11px] tracking-[0.3em] uppercase text-gold/70 group-hover:text-gold transition-colors duration-700">
-              {product.monogram}
-            </span>
-            {primaryBadge(product, locale) && (
-              <span className="font-display-en text-[10px] tracking-eyebrow uppercase text-gold-deep border border-gold-deep/40 px-2 py-0.5 rounded-[2px]">
-                {primaryBadge(product, locale)}
-              </span>
-            )}
-          </div>
+          {/* Featured image — when available; falls back to monogram-only header */}
+          {product.image && (
+            <div className="relative aspect-[4/3] bg-ivory overflow-hidden">
+              <Image
+                src={product.image}
+                alt=""
+                fill
+                sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 90vw"
+                className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-[1.04]"
+              />
+            </div>
+          )}
 
-          {/* Title + tasting note — main content block */}
-          <div className="flex-1 flex flex-col items-start text-start">
-            <h3
-              className={`${displayFont} font-black tracking-display text-cedar text-2xl md:text-[26px] leading-[1.15] text-balance`}
-            >
-              {product.name[locale]}
-            </h3>
-            <p className="mt-3 md:mt-4 italic font-display-en text-[15px] md:text-base leading-[1.55] text-ink/70 text-pretty">
-              {product.tastingNote[locale]}
-            </p>
-          </div>
+          <div className="p-7 md:p-10 flex-1 flex flex-col">
+            {/* Header row: monogram + badge */}
+            <div className="flex items-start justify-between gap-4 mb-6 md:mb-8">
+              <span className="font-display-en text-[10px] md:text-[11px] tracking-[0.3em] uppercase text-gold/70 group-hover:text-gold transition-colors duration-700">
+                {product.monogram}
+              </span>
+              {primaryBadge(product, locale) && (
+                <span className="font-display-en text-[10px] tracking-eyebrow uppercase text-gold-deep border border-gold-deep/40 px-2 py-0.5 rounded-[2px]">
+                  {primaryBadge(product, locale)}
+                </span>
+              )}
+            </div>
 
-          {/* Footer row: hairline + price */}
-          <div className="mt-7 md:mt-8 flex items-end justify-between gap-4">
-            <span aria-hidden className="block h-px w-12 bg-gold-deep/40" />
-            <div className="flex items-baseline gap-1.5">
-              <span className="font-display-en text-lg md:text-[20px] text-ink/85 font-medium tabular-nums">
-                {priceLabel}
-              </span>
-              <span className="font-display-en text-[10px] md:text-[11px] tracking-eyebrow uppercase text-coffee-muted">
-                {priceSuffix}
-              </span>
+            {/* Title + tasting note */}
+            <div className="flex-1 flex flex-col items-start text-start">
+              <h3
+                className={`${displayFont} font-black tracking-display text-cedar text-2xl md:text-[26px] leading-[1.15] text-balance`}
+              >
+                {product.name[locale]}
+              </h3>
+              <p className="mt-3 md:mt-4 italic font-display-en text-[15px] md:text-base leading-[1.55] text-ink/70 text-pretty">
+                {product.tastingNote[locale]}
+              </p>
+            </div>
+
+            {/* Footer row: hairline + price */}
+            <div className="mt-7 md:mt-8 flex items-end justify-between gap-4">
+              <span aria-hidden className="block h-px w-12 bg-gold-deep/40" />
+              <div className="flex items-baseline gap-1.5">
+                <span className="font-display-en text-lg md:text-[20px] text-ink/85 font-medium tabular-nums">
+                  {priceLabel}
+                </span>
+                <span className="font-display-en text-[10px] md:text-[11px] tracking-eyebrow uppercase text-coffee-muted">
+                  {priceSuffix}
+                </span>
+              </div>
             </div>
           </div>
         </motion.div>
@@ -133,11 +149,23 @@ function CatalogRow({ product, index, locale, displayFont, priceLabel, priceSuff
         href={`/shop/${product.slug}`}
         className="block py-6 md:py-7 border-b border-gold-deep/15 hover:border-gold-deep/40 transition-colors duration-500 group/row"
       >
-        <div className="grid grid-cols-[auto_1fr_auto] items-baseline gap-x-5 md:gap-x-8">
-          {/* Monogram — sits like a chapter number */}
-          <span className="font-display-en text-[10px] md:text-[11px] tracking-[0.3em] uppercase text-gold/70 group-hover:text-gold transition-colors duration-700 self-center">
-            {product.monogram}
-          </span>
+        <div className="grid grid-cols-[auto_1fr_auto] items-center gap-x-5 md:gap-x-8">
+          {/* Thumb — featured image if available; monogram otherwise */}
+          {product.image ? (
+            <div className="relative w-20 h-20 md:w-24 md:h-24 bg-ivory border border-gold-deep/30 rounded-[2px] overflow-hidden shrink-0">
+              <Image
+                src={product.image}
+                alt=""
+                fill
+                sizes="96px"
+                className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-[1.04]"
+              />
+            </div>
+          ) : (
+            <span className="font-display-en text-[10px] md:text-[11px] tracking-[0.3em] uppercase text-gold/70 group-hover:text-gold transition-colors duration-700 self-center">
+              {product.monogram}
+            </span>
+          )}
 
           {/* Name + tasting note */}
           <div className="min-w-0">
