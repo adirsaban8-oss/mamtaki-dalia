@@ -25,7 +25,7 @@ export async function Story({ locale }: Props) {
 
   return (
     <section
-      className="relative overflow-hidden bg-sand py-16 md:py-[120px]"
+      className="relative overflow-hidden bg-sand py-12 md:py-20"
       aria-labelledby="story-heading"
     >
       <div
@@ -108,7 +108,7 @@ export async function Story({ locale }: Props) {
           </div>
 
           {/* Pull-quote — dramatic centerpiece with oversize opening mark */}
-          <blockquote className="relative my-12 md:my-16 py-2 ps-8 md:ps-12">
+          <blockquote className="relative my-10 md:my-12 py-2 ps-8 md:ps-12">
             <span
               aria-hidden
               className="absolute top-0 start-0 font-display-en text-[120px] md:text-[160px] leading-none text-gold/20 select-none pointer-events-none -translate-y-3"
@@ -134,7 +134,7 @@ export async function Story({ locale }: Props) {
           </p>
 
           {/* CTA */}
-          <div className="mt-10 md:mt-12">
+          <div className="mt-8 md:mt-10">
             <Link
               href="/about"
               className="group inline-flex items-center gap-4 font-display-en text-[12px] tracking-eyebrow uppercase text-cedar hover:text-burgundy transition-colors duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"

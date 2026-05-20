@@ -24,7 +24,7 @@ export function Testimonials() {
 
   return (
     <section
-      className="relative bg-ivory py-16 md:py-[120px]"
+      className="relative bg-ivory py-12 md:py-20"
       aria-labelledby="reviews-heading"
     >
       <div className="mx-auto max-w-7xl px-5 md:px-10">
@@ -55,7 +55,7 @@ export function Testimonials() {
         </motion.header>
 
         {/* 3-card grid · mobile horizontal scroll-snap */}
-        <div className="mt-16 md:mt-24">
+        <div className="mt-12 md:mt-16">
           <div className="hidden md:grid md:grid-cols-3 gap-8 lg:gap-10">
             {testimonials.map((item, idx) => (
               <TestimonialCard key={item.id} item={item} locale={locale} displayFont={displayFont} index={idx} />

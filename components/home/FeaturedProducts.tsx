@@ -27,7 +27,7 @@ export function FeaturedProducts({ locale }: Props) {
 
   return (
     <section
-      className="relative overflow-hidden bg-ivory py-16 md:py-[120px]"
+      className="relative overflow-hidden bg-ivory py-12 md:py-20"
       aria-labelledby="featured-heading"
     >
       <div aria-hidden className="absolute -top-20 -end-20 w-[600px] h-[600px] text-gold pointer-events-none">
@@ -49,7 +49,7 @@ export function FeaturedProducts({ locale }: Props) {
           id="featured-heading"
         />
 
-        <div className="mt-16 md:mt-24">
+        <div className="mt-12 md:mt-16">
           <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
             {list.map((product, idx) => (
               <MenuCard key={product.id} product={product} index={idx} />
@@ -65,7 +65,7 @@ export function FeaturedProducts({ locale }: Props) {
           </div>
         </div>
 
-        <div className="mt-16 md:mt-24 flex justify-center">
+        <div className="mt-12 md:mt-16 flex justify-center">
           <Link
             href="/shop"
             className="group inline-flex items-center gap-4 font-display-en text-[12px] tracking-eyebrow uppercase text-cedar hover:text-burgundy transition-colors duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"

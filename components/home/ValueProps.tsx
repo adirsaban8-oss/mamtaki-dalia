@@ -27,7 +27,7 @@ export function ValueProps() {
 
   return (
     <section
-      className="relative overflow-hidden bg-cedar text-ivory py-16 md:py-[120px]"
+      className="relative overflow-hidden bg-cedar text-ivory py-12 md:py-20"
       aria-labelledby="values-heading"
     >
       {/* Arabesque corners at 4% — barely visible, sets tone */}
@@ -74,7 +74,7 @@ export function ValueProps() {
         </motion.header>
 
         {/* Cards — cream surfaces with 2px gold top border, 48px padding */}
-        <div className="mt-16 md:mt-24 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+        <div className="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
           {items.map(({ key, Icon }, idx) => (
             <motion.article
               key={key}

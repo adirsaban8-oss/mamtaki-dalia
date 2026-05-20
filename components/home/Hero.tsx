@@ -105,7 +105,7 @@ export function Hero({ useLocalImage = false }: { useLocalImage?: boolean }) {
       {/* ── Content ─────────────────────────────────────────────────
          Centered, generous vertical rhythm. Each child enters with
          its own delay (400 / 550 / 700 / 1000 ms) per spec. */}
-      <div className="relative z-10 mx-auto max-w-7xl w-full px-5 md:px-10 pt-28 pb-24 md:pt-44 md:pb-36 flex flex-col items-center text-center">
+      <div className="relative z-10 mx-auto max-w-7xl w-full px-5 md:px-10 pt-24 pb-16 md:pt-32 md:pb-24 flex flex-col items-center text-center">
         {/* Eyebrow */}
         <motion.div
           initial={{ y: 16, opacity: 0 }}

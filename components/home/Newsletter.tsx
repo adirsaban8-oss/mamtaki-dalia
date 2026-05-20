@@ -35,7 +35,7 @@ export function Newsletter() {
 
   return (
     <section
-      className="relative bg-burgundy text-ivory py-20 md:py-28 overflow-hidden"
+      className="relative bg-burgundy text-ivory py-12 md:py-16 overflow-hidden"
       aria-labelledby="newsletter-heading"
     >
       <div aria-hidden className="absolute -top-32 -end-32 w-[500px] h-[500px] text-gold-light pointer-events-none">

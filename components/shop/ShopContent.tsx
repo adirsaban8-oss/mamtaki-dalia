@@ -61,7 +61,7 @@ export function ShopContent({ locale }: Props) {
     setActiveBadges((cur) => (cur.includes(badge) ? cur.filter((b) => b !== badge) : [...cur, badge]));
 
   return (
-    <section className="relative bg-ivory pb-16 md:pb-[120px]">
+    <section className="relative bg-ivory pb-12 md:pb-20">
       {/* Decorative arabesque */}
       <div
         aria-hidden
@@ -71,7 +71,7 @@ export function ShopContent({ locale }: Props) {
       </div>
 
       {/* Page header */}
-      <header className="relative mx-auto max-w-7xl px-5 md:px-10 pt-16 md:pt-24 pb-12 md:pb-16 flex flex-col items-center text-center">
+      <header className="relative mx-auto max-w-7xl px-5 md:px-10 pt-12 md:pt-16 pb-8 md:pb-12 flex flex-col items-center text-center">
         <div className="flex items-center gap-5 text-gold-deep">
           <span aria-hidden className="block h-px w-12 bg-gold" />
           <span className="font-display-en text-[12px] tracking-eyebrow uppercase">
@@ -90,7 +90,7 @@ export function ShopContent({ locale }: Props) {
       </header>
 
       {/* Filter chips */}
-      <div className="relative mx-auto max-w-7xl px-5 md:px-10 mb-12 md:mb-16 flex flex-wrap items-center justify-center gap-2.5">
+      <div className="relative mx-auto max-w-7xl px-5 md:px-10 mb-10 md:mb-12 flex flex-wrap items-center justify-center gap-2.5">
         {ALL_BADGES.map((badge) => {
           const active = activeBadges.includes(badge);
           return (
@@ -119,7 +119,7 @@ export function ShopContent({ locale }: Props) {
       {/* Category index — sticky pill nav on desktop */}
       <nav
         aria-label="Categories"
-        className="relative mx-auto max-w-7xl px-5 md:px-10 mb-16 md:mb-20 hidden lg:flex flex-wrap items-center justify-center gap-2 sticky top-[88px] z-30"
+        className="relative mx-auto max-w-7xl px-5 md:px-10 mb-10 md:mb-14 hidden lg:flex flex-wrap items-center justify-center gap-2 sticky top-[88px] z-30"
       >
         <div className="bg-cream-card border border-gold-deep/30 px-2 py-1.5 flex flex-wrap items-center gap-1 rounded-[2px] shadow-soft backdrop-blur">
           {Array.from(filteredByCategory.keys()).map((category) => (

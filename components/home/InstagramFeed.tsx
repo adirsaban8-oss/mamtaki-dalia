@@ -32,7 +32,7 @@ export function InstagramFeed() {
 
   return (
     <section
-      className="relative bg-ivory py-20 md:py-[120px]"
+      className="relative bg-ivory py-12 md:py-20"
       aria-labelledby="instagram-heading"
     >
       <div className="mx-auto max-w-7xl px-5 md:px-10">
@@ -41,7 +41,7 @@ export function InstagramFeed() {
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 1.0, ease: easeLuxe }}
-          className="flex flex-col items-center text-center mb-12 md:mb-16"
+          className="flex flex-col items-center text-center mb-10 md:mb-12"
         >
           <SectionDivider variant="crescent" className="mb-6" />
           <span className="font-display-en text-[12px] tracking-eyebrow uppercase text-gold-deep">
@@ -71,7 +71,7 @@ export function InstagramFeed() {
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.9, ease: easeLuxe, delay: 0.3 }}
-          className="mt-14 md:mt-16 flex justify-center"
+          className="mt-10 md:mt-12 flex justify-center"
         >
           <a
             href="https://www.instagram.com/mamtaki_dalia/"

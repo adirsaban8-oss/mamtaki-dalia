@@ -33,7 +33,7 @@ export function Footer({ locale }: Props) {
   ];
 
   return (
-    <footer className="relative bg-cedar text-ivory pt-20 md:pt-28 pb-10 overflow-hidden">
+    <footer className="relative bg-cedar text-ivory pt-14 md:pt-20 pb-10 overflow-hidden">
       {/* Subtle arabesque corners */}
       <div aria-hidden className="absolute -top-24 -start-24 w-[500px] h-[500px] text-gold-light pointer-events-none">
         <ArabesquePattern opacity={0.04} className="absolute inset-0" />
@@ -44,7 +44,7 @@ export function Footer({ locale }: Props) {
 
       <div className="relative mx-auto max-w-7xl px-5 md:px-10">
         {/* Brand mark */}
-        <div className="flex flex-col items-center text-center mb-16 md:mb-20">
+        <div className="flex flex-col items-center text-center mb-10 md:mb-14">
           <BrandMark size={56} className="text-gold" />
           <h2 className={`mt-6 ${displayFont} font-black text-3xl md:text-4xl lg:text-5xl text-ivory tracking-display text-balance`}>
             {t('brandLine')}
@@ -55,7 +55,7 @@ export function Footer({ locale }: Props) {
         </div>
 
         {/* Hairline above columns */}
-        <div aria-hidden className="h-px w-full bg-gold-light/15 mb-12 md:mb-16" />
+        <div aria-hidden className="h-px w-full bg-gold-light/15 mb-10 md:mb-12" />
 
         {/* 4 columns */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-12">
@@ -144,7 +144,7 @@ export function Footer({ locale }: Props) {
         </div>
 
         {/* Bottom hairline */}
-        <div aria-hidden className="h-px w-full bg-gold-light/15 mt-16 md:mt-20 mb-8" />
+        <div aria-hidden className="h-px w-full bg-gold-light/15 mt-12 md:mt-14 mb-8" />
 
         {/* Bottom bar: social + copyright + credit */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-start">

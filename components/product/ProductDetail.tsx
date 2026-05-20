@@ -216,9 +216,9 @@ export function ProductDetail({ product, locale }: Props) {
       </div>
 
       {/* Related */}
-      <section className="relative bg-ivory py-16 md:py-[120px] border-t border-hairline/60">
+      <section className="relative bg-ivory py-12 md:py-20 border-t border-hairline/60">
         <div className="mx-auto max-w-7xl px-5 md:px-10">
-          <header className="flex flex-col items-center text-center mb-12 md:mb-16">
+          <header className="flex flex-col items-center text-center mb-10 md:mb-12">
             <div className="flex items-center gap-5 text-gold-deep">
               <span aria-hidden className="block h-px w-12 bg-gold" />
               <span className="font-display-en text-[12px] tracking-eyebrow uppercase">
