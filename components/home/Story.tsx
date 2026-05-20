@@ -107,12 +107,19 @@ export async function Story({ locale }: Props) {
             <p>{t('para2')}</p>
           </div>
 
-          {/* Inline pull-quote — italic gold-deep, start border */}
-          <blockquote className="my-10 md:my-12 ps-6 border-s-2 border-gold">
-            <p className={`${displayFont} italic text-xl md:text-2xl leading-[1.4] text-gold-deep`}>
+          {/* Pull-quote — dramatic centerpiece with oversize opening mark */}
+          <blockquote className="relative my-12 md:my-16 py-2 ps-8 md:ps-12">
+            <span
+              aria-hidden
+              className="absolute top-0 start-0 font-display-en text-[120px] md:text-[160px] leading-none text-gold/20 select-none pointer-events-none -translate-y-3"
+            >
+              “
+            </span>
+            <p className={`relative ${displayFont} italic text-2xl md:text-3xl lg:text-[34px] leading-[1.3] text-gold-deep text-balance`}>
               {t('pullQuote')}
             </p>
-            <cite className="mt-4 block not-italic font-display-en text-[11px] tracking-eyebrow uppercase text-coffee-muted">
+            <span aria-hidden className="mt-5 block h-px w-16 bg-gold" />
+            <cite className="mt-3 block not-italic font-display-en text-[11px] tracking-eyebrow uppercase text-coffee-muted">
               — {t('quoteAttribution')}
             </cite>
           </blockquote>

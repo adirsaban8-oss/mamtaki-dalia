@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { useLocale, useTranslations } from 'next-intl';
 import type { Locale } from '@/i18n/locales';
 import { testimonials } from '@/lib/mockData';
+import { SectionDivider } from '@/components/ornaments/SectionDivider';
 
 const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 
@@ -35,6 +36,8 @@ export function Testimonials() {
           transition={{ duration: 1.0, ease: easeLuxe }}
           className="flex flex-col items-center text-center"
         >
+          <SectionDivider variant="rosette" className="mb-6 md:mb-8" />
+
           <div className="flex items-center gap-5 text-gold-deep">
             <span aria-hidden className="block h-px w-12 bg-gold" />
             <span className="font-display-en text-[12px] tracking-eyebrow uppercase">

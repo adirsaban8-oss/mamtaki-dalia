@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import type { Locale } from '@/i18n/locales';
+import { SectionDivider } from '@/components/ornaments/SectionDivider';
 
 type Props = {
   eyebrow: string;
@@ -10,6 +11,8 @@ type Props = {
   tone?: 'dark' | 'light';
   className?: string;
   id?: string;
+  /** Optional decorative motif above the eyebrow (centered headings only) */
+  ornament?: 'star' | 'crescent' | 'rosette' | 'none';
 };
 
 /**
@@ -27,6 +30,7 @@ export function SectionHeading({
   tone = 'dark',
   className,
   id,
+  ornament = 'none',
 }: Props) {
   const displayFont = locale === 'ar' ? 'font-display-ar' : 'font-display-he';
   const isCenter = align === 'center';
@@ -40,6 +44,14 @@ export function SectionHeading({
     <header
       className={`flex flex-col ${isCenter ? 'items-center text-center' : 'items-start text-start'} ${className ?? ''}`}
     >
+      {ornament !== 'none' && isCenter && (
+        <SectionDivider
+          variant={ornament}
+          tone={tone === 'dark' ? 'gold-deep' : 'gold-light'}
+          className="mb-6 md:mb-8"
+        />
+      )}
+
       {/* Eyebrow with twin gold lines */}
       <div className={`flex items-center gap-5 ${eyebrowColor}`}>
         <span aria-hidden className="block h-px w-12 bg-gold" />

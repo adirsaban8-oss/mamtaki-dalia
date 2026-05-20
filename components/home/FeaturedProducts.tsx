@@ -45,6 +45,7 @@ export function FeaturedProducts({ locale }: Props) {
           body={t('body')}
           align="center"
           tone="dark"
+          ornament="star"
           id="featured-heading"
         />
 
