@@ -49,7 +49,7 @@ export function InstagramFeed() {
           </span>
           <h2
             id="instagram-heading"
-            className={`mt-5 ${displayFont} font-black text-3xl md:text-5xl text-cedar tracking-display leading-[1.1] text-balance`}
+            className={`mt-5 ${displayFont} font-black text-[2rem] md:text-5xl text-cedar tracking-display leading-[1.1] text-balance`}
           >
             {t('title')}
           </h2>

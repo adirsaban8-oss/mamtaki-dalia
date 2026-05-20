@@ -80,7 +80,7 @@ export function ShopContent({ locale }: Props) {
           <span aria-hidden className="block h-px w-12 bg-gold" />
         </div>
         <h1
-          className={`mt-6 md:mt-8 ${displayFont} font-black tracking-display leading-[1.05] text-cedar text-balance text-4xl md:text-6xl lg:text-7xl`}
+          className={`mt-6 md:mt-8 ${displayFont} font-black tracking-display leading-[1.05] text-cedar text-balance text-[2.5rem] md:text-6xl lg:text-7xl`}
         >
           {t('title')}
         </h1>

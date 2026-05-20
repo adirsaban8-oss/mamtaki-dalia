@@ -130,7 +130,7 @@ export function Hero({ useLocalImage = false }: { useLocalImage?: boolean }) {
             initial={{ y: 80, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 1.4, delay: 0.4, ease: easeLuxe }}
-            className="block whitespace-nowrap text-[2.5rem] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-ivory"
+            className="block whitespace-nowrap text-[3.25rem] sm:text-6xl md:text-7xl lg:text-8xl xl:text-[7.5rem] text-ivory"
           >
             {t('titleLine1')}
           </motion.span>
@@ -138,7 +138,7 @@ export function Hero({ useLocalImage = false }: { useLocalImage?: boolean }) {
             initial={{ y: 80, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 1.4, delay: 0.55, ease: easeLuxe }}
-            className="block whitespace-nowrap text-[2.5rem] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-gold mt-1 md:mt-3"
+            className="block whitespace-nowrap text-[3.25rem] sm:text-6xl md:text-7xl lg:text-8xl xl:text-[7.5rem] text-gold mt-1 md:mt-3"
           >
             {t('titleLine2')}
           </motion.span>

@@ -48,27 +48,18 @@ export function Testimonials() {
 
           <h2
             id="reviews-heading"
-            className={`mt-6 md:mt-8 ${displayFont} font-black tracking-display leading-[1.05] text-balance text-cedar text-4xl md:text-5xl lg:text-6xl`}
+            className={`mt-6 md:mt-8 ${displayFont} font-black tracking-display leading-[1.05] text-balance text-cedar text-[2.25rem] md:text-5xl lg:text-6xl`}
           >
             {t('title')}
           </h2>
         </motion.header>
 
-        {/* 3-card grid · mobile horizontal scroll-snap */}
-        <div className="mt-12 md:mt-16">
-          <div className="hidden md:grid md:grid-cols-3 gap-8 lg:gap-10">
-            {testimonials.map((item, idx) => (
-              <TestimonialCard key={item.id} item={item} locale={locale} displayFont={displayFont} index={idx} />
-            ))}
-          </div>
-
-          <div className="md:hidden -mx-5 px-5 overflow-x-auto snap-x snap-mandatory flex gap-5 pb-4 scroll-pl-5 scrollbar-hide">
-            {testimonials.map((item, idx) => (
-              <div key={item.id} className="snap-start shrink-0 w-[82%]">
-                <TestimonialCard item={item} locale={locale} displayFont={displayFont} index={idx} />
-              </div>
-            ))}
-          </div>
+        {/* 3-card grid for tablet+, stacked column for mobile. No
+            horizontal scroll — mobile gets the full quote presence too. */}
+        <div className="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 lg:gap-10">
+          {testimonials.map((item, idx) => (
+            <TestimonialCard key={item.id} item={item} locale={locale} displayFont={displayFont} index={idx} />
+          ))}
         </div>
       </div>
     </section>

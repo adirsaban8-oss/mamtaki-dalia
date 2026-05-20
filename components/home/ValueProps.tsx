@@ -63,7 +63,7 @@ export function ValueProps() {
 
           <h2
             id="values-heading"
-            className={`mt-6 md:mt-8 ${displayFont} font-black tracking-display leading-[1.05] text-balance text-ivory text-4xl md:text-5xl lg:text-6xl`}
+            className={`mt-6 md:mt-8 ${displayFont} font-black tracking-display leading-[1.05] text-balance text-ivory text-[2.25rem] md:text-5xl lg:text-6xl`}
           >
             {t('title')}
           </h2>

@@ -62,7 +62,7 @@ export function Newsletter() {
 
         <h2
           id="newsletter-heading"
-          className={`mt-6 ${displayFont} font-black text-3xl md:text-5xl text-ivory tracking-display leading-[1.1] text-balance`}
+          className={`mt-6 ${displayFont} font-black text-[2rem] md:text-5xl text-ivory tracking-display leading-[1.1] text-balance`}
         >
           {t('title')}
         </h2>
