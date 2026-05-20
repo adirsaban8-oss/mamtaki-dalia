@@ -120,15 +120,17 @@ export function Hero({ useLocalImage = false }: { useLocalImage?: boolean }) {
           <GoldDivider className="!w-6 sm:!w-10 shrink-0" />
         </motion.div>
 
-        {/* Headline — black weight 900, mighty scale, text-shadow */}
+        {/* Headline — black weight 900, mighty scale, text-shadow.
+           Each line is whitespace-nowrap so the Hebrew title never
+           breaks per-word (e.g. "דלית אל כרמל" stays on one line). */}
         <h1
-          className={`${displayFont} font-black tracking-display leading-[1.05] text-balance text-shadow-hero max-w-[12ch]`}
+          className={`${displayFont} font-black tracking-display leading-[1.05] text-shadow-hero text-center`}
         >
           <motion.span
             initial={{ y: 80, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 1.4, delay: 0.4, ease: easeLuxe }}
-            className="block text-[2.75rem] sm:text-6xl md:text-7xl lg:text-8xl xl:text-[7.5rem] 2xl:text-[8rem] text-ivory"
+            className="block whitespace-nowrap text-[2.5rem] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-ivory"
           >
             {t('titleLine1')}
           </motion.span>
@@ -136,7 +138,7 @@ export function Hero({ useLocalImage = false }: { useLocalImage?: boolean }) {
             initial={{ y: 80, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 1.4, delay: 0.55, ease: easeLuxe }}
-            className="block text-[2.75rem] sm:text-6xl md:text-7xl lg:text-8xl xl:text-[7.5rem] 2xl:text-[8rem] text-gold mt-1 md:mt-3"
+            className="block whitespace-nowrap text-[2.5rem] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-gold mt-1 md:mt-3"
           >
             {t('titleLine2')}
           </motion.span>

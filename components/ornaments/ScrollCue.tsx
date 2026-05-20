@@ -8,8 +8,11 @@ type Props = {
 };
 
 /**
- * Spec: vertical 2px gold line, 60px tall, with gentle pulse +
- * "גלול למטה" text BELOW. Used at the bottom-center of the hero.
+ * Minimal scroll cue — a small gold chevron with gentle bounce, set
+ * at the very bottom of the hero. No vertical line, no label: those
+ * were competing with the headline and CTAs for vertical real-estate.
+ * `label` is kept on the prop for backwards compatibility but rendered
+ * as a sr-only string.
  */
 export function ScrollCue({ label, className }: Props) {
   return (
@@ -17,26 +20,20 @@ export function ScrollCue({ label, className }: Props) {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ delay: 2.0, duration: 1.2, ease: [0.25, 0.46, 0.45, 0.94] }}
-      className={`flex flex-col items-center gap-4 ${className ?? ''}`}
+      className={`pointer-events-none ${className ?? ''}`}
     >
-      {/* Vertical gold line — 2px wide, 60px tall, pulsing scaleY */}
-      <span
+      <span className="sr-only">{label}</span>
+      <motion.span
         aria-hidden
-        className="block w-[2px] h-[60px] bg-gradient-to-b from-gold-light/0 via-gold to-gold-light/30 origin-top"
+        animate={{ y: [0, 6, 0] }}
+        transition={{ duration: 2.4, repeat: Infinity, ease: [0.25, 0.46, 0.45, 0.94] }}
+        className="block text-gold-light/70"
       >
-        <motion.span
-          className="block w-full h-full bg-gold origin-top"
-          animate={{ scaleY: [0, 1, 0] }}
-          transition={{
-            duration: 2.6,
-            repeat: Infinity,
-            ease: [0.25, 0.46, 0.45, 0.94],
-          }}
-        />
-      </span>
-      <span className="font-display-en text-[11px] tracking-eyebrow uppercase text-ivory/80">
-        {label}
-      </span>
+        <svg width="18" height="22" viewBox="0 0 18 22" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <path d="M 9 2 L 9 16" />
+          <path d="M 3 13 L 9 19 L 15 13" />
+        </svg>
+      </motion.span>
     </motion.div>
   );
 }
