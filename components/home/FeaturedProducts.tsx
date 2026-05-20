@@ -2,7 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 import type { Locale } from '@/i18n/locales';
-import { useCatalog } from '@/store/catalog';
+import { useProducts } from '@/lib/data/useProducts';
 import { SectionHeading } from './SectionHeading';
 import { MenuCard } from '@/components/product/MenuCard';
 import { Link } from '@/i18n/navigation';
@@ -17,14 +17,11 @@ type Props = { locale: Locale };
  */
 export function FeaturedProducts({ locale }: Props) {
   const t = useTranslations('FeaturedProducts');
-  const products = useCatalog((s) => s.products);
-  const featured = products
-    .filter((p) => p.visible !== false && p.badges.includes('bestseller'))
-    .slice(0, 4);
+  const { products } = useProducts();
+  const featured = products.filter((p) => p.badges.includes('bestseller')).slice(0, 4);
 
   // Fallback: any 4 visible products if no bestsellers tagged yet
-  const fallback = products.filter((p) => p.visible !== false).slice(0, 4);
-  const list = featured.length > 0 ? featured : fallback;
+  const list = featured.length > 0 ? featured : products.slice(0, 4);
 
   if (list.length === 0) return null;
 

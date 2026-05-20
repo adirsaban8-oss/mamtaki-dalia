@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useCatalog } from '@/store/catalog';
+import { useProduct } from '@/lib/data/useProducts';
 import { ProductDetail } from './ProductDetail';
 import { Link } from '@/i18n/navigation';
 import type { Locale } from '@/i18n/locales';
@@ -16,14 +16,14 @@ type Props = { slug: string; locale: Locale };
  */
 export function ProductPageClient({ slug, locale }: Props) {
   const [hydrated, setHydrated] = useState(false);
-  const product = useCatalog((s) => s.products.find((p) => p.slug === slug));
+  const { product, loading } = useProduct(slug);
   const displayFont = locale === 'ar' ? 'font-display-ar' : 'font-display-he';
 
   useEffect(() => {
     setHydrated(true);
   }, []);
 
-  if (!hydrated) {
+  if (!hydrated || loading) {
     return (
       <div className="mx-auto max-w-7xl px-5 md:px-10 py-24">
         <div className="h-12 w-2/3 bg-sand/60 rounded-[2px] animate-pulse" />

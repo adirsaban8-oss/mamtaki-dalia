@@ -11,7 +11,7 @@ import {
   type ProductBadge,
   type Product,
 } from '@/lib/mockData';
-import { useCatalog } from '@/store/catalog';
+import { useProducts } from '@/lib/data/useProducts';
 import type { Locale } from '@/i18n/locales';
 import { MenuCard } from '@/components/product/MenuCard';
 import { ArabesquePattern } from '@/components/ornaments/ArabesquePattern';
@@ -36,13 +36,13 @@ export function ShopContent({ locale }: Props) {
   const displayFont = locale === 'ar' ? 'font-display-ar' : 'font-display-he';
 
   const [activeBadges, setActiveBadges] = useState<ProductBadge[]>([]);
-  const allProducts = useCatalog((s) => s.products);
+  const { products: allProducts } = useProducts();
 
   const filteredByCategory = useMemo(() => {
     const map = new Map<ProductCategory, Product[]>();
     for (const category of orderedCategories) {
       const list = allProducts
-        .filter((p) => p.category === category && p.visible !== false)
+        .filter((p) => p.category === category)
         .filter((p) => {
           if (activeBadges.length === 0) return true;
           return activeBadges.some((b) => p.badges.includes(b));

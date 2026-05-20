@@ -14,6 +14,7 @@ import { notFound } from 'next/navigation';
 import '../globals.css';
 import { locales, type Locale } from '@/i18n/locales';
 import { CartDrawer } from '@/components/cart/CartDrawer';
+import { ApolloProvider } from '@/components/providers/ApolloProvider';
 
 const frank = Frank_Ruhl_Libre({
   subsets: ['hebrew', 'latin'],
@@ -103,8 +104,10 @@ export default async function LocaleLayout({
     >
       <body className="min-h-full flex flex-col bg-ivory text-coffee">
         <NextIntlClientProvider locale={locale as Locale}>
-          {children}
-          <CartDrawer />
+          <ApolloProvider>
+            {children}
+            <CartDrawer />
+          </ApolloProvider>
         </NextIntlClientProvider>
       </body>
     </html>

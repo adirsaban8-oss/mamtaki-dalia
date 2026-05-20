@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 import type { Locale } from '@/i18n/locales';
 import type { Product } from '@/lib/mockData';
 import { useCart } from '@/store/cart';
-import { useCatalog } from '@/store/catalog';
+import { useProducts } from '@/lib/data/useProducts';
 import { Link } from '@/i18n/navigation';
 import { WeightSelector } from './WeightSelector';
 import { MenuCard } from './MenuCard';
@@ -41,14 +41,13 @@ export function ProductDetail({ product, locale }: Props) {
     return product.price * weight;
   }, [product, weight, isWeighted]);
 
-  const allProducts = useCatalog((s) => s.products);
+  const { products: allProducts } = useProducts();
   const related = useMemo(
     () =>
       allProducts
         .filter(
           (p) =>
             p.id !== product.id &&
-            p.visible !== false &&
             (p.category === product.category || p.badges.includes('bestseller'))
         )
         .slice(0, 4),
