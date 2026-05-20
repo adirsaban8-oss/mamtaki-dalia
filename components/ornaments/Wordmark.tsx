@@ -22,12 +22,12 @@ export function Wordmark({ locale, variant = 'dark', size = 'md' }: Props) {
 
   const nameSize =
     size === 'lg'
-      ? 'text-xl sm:text-2xl md:text-3xl'
+      ? 'text-lg sm:text-2xl md:text-3xl'
       : size === 'sm'
         ? 'text-sm sm:text-base'
-        : 'text-[15px] sm:text-lg md:text-xl';
+        : 'text-[13px] sm:text-lg md:text-xl';
 
-  const markSize = size === 'lg' ? 40 : size === 'sm' ? 22 : 28;
+  const markSize = size === 'lg' ? 40 : size === 'sm' ? 22 : 26;
 
   const displayFont = locale === 'ar' ? 'font-display-ar' : 'font-display-he';
 

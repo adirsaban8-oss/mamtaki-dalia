@@ -62,11 +62,10 @@ export function Testimonials() {
             ))}
           </div>
 
-          <div className="md:hidden -mx-5 px-5 overflow-x-auto snap-x snap-mandatory flex gap-5 pb-4 scroll-pl-5 scrollbar-hide">
+          {/* Mobile: 1-column stack (replaces horizontal scroll). */}
+          <div className="md:hidden flex flex-col gap-5">
             {testimonials.map((item, idx) => (
-              <div key={item.id} className="snap-start shrink-0 w-[82%]">
-                <TestimonialCard item={item} locale={locale} displayFont={displayFont} index={idx} />
-              </div>
+              <TestimonialCard key={item.id} item={item} locale={locale} displayFont={displayFont} index={idx} />
             ))}
           </div>
         </div>

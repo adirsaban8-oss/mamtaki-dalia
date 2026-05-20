@@ -56,11 +56,12 @@ export function FeaturedProducts({ locale }: Props) {
             ))}
           </div>
 
-          <div className="md:hidden -mx-5 px-5 overflow-x-auto snap-x snap-mandatory flex gap-5 pb-4 scrollbar-hide">
+          {/* Mobile: 2-column grid (replaces the horizontal-scroll
+              variant that didn't feel right on iPhone). Desktop layout
+              above is untouched. */}
+          <div className="md:hidden grid grid-cols-2 gap-3">
             {list.map((product, idx) => (
-              <div key={product.id} className="snap-start shrink-0 w-[82%]">
-                <MenuCard product={product} index={idx} />
-              </div>
+              <MenuCard key={product.id} product={product} index={idx} />
             ))}
           </div>
         </div>

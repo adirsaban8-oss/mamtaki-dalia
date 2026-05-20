@@ -149,15 +149,16 @@ function CatalogRow({ product, index, locale, displayFont, priceLabel, priceSuff
         href={`/shop/${product.slug}`}
         className="block py-6 md:py-7 border-b border-gold-deep/15 hover:border-gold-deep/40 transition-colors duration-500 group/row"
       >
-        <div className="grid grid-cols-[auto_1fr_auto] items-center gap-x-5 md:gap-x-8">
-          {/* Thumb — featured image if available; monogram otherwise */}
+        <div className="grid grid-cols-[auto_1fr_auto] items-center gap-x-3 sm:gap-x-5 md:gap-x-8">
+          {/* Thumb — featured image if available; monogram otherwise.
+              Smaller on phones so the name column gets enough width. */}
           {product.image ? (
-            <div className="relative w-20 h-20 md:w-24 md:h-24 bg-ivory border border-gold-deep/30 rounded-[2px] overflow-hidden shrink-0">
+            <div className="relative w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-ivory border border-gold-deep/30 rounded-[2px] overflow-hidden shrink-0">
               <Image
                 src={product.image}
                 alt=""
                 fill
-                sizes="96px"
+                sizes="(min-width: 768px) 96px, 56px"
                 className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-[1.04]"
               />
             </div>
@@ -170,23 +171,23 @@ function CatalogRow({ product, index, locale, displayFont, priceLabel, priceSuff
           {/* Name + tasting note */}
           <div className="min-w-0">
             <h3
-              className={`${displayFont} font-bold tracking-display text-cedar text-xl md:text-2xl leading-tight`}
+              className={`${displayFont} font-bold tracking-display text-cedar text-base sm:text-xl md:text-2xl leading-tight`}
             >
               {product.name[locale]}
             </h3>
-            <p className="mt-1.5 italic font-display-en text-[14px] md:text-[15px] leading-[1.55] text-ink/65 text-pretty">
+            <p className="mt-1 sm:mt-1.5 italic font-display-en text-[12px] sm:text-[14px] md:text-[15px] leading-[1.5] text-ink/65 text-pretty line-clamp-2">
               {product.tastingNote[locale]}
             </p>
           </div>
 
           {/* Price */}
-          <div className="text-end self-center">
-            <div className="flex items-baseline gap-1.5 justify-end">
-              <span className="font-display-en text-lg md:text-xl text-ink/90 font-medium tabular-nums">
+          <div className="text-end self-center shrink-0">
+            <div className="flex items-baseline gap-1 sm:gap-1.5 justify-end">
+              <span className="font-display-en text-base sm:text-lg md:text-xl text-ink/90 font-medium tabular-nums">
                 {priceLabel}
               </span>
             </div>
-            <span className="font-display-en text-[10px] tracking-eyebrow uppercase text-coffee-muted mt-1 block">
+            <span className="font-display-en text-[9px] sm:text-[10px] tracking-eyebrow uppercase text-coffee-muted mt-0.5 sm:mt-1 block">
               {priceSuffix}
             </span>
           </div>

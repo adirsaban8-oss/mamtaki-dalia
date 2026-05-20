@@ -236,11 +236,10 @@ export function ProductDetail({ product, locale }: Props) {
               <MenuCard key={p.id} product={p} index={idx} />
             ))}
           </div>
-          <div className="md:hidden -mx-5 px-5 overflow-x-auto snap-x snap-mandatory flex gap-5 pb-4 scrollbar-hide">
+          {/* Mobile: 2-col grid (replaces horizontal scroll). */}
+          <div className="md:hidden grid grid-cols-2 gap-3">
             {related.map((p, idx) => (
-              <div key={p.id} className="snap-start shrink-0 w-[82%]">
-                <MenuCard product={p} index={idx} />
-              </div>
+              <MenuCard key={p.id} product={p} index={idx} />
             ))}
           </div>
         </div>

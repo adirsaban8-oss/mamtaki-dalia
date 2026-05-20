@@ -82,16 +82,16 @@ export function Header({ overHero = true }: Props) {
         </nav>
 
         {/* Utilities — tighter gap on phones, generous from md+ */}
-        <div className="flex items-center gap-2 sm:gap-4 md:gap-6 shrink-0">
+        <div className="flex items-center gap-1 sm:gap-4 md:gap-6 shrink-0">
           <LanguageSwitcher variant={onDark ? 'light' : 'dark'} />
           <span aria-hidden className={`hidden md:block h-5 w-px ${onDark ? 'bg-ivory/30' : 'bg-hairline'}`} />
           <CartIcon variant={onDark ? 'light' : 'dark'} />
 
-          {/* Mobile menu trigger */}
+          {/* Mobile menu trigger — slightly smaller on phone */}
           <button
             type="button"
             onClick={() => setMenuOpen((v) => !v)}
-            className={`lg:hidden inline-flex items-center justify-center w-10 h-10 transition-colors duration-500 ${onDark ? 'text-ivory' : 'text-cedar'}`}
+            className={`lg:hidden inline-flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 transition-colors duration-500 ${onDark ? 'text-ivory' : 'text-cedar'}`}
             aria-label={menuOpen ? t('menuClose') : t('menuOpen')}
             aria-expanded={menuOpen}
           >
