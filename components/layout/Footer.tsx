@@ -57,16 +57,17 @@ export function Footer({ locale }: Props) {
         {/* Hairline above columns */}
         <div aria-hidden className="h-px w-full bg-gold-light/15 mb-10 md:mb-12" />
 
-        {/* 4 columns */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-10 md:gap-12">
+        {/* 4 columns — even on phone, per user request. Mobile text is
+            scaled down so the 4 columns still fit a 375px viewport. */}
+        <div className="grid grid-cols-4 gap-3 sm:gap-6 md:gap-12">
           {/* Navigation */}
           <FooterColumn title={t('navigation')} displayFont={displayFont}>
-            <ul className="space-y-3">
+            <ul className="space-y-2 sm:space-y-3">
               {navLinks.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-sm text-ivory/70 hover:text-gold-light transition-colors duration-500"
+                    className="text-[11px] sm:text-sm text-ivory/70 hover:text-gold-light transition-colors duration-500 block leading-snug"
                   >
                     {item.label}
                   </Link>
@@ -77,12 +78,12 @@ export function Footer({ locale }: Props) {
 
           {/* Categories */}
           <FooterColumn title={t('categories')} displayFont={displayFont}>
-            <ul className="space-y-3">
+            <ul className="space-y-2 sm:space-y-3">
               {orderedCategories.map((cat) => (
                 <li key={cat}>
                   <Link
                     href="/shop"
-                    className="text-sm text-ivory/70 hover:text-gold-light transition-colors duration-500"
+                    className="text-[11px] sm:text-sm text-ivory/70 hover:text-gold-light transition-colors duration-500 block leading-snug"
                   >
                     {categoryLabels[cat][locale]}
                   </Link>
@@ -93,12 +94,12 @@ export function Footer({ locale }: Props) {
 
           {/* Info */}
           <FooterColumn title={t('info')} displayFont={displayFont}>
-            <ul className="space-y-3">
+            <ul className="space-y-2 sm:space-y-3">
               {infoLinks.map((item) => (
                 <li key={item.label}>
                   <a
                     href={item.href}
-                    className="text-sm text-ivory/70 hover:text-gold-light transition-colors duration-500"
+                    className="text-[11px] sm:text-sm text-ivory/70 hover:text-gold-light transition-colors duration-500 block leading-snug"
                   >
                     {item.label}
                   </a>
@@ -109,8 +110,8 @@ export function Footer({ locale }: Props) {
 
           {/* Contact */}
           <FooterColumn title={t('contact')} displayFont={displayFont}>
-            <address className="not-italic space-y-3 text-sm text-ivory/70 leading-[1.7]">
-              <p className={`${displayFont} text-ivory text-base font-bold`}>
+            <address className="not-italic space-y-2 sm:space-y-3 text-[11px] sm:text-sm text-ivory/70 leading-[1.55] sm:leading-[1.7]">
+              <p className={`${displayFont} text-ivory text-[12px] sm:text-base font-bold leading-snug`}>
                 {locale === 'ar' ? 'دالية ١٠، دالية الكرمل' : 'דליה 10, דלית אל כרמל'}
               </p>
               <p>
@@ -122,20 +123,20 @@ export function Footer({ locale }: Props) {
                 </a>
               </p>
               <p>
-                <a href="mailto:amal3591@gmail.com" className="hover:text-gold-light transition-colors duration-500">
+                <a href="mailto:amal3591@gmail.com" className="hover:text-gold-light transition-colors duration-500 break-all">
                   amal3591@gmail.com
                 </a>
               </p>
-              <p className="font-display-en text-[11px] tracking-eyebrow uppercase text-gold-light/80 pt-2">
+              <p className="font-display-en text-[9px] sm:text-[11px] tracking-eyebrow uppercase text-gold-light/80 pt-1 sm:pt-2">
                 {t('hours')}
               </p>
-              <p className="text-xs text-ivory/60">{t('hoursValue')}</p>
+              <p className="text-[10px] sm:text-xs text-ivory/60 leading-snug">{t('hoursValue')}</p>
 
               <a
                 href="https://waze.com/ul?q=דליה%2010%20דלית%20אל%20כרמל"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 mt-3 px-3 h-9 border border-gold-light/30 text-gold-light font-display-en text-[11px] tracking-eyebrow uppercase hover:border-gold transition-colors duration-500 rounded-[2px]"
+                className="inline-flex items-center gap-1.5 sm:gap-2 mt-2 sm:mt-3 px-2 sm:px-3 h-7 sm:h-9 border border-gold-light/30 text-gold-light font-display-en text-[9px] sm:text-[11px] tracking-eyebrow uppercase hover:border-gold transition-colors duration-500 rounded-[2px]"
               >
                 <WazeIcon /> {t('waze')}
               </a>
@@ -146,9 +147,11 @@ export function Footer({ locale }: Props) {
         {/* Bottom hairline */}
         <div aria-hidden className="h-px w-full bg-gold-light/15 mt-12 md:mt-14 mb-8" />
 
-        {/* Bottom bar: social + copyright + credit */}
-        <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-start">
-          <div className="flex items-center gap-4">
+        {/* Bottom bar: social + copyright + credit — horizontal at all
+            widths, just tighter spacing on phones. Credit hides on the
+            smallest screens so the row never overflows. */}
+        <div className="flex flex-row items-center justify-between gap-2 sm:gap-6">
+          <div className="flex items-center gap-2 sm:gap-4">
             <SocialIcon href="https://www.instagram.com/mamtaki_dalia/" label="Instagram">
               <InstagramIcon />
             </SocialIcon>
@@ -163,11 +166,11 @@ export function Footer({ locale }: Props) {
             </SocialIcon>
           </div>
 
-          <p className="font-display-en text-[11px] tracking-eyebrow uppercase text-ivory/50">
-            © {new Date().getFullYear()} Maison Dalia · {t('rights')}
+          <p className="font-display-en text-[9px] sm:text-[11px] tracking-eyebrow uppercase text-ivory/50 text-center">
+            © {new Date().getFullYear()} Maison Dalia
           </p>
 
-          <p className="font-display-en text-[10px] tracking-eyebrow uppercase text-ivory/40">
+          <p className="hidden sm:block font-display-en text-[10px] tracking-eyebrow uppercase text-ivory/40">
             {t('craftedBy')}
           </p>
         </div>
@@ -189,7 +192,7 @@ function FooterColumn({
 }) {
   return (
     <div>
-      <h3 className={`${displayFont} font-black text-base text-gold-light mb-5 tracking-display`}>
+      <h3 className={`${displayFont} font-black text-[12px] sm:text-base text-gold-light mb-3 sm:mb-5 tracking-display leading-snug`}>
         {title}
       </h3>
       {children}
@@ -212,7 +215,7 @@ function SocialIcon({
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
-      className="w-10 h-10 inline-flex items-center justify-center border border-gold-light/30 text-gold-light hover:border-gold hover:text-gold transition-colors duration-500 rounded-[2px]"
+      className="w-8 h-8 sm:w-10 sm:h-10 inline-flex items-center justify-center border border-gold-light/30 text-gold-light hover:border-gold hover:text-gold transition-colors duration-500 rounded-[2px]"
     >
       {children}
     </a>
