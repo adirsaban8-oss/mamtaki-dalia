@@ -231,9 +231,16 @@ export function ProductDetail({ product, locale }: Props) {
             </h2>
           </header>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
             {related.map((p, idx) => (
               <MenuCard key={p.id} product={p} index={idx} />
+            ))}
+          </div>
+          <div className="md:hidden -mx-5 px-5 overflow-x-auto snap-x snap-mandatory flex gap-5 pb-4 scrollbar-hide">
+            {related.map((p, idx) => (
+              <div key={p.id} className="snap-start shrink-0 w-[82%]">
+                <MenuCard product={p} index={idx} />
+              </div>
             ))}
           </div>
         </div>

@@ -49,13 +49,20 @@ export function FeaturedProducts({ locale }: Props) {
           id="featured-heading"
         />
 
-        {/* Same grid across all viewports — 2-col mobile, 2-col tablet,
-            4-col desktop. No horizontal scroll variant: mobile sees the
-            full grid just like desktop. */}
-        <div className="mt-12 md:mt-16 grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-          {list.map((product, idx) => (
-            <MenuCard key={product.id} product={product} index={idx} />
-          ))}
+        <div className="mt-12 md:mt-16">
+          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
+            {list.map((product, idx) => (
+              <MenuCard key={product.id} product={product} index={idx} />
+            ))}
+          </div>
+
+          <div className="md:hidden -mx-5 px-5 overflow-x-auto snap-x snap-mandatory flex gap-5 pb-4 scrollbar-hide">
+            {list.map((product, idx) => (
+              <div key={product.id} className="snap-start shrink-0 w-[82%]">
+                <MenuCard product={product} index={idx} />
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className="mt-12 md:mt-16 flex justify-center">

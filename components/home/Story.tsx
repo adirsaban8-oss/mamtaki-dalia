@@ -96,7 +96,7 @@ export async function Story({ locale }: Props) {
           {/* Display heading — weight 900 */}
           <h2
             id="story-heading"
-            className={`mt-6 md:mt-8 ${displayFont} font-black tracking-display leading-[1.05] text-cedar text-balance text-[2.25rem] md:text-5xl lg:text-6xl`}
+            className={`mt-6 md:mt-8 ${displayFont} font-black tracking-display leading-[1.05] text-cedar text-balance text-4xl md:text-5xl lg:text-6xl`}
           >
             {t('title')}
           </h2>
