@@ -41,7 +41,7 @@ const INITIAL: FormState = {
   deliveryDate: '',
   deliveryWindow: 'noon',
   notes: '',
-  paymentMethod: 'cod',
+  paymentMethod: 'meshulam',
 };
 
 type Props = { locale: Locale };
@@ -326,49 +326,28 @@ export function CheckoutForm({ locale }: Props) {
 
           <Section title={t('payment')} displayFont={displayFont}>
             <div className="space-y-3">
-              {/* Working today */}
-              <PaymentOption
-                checked={form.paymentMethod === 'cod'}
-                onChange={() => update('paymentMethod', 'cod')}
-                title={t('payCod')}
-                subtitle={t('payCodNote')}
-                icon={<CashIcon />}
-              />
-              <PaymentOption
-                checked={form.paymentMethod === 'bacs'}
-                onChange={() => update('paymentMethod', 'bacs')}
-                title={t('payBank')}
-                subtitle={t('payBankNote')}
-                icon={<BankIcon />}
-              />
-
-              {/* Awaiting processor account — UI in place for fast switch */}
+              {/* Online payment methods — connect a processor account
+                  (Meshulam / PayPlus / Tranzila …) to activate all three. */}
               <PaymentOption
                 checked={form.paymentMethod === 'meshulam'}
                 onChange={() => update('paymentMethod', 'meshulam')}
                 title={t('payCard')}
                 subtitle={t('payCardNote')}
-                badge={t('comingSoon')}
                 icon={<CardIcon />}
-                disabled
               />
               <PaymentOption
                 checked={form.paymentMethod === 'apple_pay'}
                 onChange={() => update('paymentMethod', 'apple_pay')}
                 title={t('payApple')}
                 subtitle={t('payAppleNote')}
-                badge={t('comingSoon')}
                 icon={<AppleIcon />}
-                disabled
               />
               <PaymentOption
                 checked={form.paymentMethod === 'bit'}
                 onChange={() => update('paymentMethod', 'bit')}
                 title={t('payBit')}
                 subtitle={t('payBitNote')}
-                badge={t('comingSoon')}
                 icon={<BitIcon />}
-                disabled
               />
             </div>
           </Section>
