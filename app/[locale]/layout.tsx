@@ -15,6 +15,7 @@ import '../globals.css';
 import { locales, type Locale } from '@/i18n/locales';
 import { CartDrawer } from '@/components/cart/CartDrawer';
 import { ApolloProvider } from '@/components/providers/ApolloProvider';
+import { AccessibilityFAB } from '@/components/layout/AccessibilityFAB';
 
 const frank = Frank_Ruhl_Libre({
   subsets: ['hebrew', 'latin'],
@@ -107,6 +108,7 @@ export default async function LocaleLayout({
           <ApolloProvider>
             {children}
             <CartDrawer />
+            <AccessibilityFAB />
           </ApolloProvider>
         </NextIntlClientProvider>
       </body>

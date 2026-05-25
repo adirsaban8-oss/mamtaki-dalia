@@ -78,6 +78,17 @@
     "title": "עקבו אחרינו",
     "follow": "עקבו באינסטגרם"
   },
+  "Accessibility": {
+    "open": "פתח נגישות",
+    "close": "סגור",
+    "title": "נגישות",
+    "textSize": "גודל טקסט",
+    "highContrast": "ניגודיות גבוהה",
+    "underlineLinks": "הדגש קישורים",
+    "reduceMotion": "עצור אנימציות",
+    "reset": "איפוס הגדרות",
+    "legalNote": "מציע נגישות לפי תקן ישראלי 5568"
+  },
   "Checkout": {
     "eyebrow": "השלמת הזמנה",
     "title": "פרטי משלוח ותשלום",

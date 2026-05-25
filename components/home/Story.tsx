@@ -101,10 +101,9 @@ export async function Story({ locale }: Props) {
             {t('title')}
           </h2>
 
-          {/* Body */}
-          <div className="mt-8 md:mt-10 space-y-5 text-base md:text-lg leading-[1.8] text-coffee/90 text-pretty">
+          {/* Body — single intro paragraph (para2 cut for brevity) */}
+          <div className="mt-6 md:mt-8 text-base md:text-lg leading-[1.75] text-coffee/90 text-pretty">
             <p>{t('para1')}</p>
-            <p>{t('para2')}</p>
           </div>
 
           {/* Pull-quote — dramatic centerpiece with oversize opening mark */}
