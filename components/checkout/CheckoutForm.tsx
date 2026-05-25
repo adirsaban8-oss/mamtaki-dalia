@@ -14,7 +14,7 @@ import { ArabesquePattern } from '@/components/ornaments/ArabesquePattern';
 
 const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 
-type PaymentMethod = 'cod' | 'bacs' | 'meshulam';
+type PaymentMethod = 'cod' | 'bacs' | 'meshulam' | 'apple_pay' | 'bit';
 
 type FormState = {
   firstName: string;
@@ -326,24 +326,48 @@ export function CheckoutForm({ locale }: Props) {
 
           <Section title={t('payment')} displayFont={displayFont}>
             <div className="space-y-3">
+              {/* Working today */}
               <PaymentOption
                 checked={form.paymentMethod === 'cod'}
                 onChange={() => update('paymentMethod', 'cod')}
                 title={t('payCod')}
                 subtitle={t('payCodNote')}
+                icon={<CashIcon />}
               />
               <PaymentOption
                 checked={form.paymentMethod === 'bacs'}
                 onChange={() => update('paymentMethod', 'bacs')}
                 title={t('payBank')}
                 subtitle={t('payBankNote')}
+                icon={<BankIcon />}
               />
+
+              {/* Awaiting processor account — UI in place for fast switch */}
               <PaymentOption
                 checked={form.paymentMethod === 'meshulam'}
                 onChange={() => update('paymentMethod', 'meshulam')}
                 title={t('payCard')}
                 subtitle={t('payCardNote')}
                 badge={t('comingSoon')}
+                icon={<CardIcon />}
+                disabled
+              />
+              <PaymentOption
+                checked={form.paymentMethod === 'apple_pay'}
+                onChange={() => update('paymentMethod', 'apple_pay')}
+                title={t('payApple')}
+                subtitle={t('payAppleNote')}
+                badge={t('comingSoon')}
+                icon={<AppleIcon />}
+                disabled
+              />
+              <PaymentOption
+                checked={form.paymentMethod === 'bit'}
+                onChange={() => update('paymentMethod', 'bit')}
+                title={t('payBit')}
+                subtitle={t('payBitNote')}
+                badge={t('comingSoon')}
+                icon={<BitIcon />}
                 disabled
               />
             </div>
@@ -506,6 +530,7 @@ function PaymentOption({
   subtitle,
   badge,
   disabled,
+  icon,
 }: {
   checked: boolean;
   onChange: () => void;
@@ -513,6 +538,7 @@ function PaymentOption({
   subtitle: string;
   badge?: string;
   disabled?: boolean;
+  icon?: React.ReactNode;
 }) {
   return (
     <label
@@ -526,7 +552,12 @@ function PaymentOption({
         disabled={disabled}
         className="mt-1 accent-gold"
       />
-      <div className="flex-1">
+      {icon && (
+        <span className="shrink-0 w-10 h-10 inline-flex items-center justify-center border border-gold-deep/30 rounded-[2px] bg-cream-card text-cedar">
+          {icon}
+        </span>
+      )}
+      <div className="flex-1 min-w-0">
         <div className="flex items-center gap-3 flex-wrap">
           <span className="text-cedar font-medium">{title}</span>
           {badge && (
@@ -538,5 +569,64 @@ function PaymentOption({
         <p className="text-[13px] text-coffee-muted mt-1">{subtitle}</p>
       </div>
     </label>
+  );
+}
+
+/* ── Payment glyphs ───────────────────────────────────────────────── */
+
+function CashIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <rect x="2" y="6" width="20" height="12" rx="1" />
+      <circle cx="12" cy="12" r="2.5" />
+      <path d="M 5 9 L 5 9.5 M 19 14.5 L 19 15" />
+    </svg>
+  );
+}
+
+function BankIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M 3 9 L 12 4 L 21 9 L 21 10 L 3 10 Z" />
+      <path d="M 5 10 L 5 18 M 9 10 L 9 18 M 15 10 L 15 18 M 19 10 L 19 18" />
+      <path d="M 3 19 L 21 19" />
+    </svg>
+  );
+}
+
+function CardIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <rect x="2" y="5" width="20" height="14" rx="2" />
+      <path d="M 2 10 L 22 10" />
+      <path d="M 5 15 L 9 15" />
+    </svg>
+  );
+}
+
+function AppleIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+      <path d="M17.05 12.04c-.03-2.65 2.16-3.92 2.26-3.98-1.23-1.8-3.15-2.05-3.83-2.08-1.63-.17-3.18.96-4.01.96-.84 0-2.11-.94-3.47-.91-1.78.03-3.42 1.04-4.34 2.62-1.85 3.21-.47 7.96 1.33 10.57.88 1.28 1.93 2.71 3.3 2.66 1.33-.05 1.83-.86 3.43-.86 1.6 0 2.05.86 3.45.83 1.43-.03 2.33-1.3 3.2-2.59 1.01-1.48 1.42-2.92 1.44-2.99-.03-.01-2.76-1.06-2.79-4.21M14.6 4.41c.74-.89 1.24-2.13 1.1-3.36-1.07.04-2.36.71-3.12 1.6-.68.79-1.27 2.05-1.11 3.26 1.19.09 2.4-.6 3.13-1.5" />
+    </svg>
+  );
+}
+
+function BitIcon() {
+  // Stylized "Bit" mark — circular b inside a rounded square
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
+      <rect x="2" y="2" width="20" height="20" rx="5" fill="currentColor" />
+      <path
+        d="M 9 7 L 9 17 M 9 8.5 a 2.5 2.5 0 0 1 0 5 L 9 13.5 M 9 12 a 2.5 2.5 0 0 1 0 5"
+        stroke="white"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        fill="none"
+      />
+      <circle cx="11.5" cy="11" r="1.5" stroke="white" strokeWidth="1.4" fill="none" />
+      <circle cx="11.5" cy="15" r="1.5" stroke="white" strokeWidth="1.4" fill="none" />
+    </svg>
   );
 }
