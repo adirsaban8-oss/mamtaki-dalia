@@ -13,6 +13,8 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'plus.unsplash.com' },
       { protocol: 'http', hostname: 'mamtaki-dalia.local' },
       { protocol: 'https', hostname: 'mamtaki-dalia.local' },
+      // Production WordPress admin (Railway WordPress template)
+      { protocol: 'https', hostname: 'primary-production-022cf.up.railway.app' },
     ],
     qualities: [75, 85, 90],
     formats: ['image/avif', 'image/webp'],

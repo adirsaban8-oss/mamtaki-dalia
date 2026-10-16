@@ -19,6 +19,14 @@ RUN npm ci --no-audit --no-fund
 FROM base AS builder
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+# NEXT_PUBLIC_* values are inlined into the bundle at build time, so
+# Railway service variables must be exposed to this stage as build args.
+ARG NEXT_PUBLIC_DATA_SOURCE
+ARG NEXT_PUBLIC_WP_GRAPHQL_URL
+ARG NEXT_PUBLIC_BASE_URL=https://mamtaki-dalia-production.up.railway.app
+ENV NEXT_PUBLIC_DATA_SOURCE=$NEXT_PUBLIC_DATA_SOURCE \
+    NEXT_PUBLIC_WP_GRAPHQL_URL=$NEXT_PUBLIC_WP_GRAPHQL_URL \
+    NEXT_PUBLIC_BASE_URL=$NEXT_PUBLIC_BASE_URL
 RUN npm run build
 
 # ── 3. Lean runtime ────────────────────────────────────────────────
