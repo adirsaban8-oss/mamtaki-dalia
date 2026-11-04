@@ -19,7 +19,7 @@ type Props = {
 
 /**
  * Catalog card — Dubai-boutique style (after Bateel): white card on the
- * cream page, square white photo stage with the cut-out product inset,
+ * cream page, square full-bleed photo,
  * display-serif name, gold diamond rule, price in gold-deep (or "price
  * on request" while the owner hasn't set one). Hover: border turns gold
  * and the photo zooms 4% — no lift, no shadow.
@@ -53,14 +53,14 @@ export function MenuCard({ product, index = 0, variant = 'card' }: Props) {
         aria-label={product.name[locale]}
       >
         {/* Photo — white stage, product inset so every cut-out sits alike */}
-        <div className="relative aspect-square bg-white overflow-hidden">
+        <div className="relative aspect-square bg-sand overflow-hidden">
           {product.image ? (
             <Image
               src={product.image}
               alt={product.name[locale]}
               fill
               sizes="(min-width: 1024px) 25vw, 50vw"
-              className="object-contain p-[6%] transition-transform duration-[400ms] ease-out group-hover:scale-[1.04]"
+              className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center">

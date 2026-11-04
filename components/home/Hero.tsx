@@ -10,8 +10,8 @@ import type { Locale } from '@/i18n/locales';
 
 const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 
-/** Signature product shown in the hero arch (white-background cut-out). */
-const HERO_PRODUCT_IMAGE = '/products/kanafeh-by-weight.webp';
+/** Signature photograph shown inside the hero arch. */
+const HERO_IMAGE = '/images/hero.webp';
 
 /**
  * Hero — Dubai-boutique split layout (after Bateel / Hafiz Mustafa):
@@ -104,18 +104,21 @@ export function Hero() {
           transition={{ duration: 1.3, delay: 0.25, ease: easeLuxe }}
           className="lg:col-span-6 flex justify-center"
         >
-          <div className="relative w-[78%] max-w-[420px] sm:w-[60%] lg:w-full">
+          <div className="relative w-[82%] max-w-[460px] sm:w-[62%] lg:w-full">
             <span aria-hidden className="absolute -inset-3 sm:-inset-4 arch border border-gold/60" />
             <span aria-hidden className="absolute -inset-6 sm:-inset-8 arch border border-gold/20" />
-            <div className="relative aspect-[4/5] arch overflow-hidden bg-white">
+            <div className="relative aspect-[4/5] arch overflow-hidden bg-cedar-deep">
               <Image
-                src={HERO_PRODUCT_IMAGE}
-                alt={locale === 'ar' ? 'كنافة' : 'כנאפה'}
+                src={HERO_IMAGE}
+                alt={locale === 'ar' ? 'حلويات دالية الكرمل' : 'ממתקי דלית אל כרמל'}
                 fill
                 priority
-                sizes="(min-width: 1024px) 420px, 70vw"
-                className="object-contain p-[8%] pt-[18%]"
+                quality={85}
+                sizes="(min-width: 1024px) 460px, 80vw"
+                className="object-cover"
               />
+              {/* Soft inner vignette so the photo melts into the ink field */}
+              <span aria-hidden className="absolute inset-0 shadow-[inset_0_-40px_80px_rgba(12,23,19,0.35)]" />
             </div>
           </div>
         </motion.div>

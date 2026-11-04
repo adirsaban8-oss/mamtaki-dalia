@@ -8,14 +8,16 @@ import type { Locale } from '@/i18n/locales';
 
 export const metadata: Metadata = { title: 'קרדיט לתמונות' };
 
-/** Attribution for the illustrative product photos (CC BY / BY-SA require it). */
+/** Sources of the illustrative product photos (Pexels License). */
 export default async function CreditsPage({ params }: PageProps<'/[locale]/credits'>) {
   const { locale } = await params;
   setRequestLocale(locale);
   const ar = locale === 'ar';
   const displayFont = ar ? 'font-display-ar' : 'font-display-he';
   const nameOf = (slug: string) =>
-    seedCatalog.find((p) => p.slug === slug)?.name[locale as Locale] ?? slug;
+    slug === 'hero'
+      ? ar ? 'الصورة الرئيسية' : 'תמונה ראשית'
+      : seedCatalog.find((p) => p.slug === slug)?.name[locale as Locale] ?? slug;
 
   return (
     <>
@@ -27,8 +29,8 @@ export default async function CreditsPage({ params }: PageProps<'/[locale]/credi
           </h1>
           <p className="mt-5 text-ink/75 leading-relaxed">
             {ar
-              ? 'صور المنتجات في الموقع للتوضيح فقط، ومصدرها مكتبات صور مفتوحة. أُزيلت الخلفية ووُضعت على خلفية بيضاء. الصور المرخّصة بـ CC BY-SA متاحة بنفس الترخيص.'
-              : 'תמונות המוצרים באתר הן להמחשה בלבד, ממאגרי תמונות פתוחים. הרקע הוסר והוחלף ברקע לבן. תמונות ברישיון CC BY-SA זמינות באותו רישיון.'}
+              ? 'صور المنتجات في الموقع للتوضيح فقط، ومصدرها مكتبة الصور Pexels.'
+              : 'תמונות המוצרים באתר הן להמחשה בלבד, ממאגר התמונות Pexels.'}
           </p>
           <ul className="mt-10 divide-y divide-hairline border-y border-hairline">
             {photoCredits.map((c) => (

@@ -235,14 +235,14 @@ function MonogramSeal({ product, label }: { product: Product; label: string }) {
       <div className="relative mx-auto w-full max-w-[520px] bg-sand rounded-[4px] p-6 sm:p-10">
         <div className="relative">
           <span aria-hidden className="absolute -inset-2 sm:-inset-3 arch border border-gold/70 pointer-events-none" />
-          <div className="relative aspect-[4/5] arch overflow-hidden bg-white">
+          <div className="relative aspect-[4/5] arch overflow-hidden bg-sand">
             <Image
               src={product.image}
               alt={product.name.he}
               fill
               priority
               sizes="(min-width: 1024px) 40vw, 90vw"
-              className="object-contain p-[10%]"
+              className="object-cover"
               quality={85}
             />
           </div>

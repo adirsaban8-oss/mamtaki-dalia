@@ -15,7 +15,7 @@ const CATEGORY_IMAGE: Record<ProductCategory, string> = {
   baklava: '/products/baklava-pistachio.webp',
   trays: '/products/layali-beirut-tray.webp',
   'fruit-desserts': '/products/fruit-dessert-strawberry.webp',
-  cakes: '/products/lava-cake-milk-chocolate.webp',
+  cakes: '/products/birthday-cake.webp',
   frozen: '/products/ice-cream-popsicles.webp',
 };
 
@@ -59,13 +59,13 @@ export function CategoryArches() {
                     aria-hidden
                     className="absolute -inset-2 arch border border-gold/50 group-hover:border-gold transition-colors duration-500"
                   />
-                  <div className="relative aspect-[3/4] arch overflow-hidden bg-white border border-hairline">
+                  <div className="relative aspect-[3/4] arch overflow-hidden bg-sand">
                     <Image
                       src={CATEGORY_IMAGE[category]}
                       alt=""
                       fill
                       sizes="(min-width: 1024px) 15vw, (min-width: 768px) 30vw, 40vw"
-                      className="object-contain p-[12%] pt-[20%] transition-transform duration-[400ms] ease-out group-hover:scale-[1.05]"
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
                     />
                   </div>
                 </div>
