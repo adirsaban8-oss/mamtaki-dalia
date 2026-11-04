@@ -18,8 +18,6 @@ import { ArabesquePattern } from '@/components/ornaments/ArabesquePattern';
 
 const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 
-const ALL_BADGES: ProductBadge[] = ['bestseller', 'new', 'seasonal', 'kosher', 'vegan'];
-
 type Props = { locale: Locale };
 
 /**
@@ -57,11 +55,9 @@ export function ShopContent({ locale }: Props) {
     [filteredByCategory]
   );
 
-  const toggleBadge = (badge: ProductBadge) =>
-    setActiveBadges((cur) => (cur.includes(badge) ? cur.filter((b) => b !== badge) : [...cur, badge]));
 
   return (
-    <section className="relative bg-ivory pb-12 md:pb-20">
+    <section className="relative overflow-x-clip bg-ivory pb-12 md:pb-20">
       {/* Decorative arabesque */}
       <div
         aria-hidden
@@ -74,7 +70,7 @@ export function ShopContent({ locale }: Props) {
       <header className="relative mx-auto max-w-7xl px-5 md:px-10 pt-12 md:pt-16 pb-8 md:pb-12 flex flex-col items-center text-center">
         <div className="flex items-center gap-5 text-gold-deep">
           <span aria-hidden className="block h-px w-12 bg-gold" />
-          <span className="font-display-en text-[12px] tracking-eyebrow uppercase">
+          <span className="text-[13px] font-medium">
             {t('eyebrow')}
           </span>
           <span aria-hidden className="block h-px w-12 bg-gold" />
@@ -89,44 +85,17 @@ export function ShopContent({ locale }: Props) {
         </p>
       </header>
 
-      {/* Filter chips */}
-      <div className="relative mx-auto max-w-7xl px-5 md:px-10 mb-10 md:mb-12 flex flex-wrap items-center justify-center gap-2.5">
-        {ALL_BADGES.map((badge) => {
-          const active = activeBadges.includes(badge);
-          return (
-            <button
-              key={badge}
-              type="button"
-              onClick={() => toggleBadge(badge)}
-              aria-pressed={active}
-              className={`px-4 h-9 inline-flex items-center font-display-en text-[11px] tracking-eyebrow uppercase border transition-colors duration-500 rounded-[2px] ${active ? 'border-gold bg-gold text-ivory' : 'border-gold-deep/40 text-coffee-muted hover:border-gold hover:text-cedar'}`}
-            >
-              {t(`tags.${badge}`)}
-            </button>
-          );
-        })}
-        {activeBadges.length > 0 && (
-          <button
-            type="button"
-            onClick={() => setActiveBadges([])}
-            className="ms-2 font-display-en text-[11px] tracking-eyebrow uppercase text-burgundy hover:text-burgundy-deep transition-colors duration-500"
-          >
-            {t('clearAll')}
-          </button>
-        )}
-      </div>
-
-      {/* Category index — sticky pill nav on desktop */}
+      {/* Category index — sticky, scrolls sideways on phones */}
       <nav
-        aria-label="Categories"
-        className="relative mx-auto max-w-7xl px-5 md:px-10 mb-10 md:mb-14 hidden lg:flex flex-wrap items-center justify-center gap-2 sticky top-[88px] z-30"
+        aria-label={locale === 'ar' ? 'الفئات' : 'קטגוריות'}
+        className="sticky top-16 sm:top-[72px] z-30 mb-10 md:mb-14 bg-ivory/95 backdrop-blur border-y border-hairline"
       >
-        <div className="bg-cream-card border border-gold-deep/30 px-2 py-1.5 flex flex-wrap items-center gap-1 rounded-[2px] shadow-soft backdrop-blur">
+        <div className="mx-auto max-w-7xl px-4 md:px-10 flex gap-2 overflow-x-auto scrollbar-hide py-3 md:justify-center">
           {Array.from(filteredByCategory.keys()).map((category) => (
             <a
               key={category}
               href={`#cat-${category}`}
-              className="font-display-en text-[11px] tracking-eyebrow uppercase text-coffee-muted hover:text-cedar transition-colors duration-500 px-3 py-2"
+              className="shrink-0 h-9 px-4 inline-flex items-center rounded-full border border-hairline bg-cream-card text-[13px] font-medium text-cedar hover:border-gold hover:text-gold-deep transition-colors duration-500 whitespace-nowrap"
             >
               {categoryLabels[category][locale]}
             </a>
@@ -135,7 +104,7 @@ export function ShopContent({ locale }: Props) {
       </nav>
 
       {/* Catalog body */}
-      <div className="relative mx-auto max-w-5xl px-5 md:px-10">
+      <div className="relative mx-auto max-w-7xl px-4 md:px-10">
         {loading && allProducts.length === 0 ? (
           <CatalogSkeleton />
         ) : allProducts.length === 0 ? (
@@ -244,7 +213,7 @@ function CategorySection({ category, items, locale, displayFont }: SectionProps)
   return (
     <section
       id={`cat-${category}`}
-      className="mb-20 md:mb-28 scroll-mt-32"
+      className="mb-16 md:mb-24 scroll-mt-40"
       aria-labelledby={`heading-${category}`}
     >
       {/* Category header */}
@@ -253,27 +222,27 @@ function CategorySection({ category, items, locale, displayFont }: SectionProps)
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true, margin: '-80px' }}
         transition={{ duration: 0.9, ease: easeLuxe }}
-        className="flex flex-col items-center text-center mb-10 md:mb-14"
+        className="flex flex-col items-center text-center mb-8 md:mb-12"
       >
         <div className="flex items-center gap-5 text-gold-deep">
           <span aria-hidden className="block h-px w-12 bg-gold" />
-          <span className="font-display-en text-[11px] tracking-eyebrow uppercase">
+          <span className="text-[12px] md:text-[13px] font-medium">
             {categoryEyebrow[category][locale]}
           </span>
           <span aria-hidden className="block h-px w-12 bg-gold" />
         </div>
         <h2
           id={`heading-${category}`}
-          className={`mt-5 md:mt-6 ${displayFont} font-black tracking-display leading-[1.05] text-cedar text-balance text-3xl md:text-4xl lg:text-5xl`}
+          className={`mt-4 md:mt-5 ${displayFont} font-bold leading-[1.1] text-cedar text-balance text-3xl md:text-4xl lg:text-5xl`}
         >
           {categoryLabels[category][locale]}
         </h2>
       </motion.header>
 
-      {/* Items — Editorial List (vertical, dot-leader feel) */}
-      <div className="border-t border-gold-deep/20">
+      {/* Items — card grid: 2 cols phone, 3 tablet, 4 desktop */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
         {items.map((product, idx) => (
-          <MenuCard key={product.id} product={product} variant="row" index={idx} />
+          <MenuCard key={product.id} product={product} index={idx} />
         ))}
       </div>
     </section>

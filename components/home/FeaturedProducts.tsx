@@ -27,7 +27,7 @@ export function FeaturedProducts({ locale }: Props) {
 
   return (
     <section
-      className="relative overflow-hidden bg-ivory py-12 md:py-20"
+      className="relative overflow-hidden bg-sand py-14 md:py-20"
       aria-labelledby="featured-heading"
     >
       <div aria-hidden className="absolute -top-20 -end-20 w-[600px] h-[600px] text-gold pointer-events-none">
@@ -50,16 +50,7 @@ export function FeaturedProducts({ locale }: Props) {
         />
 
         <div className="mt-12 md:mt-16">
-          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
-            {list.map((product, idx) => (
-              <MenuCard key={product.id} product={product} index={idx} />
-            ))}
-          </div>
-
-          {/* Mobile: 2-column grid (replaces the horizontal-scroll
-              variant that didn't feel right on iPhone). Desktop layout
-              above is untouched. */}
-          <div className="md:hidden grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             {list.map((product, idx) => (
               <MenuCard key={product.id} product={product} index={idx} />
             ))}
@@ -69,7 +60,7 @@ export function FeaturedProducts({ locale }: Props) {
         <div className="mt-12 md:mt-16 flex justify-center">
           <Link
             href="/shop"
-            className="group inline-flex items-center gap-4 font-display-en text-[12px] tracking-eyebrow uppercase text-cedar hover:text-burgundy transition-colors duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+            className="group inline-flex items-center gap-4 text-[15px] font-medium text-cedar hover:text-gold-deep transition-colors duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
           >
             <span>{t('viewAll')}</span>
             <span aria-hidden className="h-px w-12 bg-current transition-[width] duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:w-20" />

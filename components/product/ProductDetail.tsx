@@ -2,16 +2,16 @@
 
 import { useMemo, useState } from 'react';
 import Image from 'next/image';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import type { Locale } from '@/i18n/locales';
 import type { Product } from '@/lib/mockData';
-import { useCart } from '@/store/cart';
+import { whatsappLink } from '@/lib/site';
 import { useProducts } from '@/lib/data/useProducts';
 import { Link } from '@/i18n/navigation';
-import { WeightSelector } from './WeightSelector';
 import { MenuCard } from './MenuCard';
 import { buttonClasses } from '@/components/ui/Button';
+import { categoryLabels } from '@/lib/mockData';
 import { ArabesquePattern } from '@/components/ornaments/ArabesquePattern';
 
 const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
@@ -31,16 +31,7 @@ export function ProductDetail({ product, locale }: Props) {
   const t = useTranslations('Product');
   const displayFont = locale === 'ar' ? 'font-display-ar' : 'font-display-he';
 
-  const isWeighted = product.unit === 'per_kg';
-  const [weight, setWeight] = useState(product.minWeight ?? 0.5);
-  const [openSection, setOpenSection] = useState<string | null>('ingredients');
-
-  const add = useCart((s) => s.add);
-
-  const total = useMemo(() => {
-    if (!isWeighted) return product.price;
-    return product.price * weight;
-  }, [product, weight, isWeighted]);
+  const [openSection, setOpenSection] = useState<string | null>('allergens');
 
   const { products: allProducts } = useProducts();
   const related = useMemo(
@@ -56,21 +47,41 @@ export function ProductDetail({ product, locale }: Props) {
   );
 
   const sections = [
-    { key: 'ingredients', title: t('ingredients'), body: product.ingredients[locale] },
-    { key: 'allergens', title: t('allergens'), body: t('allergensBody') },
-    { key: 'storage', title: t('storage'), body: t('storageBody') },
-    { key: 'prepTime', title: t('prepTime'), body: t('prepTimeBody') },
-  ] as const;
+    product.allergens?.[locale] && {
+      key: 'allergens',
+      title: t('allergens'),
+      body: product.allergens[locale],
+    },
+    product.storage?.[locale] && {
+      key: 'storage',
+      title: t('storage'),
+      body: product.storage[locale],
+    },
+    {
+      key: 'order',
+      title: locale === 'ar' ? 'الطلب والاستلام' : 'הזמנה ואיסוף',
+      body:
+        locale === 'ar'
+          ? 'نحضّر كل طلب طازجاً. يُفضَّل الطلب مسبقاً عبر واتساب أو الهاتف وتنسيق الاستلام من المحل في دالية الكرمل أو التوصيل.'
+          : 'כל הזמנה מוכנה טרייה. מומלץ להזמין מראש בוואטסאפ או בטלפון ולתאם איסוף מהחנות בדלית אל כרמל או משלוח.',
+    },
+  ].filter((x): x is { key: string; title: string; body: string } => Boolean(x));
 
+  const hasPrice = product.price > 0;
   const priceSuffix =
     product.unit === 'per_kg'
       ? locale === 'ar' ? '/ كغ' : '/ ק״ג'
       : product.unit === 'per_piece'
-        ? locale === 'ar' ? '/ قطعة' : '/ מנה'
-        : locale === 'ar' ? '/ علبة' : '/ מארז';
+        ? locale === 'ar' ? '/ قطعة' : '/ יחידה'
+        : locale === 'ar' ? '/ صينية' : '/ מגש';
+
+  const orderMessage =
+    locale === 'ar'
+      ? `مرحباً، أود أن أطلب: ${product.name.ar}`
+      : `שלום, אשמח להזמין: ${product.name.he}`;
 
   return (
-    <article className="relative bg-ivory">
+    <article className="relative overflow-x-clip bg-ivory">
       <div
         aria-hidden
         className="absolute -top-12 -end-24 w-[500px] h-[500px] text-gold pointer-events-none"
@@ -101,7 +112,7 @@ export function ProductDetail({ product, locale }: Props) {
       <div className="relative mx-auto max-w-7xl px-5 md:px-10 pt-10 md:pt-14 pb-16 md:pb-24 grid lg:grid-cols-12 gap-10 lg:gap-16">
         {/* Left — Monogram seal in place of a photo */}
         <div className="lg:col-span-6 order-1">
-          <MonogramSeal product={product} />
+          <MonogramSeal product={product} label={categoryLabels[product.category]?.[locale] ?? ''} />
         </div>
 
         {/* Right — details panel */}
@@ -110,7 +121,7 @@ export function ProductDetail({ product, locale }: Props) {
           <div className="flex flex-wrap gap-2 mb-5">
             {product.badges.includes('bestseller') && <Pill>{t('bestsellerBadge')}</Pill>}
             {product.badges.includes('kosher') && <Pill>{t('kosherBadge')}</Pill>}
-            <Pill>{t('freshBadge')}</Pill>
+            <Pill>{categoryLabels[product.category]?.[locale]}</Pill>
             {product.badges.includes('vegan') && <Pill>{t('veganBadge')}</Pill>}
             {product.badges.includes('seasonal') && (
               <Pill>{locale === 'ar' ? 'موسمي' : 'עונתי'}</Pill>
@@ -118,14 +129,14 @@ export function ProductDetail({ product, locale }: Props) {
           </div>
 
           <h1
-            className={`${displayFont} font-black tracking-display leading-[1.05] text-cedar text-4xl md:text-5xl text-balance`}
+            className={`${displayFont} font-bold leading-[1.1] text-cedar text-4xl md:text-5xl text-balance`}
           >
             {product.name[locale]}
           </h1>
 
           {/* Tasting note — italic gold-deep, the poetic line */}
           <p
-            className={`mt-5 italic ${displayFont} text-lg md:text-xl leading-[1.5] text-gold-deep text-pretty`}
+            className="mt-4 text-[15px] md:text-base font-medium leading-[1.5] text-gold-deep text-pretty"
           >
             {product.tastingNote[locale]}
           </p>
@@ -135,68 +146,40 @@ export function ProductDetail({ product, locale }: Props) {
             {product.description[locale]}
           </p>
 
-          {/* Hairline */}
-          <span aria-hidden className="block h-px w-full bg-hairline mt-8 mb-8" />
-
-          {/* Price label */}
-          <div className="flex items-baseline gap-3">
-            <span className="font-display-en text-[11px] tracking-eyebrow uppercase text-coffee-muted">
-              {isWeighted ? t('priceKgNote') : t('priceUnitNote')}
-            </span>
-            <span className={`${displayFont} text-2xl text-burgundy font-medium`}>
-              ₪{product.price}
-            </span>
+          {/* Price */}
+          <div className="mt-8 flex items-center gap-4">
+            <span aria-hidden className="rule-diamond block w-16" />
+            <p className={`${displayFont} text-2xl md:text-3xl text-gold-deep font-bold`}>
+              {hasPrice ? (
+                <>
+                  ₪{product.price}
+                  <span className="text-base text-coffee-muted font-normal"> {priceSuffix}</span>
+                </>
+              ) : locale === 'ar' ? (
+                'السعر حسب الطلب'
+              ) : (
+                'מחיר לפי הזמנה'
+              )}
+            </p>
           </div>
 
-          {/* Weight selector — only when sold per kg */}
-          {isWeighted && product.minWeight !== undefined && product.weightStep !== undefined && (
-            <>
-              <span aria-hidden className="block h-px w-full bg-hairline mt-8 mb-8" />
-              <WeightSelector
-                weight={weight}
-                onChange={setWeight}
-                min={product.minWeight}
-                max={5}
-                step={product.weightStep}
-              />
-            </>
-          )}
-
-          {/* Live total */}
-          <div className="mt-8 flex items-baseline justify-between">
-            <div>
-              <p className="font-display-en text-[11px] tracking-eyebrow uppercase text-coffee-muted">
-                {t('totalLabel')}
-              </p>
-              <p className="font-display-en text-[10px] tracking-eyebrow uppercase text-coffee-muted/70 mt-1">
-                {isWeighted ? t('totalNote') : t('totalNoteFixed')}
-              </p>
-            </div>
-            <motion.span
-              key={total}
-              initial={{ scale: 1.08, opacity: 0.7 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.5, ease: easeLuxe }}
-              className={`${displayFont} font-black text-4xl text-burgundy tabular-nums`}
-            >
-              ₪{total.toFixed(0)}
-            </motion.span>
-          </div>
-
-          {/* Add to cart */}
-          <button
-            type="button"
-            onClick={() => add(product.id, isWeighted ? weight : 1)}
-            className={buttonClasses({ variant: 'primary', size: 'lg', className: 'w-full mt-8 h-16' })}
+          {/* Order CTA — catalog site: orders go through WhatsApp */}
+          <a
+            href={whatsappLink(orderMessage)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={buttonClasses({ variant: 'primary', size: 'lg', className: 'w-full mt-8 h-14 text-[15px] normal-case tracking-normal' })}
           >
-            {t('addToCart')}
-            <CartBagIcon />
-          </button>
-
-          {/* Freshness note */}
-          <p className="mt-6 font-display-en text-[11px] tracking-eyebrow uppercase text-coffee-muted text-center">
-            {t('freshness', { hours: product.freshnessHours })}
-          </p>
+            <WhatsAppIcon />
+            {locale === 'ar' ? 'للطلب عبر واتساب' : 'להזמנה בוואטסאפ'}
+          </a>
+          <a
+            href="tel:+972525986266"
+            className="mt-3 text-center text-sm text-coffee-muted hover:text-cedar transition-colors duration-500"
+          >
+            {locale === 'ar' ? 'أو اتصلوا: ' : 'או בטלפון: '}
+            <span dir="ltr" className="font-medium">052-5986266</span>
+          </a>
 
           {/* Accordion */}
           <div className="mt-10 border-t border-hairline">
@@ -231,13 +214,7 @@ export function ProductDetail({ product, locale }: Props) {
             </h2>
           </header>
 
-          <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10">
-            {related.map((p, idx) => (
-              <MenuCard key={p.id} product={p} index={idx} />
-            ))}
-          </div>
-          {/* Mobile: 2-col grid (replaces horizontal scroll). */}
-          <div className="md:hidden grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
             {related.map((p, idx) => (
               <MenuCard key={p.id} product={p} index={idx} />
             ))}
@@ -250,29 +227,29 @@ export function ProductDetail({ product, locale }: Props) {
 
 /* ── Monogram seal — the photo-less product identity ─────────────── */
 
-function MonogramSeal({ product }: { product: Product }) {
-  // When the product has a featured image, show it inside the gold frame
-  // (overrides the typographic seal). Falls back to the monogram seal when
-  // no image is uploaded yet.
+function MonogramSeal({ product, label }: { product: Product; label: string }) {
+  // Photo inside a keyhole arch on a sand stage, with a gold hairline
+  // arch set just outside it. Falls back to the typographic seal.
   if (product.image) {
     return (
-      <div className="relative aspect-square max-w-md mx-auto lg:max-w-none">
-        <div className="relative w-full h-full overflow-hidden bg-cream-card border border-gold-deep/40 rounded-[2px] shadow-soft">
-          <Image
-            src={product.image}
-            alt=""
-            fill
-            priority
-            sizes="(min-width: 1024px) 50vw, 90vw"
-            className="object-cover"
-            quality={85}
-          />
+      <div className="relative mx-auto w-full max-w-[520px] bg-sand rounded-[4px] p-6 sm:p-10">
+        <div className="relative">
+          <span aria-hidden className="absolute -inset-2 sm:-inset-3 arch border border-gold/70 pointer-events-none" />
+          <div className="relative aspect-[4/5] arch overflow-hidden bg-white">
+            <Image
+              src={product.image}
+              alt={product.name.he}
+              fill
+              priority
+              sizes="(min-width: 1024px) 40vw, 90vw"
+              className="object-contain p-[10%]"
+              quality={85}
+            />
+          </div>
         </div>
-        {/* Inner hairline 16px inset — keeps the gold frame language */}
-        <span
-          aria-hidden
-          className="absolute inset-4 border border-gold/40 rounded-[2px] pointer-events-none"
-        />
+        {label && (
+          <p className="mt-5 text-center text-[13px] font-medium text-gold-deep">{label}</p>
+        )}
       </div>
     );
   }
@@ -293,7 +270,7 @@ function MonogramSeal({ product }: { product: Product }) {
         </span>
         <span className="mt-6 block h-px w-16 bg-gold-deep/50" aria-hidden />
         <span className="mt-6 font-display-en text-[10px] tracking-[0.4em] uppercase text-gold-deep/70">
-          {product.category.replace(/-/g, ' ')}
+          {label}
         </span>
       </div>
     </div>
@@ -343,7 +320,7 @@ function AccordionItem({
         aria-expanded={isOpen}
         className="w-full flex items-center justify-between py-5 text-start group"
       >
-        <span className="font-display-en text-[12px] tracking-eyebrow uppercase text-cedar group-hover:text-burgundy transition-colors duration-500">
+        <span className="text-[15px] font-medium text-cedar group-hover:text-gold-deep transition-colors duration-500">
           {title}
         </span>
         <motion.span
@@ -371,27 +348,16 @@ function AccordionItem({
 
 function Pill({ children }: { children: React.ReactNode }) {
   return (
-    <span className="px-3 h-7 inline-flex items-center font-display-en text-[11px] tracking-eyebrow uppercase border border-gold-deep/60 text-gold-deep rounded-[2px]">
+    <span className="px-3 h-7 inline-flex items-center text-[12px] font-medium border border-gold-deep/50 text-gold-deep rounded-full">
       {children}
     </span>
   );
 }
 
-function CartBagIcon() {
+function WhatsAppIcon() {
   return (
-    <svg
-      width="16"
-      height="16"
-      viewBox="0 0 16 16"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-    >
-      <path d="M 3 5 L 13 5 L 12 14 L 4 14 Z" />
-      <path d="M 5 5 L 5 3 a 3 3 0 0 1 6 0 L 11 5" />
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+      <path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 21.8c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4C2.7 15.6 2.2 13.8 2.2 12 2.2 6.6 6.6 2.2 12 2.2c2.6 0 5.1 1 6.9 2.9 1.8 1.8 2.9 4.3 2.9 6.9 0 5.4-4.4 9.8-9.8 9.8zm8.3-18.1C18.1 1.5 15.1.3 12 .3 5.5.3.3 5.5.3 12c0 2.1.5 4.1 1.6 5.9L.2 23.7l6-1.6c1.7.9 3.7 1.4 5.7 1.4 6.5 0 11.7-5.2 11.7-11.7 0-3.1-1.2-6.1-3.3-8.1z" />
     </svg>
   );
 }

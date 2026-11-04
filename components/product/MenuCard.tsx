@@ -18,23 +18,13 @@ type Props = {
 };
 
 /**
- * Catalog primitive. No product photo — the SKU monogram is the visual
- * identity. Layout:
- *   ┌──────────────────────────────────────────────────────────────┐
- *   │ [K · N · F]                                       [bestseller]│
- *   │                                                                │
- *   │              כנאפה גבינה קלאסית                                │
- *   │      גבינה רכה · סירופ ורדים · פיסטוק חלבי                    │
- *   │                                                                │
- *   │              ─────────────                                     │
- *   │              ₪160  /  ק"ג                                      │
- *   └──────────────────────────────────────────────────────────────┘
+ * Catalog card — Dubai-boutique style (after Bateel): white card on the
+ * cream page, square white photo stage with the cut-out product inset,
+ * display-serif name, gold diamond rule, price in gold-deep (or "price
+ * on request" while the owner hasn't set one). Hover: border turns gold
+ * and the photo zooms 4% — no lift, no shadow.
  *
- *  – Sharp 2px corners (luxury discipline).
- *  – 1px gold-deep hairline border at 40% opacity, full gold on hover.
- *  – Subtle -4px lift (less than the photo-card -8px; less mass to move).
- *  – Hover: monogram fades from gold/60 to full gold; small directional
- *    chevron appears next to the price.
+ * The `row` variant is kept for compact lists.
  */
 export function MenuCard({ product, index = 0, variant = 'card' }: Props) {
   const locale = useLocale() as Locale;
@@ -51,75 +41,59 @@ export function MenuCard({ product, index = 0, variant = 'card' }: Props) {
 
   return (
     <motion.article
-      initial={{ y: 24, opacity: 0 }}
+      initial={{ y: 16, opacity: 0 }}
       whileInView={{ y: 0, opacity: 1 }}
-      viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 1.0, ease: easeLuxe, delay: index * 0.08 }}
-      className="group relative"
+      viewport={{ once: true, margin: '-60px' }}
+      transition={{ duration: 0.8, ease: easeLuxe, delay: (index % 4) * 0.06 }}
+      className="group relative h-full"
     >
       <Link
         href={`/shop/${product.slug}`}
-        className="block focus:outline-none"
+        className="flex h-full flex-col bg-cream-card border border-hairline group-hover:border-gold transition-colors duration-500 rounded-[4px] overflow-hidden focus:outline-none"
         aria-label={product.name[locale]}
       >
-        <motion.div
-          initial={false}
-          whileHover={{ y: -4 }}
-          transition={{ duration: 0.7, ease: easeLuxe }}
-          className="relative bg-cream-card border border-gold-deep/40 group-hover:border-gold transition-[border-color] duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] rounded-[2px] overflow-hidden flex flex-col min-h-[320px]"
-        >
-          {/* Featured image — when available; falls back to monogram-only header */}
-          {product.image && (
-            <div className="relative aspect-[4/3] bg-ivory overflow-hidden">
-              <Image
-                src={product.image}
-                alt=""
-                fill
-                sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 90vw"
-                className="object-cover transition-transform duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:scale-[1.04]"
-              />
-            </div>
-          )}
-
-          <div className="p-7 md:p-10 flex-1 flex flex-col">
-            {/* Header row: monogram + badge */}
-            <div className="flex items-start justify-between gap-4 mb-6 md:mb-8">
-              <span className="font-display-en text-[10px] md:text-[11px] tracking-[0.3em] uppercase text-gold/70 group-hover:text-gold transition-colors duration-700">
+        {/* Photo — white stage, product inset so every cut-out sits alike */}
+        <div className="relative aspect-square bg-white overflow-hidden">
+          {product.image ? (
+            <Image
+              src={product.image}
+              alt={product.name[locale]}
+              fill
+              sizes="(min-width: 1024px) 25vw, 50vw"
+              className="object-contain p-[6%] transition-transform duration-[400ms] ease-out group-hover:scale-[1.04]"
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="font-display-en text-sm tracking-[0.3em] uppercase text-gold/70">
                 {product.monogram}
               </span>
-              {primaryBadge(product, locale) && (
-                <span className="font-display-en text-[10px] tracking-eyebrow uppercase text-gold-deep border border-gold-deep/40 px-2 py-0.5 rounded-[2px]">
-                  {primaryBadge(product, locale)}
-                </span>
-              )}
             </div>
+          )}
+          {primaryBadge(product, locale) && (
+            <span className="absolute top-3 start-3 px-2.5 h-6 inline-flex items-center rounded-[2px] bg-cedar text-gold-light text-[11px] font-medium">
+              {primaryBadge(product, locale)}
+            </span>
+          )}
+        </div>
 
-            {/* Title + tasting note */}
-            <div className="flex-1 flex flex-col items-start text-start">
-              <h3
-                className={`${displayFont} font-black tracking-display text-cedar text-2xl md:text-[26px] leading-[1.15] text-balance`}
-              >
-                {product.name[locale]}
-              </h3>
-              <p className="mt-3 md:mt-4 italic font-display-en text-[15px] md:text-base leading-[1.55] text-ink/70 text-pretty">
-                {product.tastingNote[locale]}
-              </p>
-            </div>
-
-            {/* Footer row: hairline + price */}
-            <div className="mt-7 md:mt-8 flex items-end justify-between gap-4">
-              <span aria-hidden className="block h-px w-12 bg-gold-deep/40" />
-              <div className="flex items-baseline gap-1.5">
-                <span className="font-display-en text-lg md:text-[20px] text-ink/85 font-medium tabular-nums">
-                  {priceLabel}
-                </span>
-                <span className="font-display-en text-[10px] md:text-[11px] tracking-eyebrow uppercase text-coffee-muted">
-                  {priceSuffix}
-                </span>
-              </div>
-            </div>
+        {/* Text */}
+        <div className="flex flex-1 flex-col items-center text-center px-3 sm:px-5 pt-4 sm:pt-5 pb-5 sm:pb-6">
+          <h3
+            className={`${displayFont} font-bold text-cedar text-[17px] sm:text-xl leading-[1.2] text-balance`}
+          >
+            {product.name[locale]}
+          </h3>
+          <p className="mt-1.5 text-[12px] sm:text-[13px] leading-snug text-coffee-muted line-clamp-2 text-pretty min-h-[2.5em]">
+            {product.tastingNote[locale]}
+          </p>
+          <div className="mt-auto pt-4 flex flex-col items-center">
+            <span aria-hidden className="rule-diamond block w-20" />
+            <p className="mt-3 text-[13px] sm:text-sm font-medium text-gold-deep">
+              {priceLabel}
+              {priceSuffix && <span className="text-coffee-muted font-normal"> {priceSuffix}</span>}
+            </p>
           </div>
-        </motion.div>
+        </div>
       </Link>
     </motion.article>
   );
@@ -200,23 +174,25 @@ function CatalogRow({ product, index, locale, displayFont, priceLabel, priceSuff
 /* ── helpers ──────────────────────────────────────────────────────── */
 
 function formatPrice(product: Product, locale: Locale): string {
+  if (!product.price) return locale === 'ar' ? 'السعر حسب الطلب' : 'מחיר לפי הזמנה';
   return `₪${product.price}`;
 }
 
 function formatPriceSuffix(product: Product, locale: Locale): string {
+  if (!product.price) return '';
   switch (product.unit) {
     case 'per_kg':
       return locale === 'ar' ? '/ كغ' : '/ ק״ג';
     case 'per_piece':
-      return locale === 'ar' ? '/ قطعة' : '/ מנה';
+      return locale === 'ar' ? '/ قطعة' : '/ יחידה';
     case 'per_box':
-      return locale === 'ar' ? '/ علبة' : '/ מארז';
+      return locale === 'ar' ? '/ صينية' : '/ מגש';
   }
 }
 
 function primaryBadge(product: Product, locale: Locale): string | null {
   if (product.badges.includes('bestseller')) {
-    return locale === 'ar' ? 'الأكثر مبيعاً' : 'מומלץ';
+    return locale === 'ar' ? 'الأكثر طلباً' : 'הכי מבוקש';
   }
   if (product.badges.includes('new')) {
     return locale === 'ar' ? 'جديد' : 'חדש';

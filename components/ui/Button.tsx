@@ -2,7 +2,7 @@ import { forwardRef } from 'react';
 import type { ComponentPropsWithoutRef, ReactNode } from 'react';
 import { cn } from '@/lib/cn';
 
-export type ButtonVariant = 'primary' | 'outline' | 'ghost';
+export type ButtonVariant = 'primary' | 'gold' | 'outline' | 'ghost';
 export type ButtonSize = 'md' | 'lg';
 
 const sizeMap: Record<ButtonSize, string> = {
@@ -12,7 +12,9 @@ const sizeMap: Record<ButtonSize, string> = {
 
 const variantMap: Record<ButtonVariant, string> = {
   primary:
-    'bg-burgundy text-ivory border border-burgundy hover:bg-burgundy-deep hover:border-gold focus-visible:bg-burgundy-deep',
+    'bg-cedar text-ivory border border-cedar hover:bg-cedar-light hover:border-gold focus-visible:bg-cedar-light',
+  gold:
+    'bg-gold text-cedar border border-gold hover:bg-gold-light hover:border-gold-light focus-visible:bg-gold-light',
   outline:
     'bg-transparent text-ivory border border-gold-light/70 hover:border-gold hover:bg-gold/10 focus-visible:border-gold',
   ghost:
@@ -20,7 +22,7 @@ const variantMap: Record<ButtonVariant, string> = {
 };
 
 const baseClasses =
-  'inline-flex items-center justify-center gap-3 font-display-en tracking-eyebrow uppercase rounded-xs transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] select-none whitespace-nowrap';
+  'inline-flex items-center justify-center gap-3 font-medium tracking-eyebrow uppercase rounded-xs transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] select-none whitespace-nowrap';
 
 /**
  * Returns the brand button classes. Apply directly to <Link> from

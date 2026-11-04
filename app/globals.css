@@ -15,28 +15,28 @@
      Surfaces are always warm cream; no #FFFFFF. Dark sections lean
      on cedar + burgundy. Gold is the antique-leaf hue, not neon. */
 
-  --color-ivory: #F5EDE0;          /* main page background — parchment */
-  --color-sand: #EBE0CF;           /* section variation — sand */
-  --color-cream-card: #FFFBF5;     /* pure cream — elevated cards on ivory */
+  --color-ivory: #F6F0E6;          /* main page background — parchment */
+  --color-sand: #EBE4DA;           /* section variation — sand */
+  --color-cream-card: #FFFFFF;     /* product cards — white so cut-out photos blend in */
 
-  --color-cedar: #1C3A2E;          /* deep forest — header / dark sections */
-  --color-cedar-deep: #12251C;     /* hero photo edge stop, deepest grade */
-  --color-cedar-light: #2D5244;    /* sage on dark backgrounds */
+  --color-cedar: #14231E;          /* deep forest — header / dark sections */
+  --color-cedar-deep: #0C1713;     /* hero photo edge stop, deepest grade */
+  --color-cedar-light: #1F4D3F;    /* sage on dark backgrounds */
   --color-ink: #2A2622;            /* body paragraph on cream (lower chroma) */
 
-  --color-gold: #C9A66B;           /* antique gold — primary accent */
-  --color-gold-light: #E3D5B7;     /* champagne — hover / highlights */
-  --color-gold-deep: #9D7E54;      /* bronze — borders */
+  --color-gold: #C3A477;           /* antique gold — primary accent */
+  --color-gold-light: #E6D6B8;     /* champagne — hover / highlights */
+  --color-gold-deep: #9C7A45;      /* bronze — borders */
 
   --color-burgundy: #6B2735;       /* deep wine — primary CTA */
   --color-burgundy-deep: #4A1B25;  /* mahogany — pressed / hover */
 
-  --color-pistachio: #9FAF88;      /* muted green accent */
+  --color-pistachio: #93A55B;      /* muted green accent */
   --color-copper: #B87654;         /* rose gold detail */
 
   --color-coffee: #2A1F15;         /* body text on cream */
   --color-coffee-muted: #6B5A47;   /* muted body on cream */
-  --color-hairline: #DCC9A5;       /* warm hairline borders on cream */
+  --color-hairline: #E5D5C6;       /* warm hairline borders on cream */
 
   /* ── Shadows ─────────────────────────────────────────────────────
      Tuned exactly to the spec. Card hover lifts with burgundy ghost. */
@@ -215,3 +215,42 @@ html.a11y-no-motion *::after {
   scroll-behavior: auto !important;
 }
 
+
+/* ==================================================================
+   Dubai-boutique motifs
+   ================================================================== */
+
+/* Letter-spacing breaks Arabic joining and looks loose in Hebrew —
+   the wide "eyebrow" tracking is for Latin text only. */
+html[lang="ar"] .tracking-eyebrow,
+html[lang="ar"] [class*="tracking-["] { letter-spacing: 0 !important; }
+html[lang="he"] .tracking-eyebrow { letter-spacing: 0.06em; }
+
+/* Keyhole arch — rectangle crowned by a half circle. */
+@utility arch {
+  border-radius: 999px 999px 0 0;
+}
+
+/* Khatam (8-point star) tile — gold hairline, for dark sections only. */
+@utility pattern-khatam {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cg fill='none' stroke='%23C3A477' stroke-width='0.75'%3E%3Crect x='18' y='18' width='36' height='36'/%3E%3Crect x='18' y='18' width='36' height='36' transform='rotate(45 36 36)'/%3E%3Ccircle cx='36' cy='36' r='6'/%3E%3Cpath d='M0 0 L10 10 M72 0 L62 10 M0 72 L10 62 M72 72 L62 62'/%3E%3C/g%3E%3C/svg%3E");
+  background-size: 72px 72px;
+}
+
+/* Gold rule with a centred diamond. */
+@utility rule-diamond {
+  position: relative;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--color-gold) 20%, var(--color-gold) 80%, transparent);
+  &::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 7px;
+    height: 7px;
+    background: var(--color-ivory);
+    border: 1px solid var(--color-gold);
+    transform: translate(-50%, -50%) rotate(45deg);
+  }
+}

@@ -25,6 +25,7 @@ export async function Story({ locale }: Props) {
 
   return (
     <section
+      id="story"
       className="relative overflow-hidden bg-sand py-12 md:py-20"
       aria-labelledby="story-heading"
     >
@@ -135,7 +136,7 @@ export async function Story({ locale }: Props) {
           {/* CTA */}
           <div className="mt-8 md:mt-10">
             <Link
-              href="/about"
+              href="/shop"
               className="group inline-flex items-center gap-4 font-display-en text-[12px] tracking-eyebrow uppercase text-cedar hover:text-burgundy transition-colors duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
             >
               <span>{t('cta')}</span>

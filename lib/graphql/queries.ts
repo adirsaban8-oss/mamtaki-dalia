@@ -21,15 +21,30 @@ export const PRODUCT_FIELDS = gql`
     name
     shortDescription
     description
+    menuOrder
     ... on SimpleProduct {
-      price
-      regularPrice
+      price(format: RAW)
+      regularPrice(format: RAW)
       stockStatus
+      attributes {
+        nodes {
+          name
+          label
+          options
+        }
+      }
     }
     ... on VariableProduct {
-      price
-      regularPrice
+      price(format: RAW)
+      regularPrice(format: RAW)
       stockStatus
+      attributes {
+        nodes {
+          name
+          label
+          options
+        }
+      }
     }
     featuredImage {
       node {
@@ -60,7 +75,10 @@ export const PRODUCT_FIELDS = gql`
 /** Full catalog — used by /shop and homepage Featured. */
 export const PRODUCTS_QUERY = gql`
   query GetProducts($first: Int = 100) {
-    products(first: $first, where: { status: "publish" }) {
+    products(
+      first: $first
+      where: { status: "publish", orderby: [{ field: MENU_ORDER, order: ASC }] }
+    ) {
       nodes {
         ...ProductFields
       }

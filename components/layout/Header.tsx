@@ -7,7 +7,7 @@ import { Link } from '@/i18n/navigation';
 import type { Locale } from '@/i18n/locales';
 import { Wordmark } from '@/components/ornaments/Wordmark';
 import { LanguageSwitcher } from './LanguageSwitcher';
-import { CartIcon } from './CartIcon';
+import { whatsappLink } from '@/lib/site';
 
 type Props = {
   /**
@@ -50,9 +50,8 @@ export function Header({ overHero = true }: Props) {
 
   const navItems = [
     { href: '/shop', label: t('shop') },
-    { href: '/about', label: t('story') },
-    { href: '/gallery', label: t('gallery') },
-    { href: '/contact', label: t('contact') },
+    { href: '/#story', label: t('story') },
+    { href: '#contact', label: t('contact') },
   ];
 
   return (
@@ -74,7 +73,7 @@ export function Header({ overHero = true }: Props) {
             <Link
               key={item.href}
               href={item.href}
-              className={`relative font-display-en text-[11px] tracking-eyebrow uppercase transition-colors duration-500 ${navLinkColor} after:content-[''] after:absolute after:-bottom-2 after:left-1/2 after:w-0 after:h-px after:bg-gold after:transition-[width] after:duration-500 after:-translate-x-1/2 hover:after:w-6`}
+              className={`relative text-[15px] font-medium transition-colors duration-500 ${navLinkColor} after:content-[''] after:absolute after:-bottom-2 after:left-1/2 after:w-0 after:h-px after:bg-gold after:transition-[width] after:duration-500 after:-translate-x-1/2 hover:after:w-6`}
             >
               {item.label}
             </Link>
@@ -85,7 +84,15 @@ export function Header({ overHero = true }: Props) {
         <div className="flex items-center gap-1 sm:gap-4 md:gap-6 shrink-0">
           <LanguageSwitcher variant={onDark ? 'light' : 'dark'} />
           <span aria-hidden className={`hidden md:block h-5 w-px ${onDark ? 'bg-ivory/30' : 'bg-hairline'}`} />
-          <CartIcon variant={onDark ? 'light' : 'dark'} />
+          <a
+            href={whatsappLink()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`inline-flex items-center gap-2 h-9 sm:h-10 px-3 sm:px-4 border rounded-[2px] text-[12px] sm:text-[13px] font-medium transition-colors duration-500 ${onDark ? 'border-gold/60 text-gold-light hover:bg-gold hover:text-cedar' : 'border-cedar/30 text-cedar hover:bg-cedar hover:text-ivory'}`}
+          >
+            <WhatsAppIcon />
+            <span className="hidden sm:inline">{locale === 'ar' ? 'للطلبات' : 'להזמנות'}</span>
+          </a>
 
           {/* Mobile menu trigger — slightly smaller on phone */}
           <button
@@ -129,7 +136,7 @@ export function Header({ overHero = true }: Props) {
               key={item.href}
               href={item.href}
               onClick={() => setMenuOpen(false)}
-              className="font-display-en text-sm tracking-eyebrow uppercase text-cedar hover:text-burgundy transition-colors"
+              className="text-lg font-medium text-cedar hover:text-gold-deep transition-colors"
             >
               {item.label}
             </Link>
@@ -137,5 +144,13 @@ export function Header({ overHero = true }: Props) {
         </nav>
       </motion.div>
     </motion.header>
+  );
+}
+
+function WhatsAppIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+      <path d="M17.5 14.4c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6l.4-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2.2c-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.8.4-.3.3-1 1-1 2.4s1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.6-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4-.1-.1-.3-.2-.6-.3zM12 21.8c-1.8 0-3.5-.5-5-1.4l-.4-.2-3.7 1 1-3.6-.2-.4C2.7 15.6 2.2 13.8 2.2 12 2.2 6.6 6.6 2.2 12 2.2c2.6 0 5.1 1 6.9 2.9 1.8 1.8 2.9 4.3 2.9 6.9 0 5.4-4.4 9.8-9.8 9.8zm8.3-18.1C18.1 1.5 15.1.3 12 .3 5.5.3.3 5.5.3 12c0 2.1.5 4.1 1.6 5.9L.2 23.7l6-1.6c1.7.9 3.7 1.4 5.7 1.4 6.5 0 11.7-5.2 11.7-11.7 0-3.1-1.2-6.1-3.3-8.1z" />
+    </svg>
   );
 }

@@ -5,8 +5,8 @@ import { Ticker } from '@/components/home/Ticker';
 import { FeaturedProducts } from '@/components/home/FeaturedProducts';
 import { Story } from '@/components/home/Story';
 import { ValueProps } from '@/components/home/ValueProps';
-import { Testimonials } from '@/components/home/Testimonials';
-import { Newsletter } from '@/components/home/Newsletter';
+import { CategoryArches } from '@/components/home/CategoryArches';
+import { OrderBand } from '@/components/home/OrderBand';
 import { Footer } from '@/components/layout/Footer';
 import type { Locale } from '@/i18n/locales';
 
@@ -19,12 +19,12 @@ export default async function HomePage({ params }: PageProps<'/[locale]'>) {
       <Header overHero />
       <main className="flex-1">
         <Hero />
+        <CategoryArches />
         <Ticker />
         <FeaturedProducts locale={locale as Locale} />
         <Story locale={locale as Locale} />
         <ValueProps />
-        <Testimonials />
-        <Newsletter />
+        <OrderBand />
       </main>
       <Footer locale={locale as Locale} />
     </>

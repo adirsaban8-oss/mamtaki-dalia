@@ -1,8 +1,9 @@
-import type {
-  Product,
-  ProductCategory,
-  ProductBadge,
-  PricingUnit,
+import {
+  categoryLabels,
+  type Product,
+  type ProductCategory,
+  type ProductBadge,
+  type PricingUnit,
 } from '@/lib/mockData';
 import { deriveMonogram } from '@/store/catalog';
 
@@ -31,8 +32,10 @@ type WPProductNode = {
   name?: string | null;
   shortDescription?: string | null;
   description?: string | null;
+  menuOrder?: number | null;
   price?: string | null;
   regularPrice?: string | null;
+  attributes?: { nodes?: Array<{ name?: string | null; label?: string | null; options?: string[] | null }> | null } | null;
   stockStatus?: 'IN_STOCK' | 'OUT_OF_STOCK' | 'ON_BACKORDER' | null;
   featuredImage?: { node?: WPImage | null } | null;
   galleryImages?: { nodes?: WPImage[] | null } | null;
@@ -45,20 +48,33 @@ const CATEGORY_SLUG_MAP: Record<string, ProductCategory> = {
   knafeh: 'kanafeh',
   כנאפה: 'kanafeh',
   baklava: 'baklava',
+  בקלאווה: 'baklava',
   בקלאוה: 'baklava',
-  'beirut-nights': 'beirut-nights',
-  לילות: 'beirut-nights',
-  maamoul: 'maamoul',
-  מעמול: 'maamoul',
-  halawa: 'halawa',
-  חלאוה: 'halawa',
-  awameh: 'awameh',
-  עוואמה: 'awameh',
-  'ice-cream': 'ice-cream',
-  גלידה: 'ice-cream',
-  'gift-boxes': 'gift-boxes',
-  מארזים: 'gift-boxes',
+  trays: 'trays',
+  מגשים: 'trays',
+  'fruit-desserts': 'fruit-desserts',
+  'קינוחי-פירות': 'fruit-desserts',
+  cakes: 'cakes',
+  עוגות: 'cakes',
+  frozen: 'frozen',
+  'ice-cream': 'frozen',
+  קפואים: 'frozen',
 };
+
+/** Categories may also be matched by their display name (he / ar), so
+ *  the owner can create them in WordPress without typing English slugs. */
+const CATEGORY_BY_NAME: Record<string, ProductCategory> = Object.fromEntries(
+  (Object.entries(categoryLabels) as [ProductCategory, { he: string; ar: string }][]).flatMap(
+    ([cat, label]) => [
+      [label.he, cat],
+      [label.ar, cat],
+    ]
+  )
+);
+
+/** WooCommerce attribute names (any language) that feed the product page. */
+const ALLERGEN_ATTRS = ['allergens', 'אלרגנים', 'מידע על אלרגנים'];
+const STORAGE_ATTRS = ['storage', 'אחסנה', 'דרך אחסנה'];
 
 const TAG_TO_BADGE: Record<string, ProductBadge> = {
   bestseller: 'bestseller',
@@ -92,8 +108,14 @@ export function mapWPProduct(node: WPProductNode): Product {
   const tagSlugs = (node.productTags?.nodes ?? []).map((t) => t.slug.toLowerCase());
   const categorySlugs = (node.productCategories?.nodes ?? []).map((c) => c.slug.toLowerCase());
 
+  const categoryNames = (node.productCategories?.nodes ?? []).map((c) => c.name.trim());
   const category =
-    categorySlugs.map((s) => CATEGORY_SLUG_MAP[s]).find(Boolean) ?? 'kanafeh';
+    categorySlugs.map((s) => CATEGORY_SLUG_MAP[decodeSlug(s)]).find(Boolean) ??
+    categoryNames.map((n) => CATEGORY_BY_NAME[n]).find(Boolean) ??
+    'kanafeh';
+
+  const allergens = readAttribute(node, ALLERGEN_ATTRS);
+  const storage = readAttribute(node, STORAGE_ATTRS);
 
   const unit = tagSlugs.map((t) => TAG_TO_UNIT[t]).find(Boolean) ?? 'per_kg';
 
@@ -130,7 +152,25 @@ export function mapWPProduct(node: WPProductNode): Product {
     confirmed: true,
     image,
     gallery,
+    allergens: allergens ? { he: allergens, ar: allergens } : undefined,
+    storage: storage ? { he: storage, ar: storage } : undefined,
   };
+}
+
+/** WordPress percent-encodes non-Latin slugs (e.g. Hebrew category slugs). */
+function decodeSlug(slug: string): string {
+  try {
+    return decodeURIComponent(slug);
+  } catch {
+    return slug;
+  }
+}
+
+function readAttribute(node: WPProductNode, names: string[]): string {
+  const attr = (node.attributes?.nodes ?? []).find((a) =>
+    [a.name, a.label].some((n) => n && names.includes(n.trim().toLowerCase()))
+  );
+  return (attr?.options ?? []).map((o) => o.trim()).filter(Boolean).join(', ');
 }
 
 export function mapWPProducts(nodes: WPProductNode[] = []): Product[] {

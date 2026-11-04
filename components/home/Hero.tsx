@@ -5,177 +5,124 @@ import { motion } from 'framer-motion';
 import { useLocale, useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { buttonClasses } from '@/components/ui/Button';
-import { GoldDivider } from '@/components/ornaments/GoldDivider';
-import { ScrollCue } from '@/components/ornaments/ScrollCue';
-import { ArabesquePattern } from '@/components/ornaments/ArabesquePattern';
+import { whatsappLink } from '@/lib/site';
 import type { Locale } from '@/i18n/locales';
 
 const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 
-/**
- * Photo: dark moody knafeh / copper-tray hero. Swap to an owned shot
- * by dropping a JPG at /public/images/hero-knafeh.jpg and rendering
- * <Hero useLocalImage />.
- *
- * Spec asks for "knafeh copper tray dark" — Unsplash IDs are placeholder.
- * If this 404s, the cedar→burgundy gradient still carries the section.
- */
-// To replace: drop a 2400×1600+ JPG at /public/images/hero-knafeh.jpg
-// and either flip `useLocalImage` or set NEXT_PUBLIC_USE_LOCAL_HERO=true.
-//
-// Content-verified via Unsplash search: a display case of Middle-Eastern
-// sweets — the on-brand atmosphere for a Druze confectionery hero.
-const HERO_IMAGE_REMOTE =
-  'https://plus.unsplash.com/premium_photo-1731953242985-7bf6e2b1fb78?w=2400&q=85&auto=format&fit=crop';
-const HERO_IMAGE_LOCAL = '/images/hero-knafeh.jpg';
+/** Signature product shown in the hero arch (white-background cut-out). */
+const HERO_PRODUCT_IMAGE = '/products/kanafeh-by-weight.webp';
 
-export function Hero({ useLocalImage = false }: { useLocalImage?: boolean }) {
+/**
+ * Hero — Dubai-boutique split layout (after Bateel / Hafiz Mustafa):
+ * deep ink field with a faint gold khatam tile, headline + CTAs on the
+ * reading side, and one signature product inside a keyhole arch with a
+ * gold hairline arch set just outside it. No carousel.
+ */
+export function Hero() {
   const locale = useLocale() as Locale;
   const t = useTranslations('Hero');
-
   const displayFont = locale === 'ar' ? 'font-display-ar' : 'font-display-he';
 
   return (
     <section
-      className="relative isolate w-full min-h-[100svh] flex items-center overflow-hidden bg-cedar text-ivory"
+      className="relative isolate overflow-hidden bg-cedar text-ivory"
       aria-label="Hero"
     >
-      {/* ── Photographic background ─────────────────────────────────
-         Slow Ken Burns drift — 22s, ease-in-out, reversing. */}
-      <motion.div
-        initial={{ scale: 1.08, x: '1%', y: '1%' }}
-        animate={{ scale: 1.18, x: '-2%', y: '-1%' }}
-        transition={{ duration: 24, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' }}
-        className="absolute inset-0 -z-30"
-      >
-        <Image
-          src={useLocalImage ? HERO_IMAGE_LOCAL : HERO_IMAGE_REMOTE}
-          alt=""
-          fill
-          priority
-          quality={90}
-          sizes="100vw"
-          className="object-cover"
-        />
-      </motion.div>
-
-      {/* ── Radial overlay (cedar → burgundy) — deep & moody ─────────
-         Calibrated to guarantee a luxury feel regardless of the photo
-         underneath. The image becomes a textural underlay, not a focal
-         point. */}
+      {/* Khatam tile — 7% so it reads as texture, never as pattern noise */}
+      <div aria-hidden className="absolute inset-0 -z-10 pattern-khatam opacity-[0.07]" />
+      {/* Soft emerald glow behind the arch */}
       <div
         aria-hidden
-        className="absolute inset-0 -z-20"
+        className="absolute inset-0 -z-10"
         style={{
           background:
-            'radial-gradient(circle at 50% 45%, rgba(28,58,46,0.62) 0%, rgba(28,58,46,0.82) 45%, rgba(74,27,37,0.92) 100%)',
+            'radial-gradient(60% 70% at 28% 55%, rgba(31,77,63,0.55) 0%, transparent 70%)',
         }}
       />
 
-      {/* Deep cedar base — guarantees jewel-tone even on a bright photo */}
-      <div aria-hidden className="absolute inset-0 -z-20 bg-cedar/65 mix-blend-multiply" />
-      {/* Burgundy edges — subtle warm rim for depth */}
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-20 pointer-events-none"
-        style={{
-          background:
-            'radial-gradient(100% 100% at 50% 50%, transparent 55%, rgba(74,27,37,0.50) 100%)',
-        }}
-      />
-
-      {/* ── Arabesque ornament — 5% opacity, top-right & bottom-left ── */}
-      <div aria-hidden className="absolute -top-24 -end-24 w-[600px] h-[600px] text-gold-light pointer-events-none">
-        <ArabesquePattern opacity={0.05} className="absolute inset-0" />
-      </div>
-      <div aria-hidden className="absolute -bottom-24 -start-24 w-[600px] h-[600px] text-gold-light pointer-events-none">
-        <ArabesquePattern opacity={0.05} className="absolute inset-0" />
-      </div>
-
-      {/* ── Vignette ─────────────────────────────────────────────── */}
-      <div
-        aria-hidden
-        className="absolute inset-0 -z-10 pointer-events-none"
-        style={{
-          background:
-            'radial-gradient(120% 80% at 50% 50%, transparent 40%, rgba(28,46,31,0.45) 100%)',
-        }}
-      />
-
-      {/* ── Content ─────────────────────────────────────────────────
-         Centered, generous vertical rhythm. Each child enters with
-         its own delay (400 / 550 / 700 / 1000 ms) per spec. */}
-      <div className="relative z-10 mx-auto max-w-7xl w-full px-5 md:px-10 pt-24 pb-16 md:pt-32 md:pb-24 flex flex-col items-center text-center">
-        {/* Eyebrow */}
-        <motion.div
-          initial={{ y: 16, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1.2, delay: 0.2, ease: easeLuxe }}
-          className="flex items-center gap-3 sm:gap-5 mb-8 md:mb-12 max-w-full"
-        >
-          <GoldDivider className="!w-6 sm:!w-10 shrink-0" />
-          <span className="font-display-en text-[10px] sm:text-[11px] md:text-[12px] tracking-eyebrow uppercase text-gold-light/95 whitespace-nowrap">
-            {t('eyebrow')}
-          </span>
-          <GoldDivider className="!w-6 sm:!w-10 shrink-0" />
-        </motion.div>
-
-        {/* Headline — black weight 900, mighty scale, text-shadow.
-           Each line is whitespace-nowrap so the Hebrew title never
-           breaks per-word (e.g. "דלית אל כרמל" stays on one line). */}
-        <h1
-          className={`${displayFont} font-black tracking-display leading-[1.05] text-shadow-hero text-center`}
-        >
-          <motion.span
-            initial={{ y: 80, opacity: 0 }}
+      <div className="mx-auto max-w-7xl px-5 md:px-10 pt-28 pb-16 md:pt-36 md:pb-24 grid lg:grid-cols-12 items-center gap-12 lg:gap-16">
+        {/* Copy — first in DOM so it sits on the reading (right) side in RTL */}
+        <div className="lg:col-span-6 flex flex-col items-center lg:items-start text-center lg:text-start">
+          <motion.div
+            initial={{ y: 12, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 1.4, delay: 0.4, ease: easeLuxe }}
-            className="block whitespace-nowrap text-[2.5rem] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-ivory"
+            transition={{ duration: 0.9, delay: 0.2, ease: easeLuxe }}
+            className="flex items-center gap-4 text-gold"
           >
-            {t('titleLine1')}
-          </motion.span>
-          <motion.span
-            initial={{ y: 80, opacity: 0 }}
+            <span aria-hidden className="block h-px w-10 bg-gold" />
+            <span className="text-[13px] font-medium text-gold-light">{t('eyebrow')}</span>
+          </motion.div>
+
+          <motion.h1
+            initial={{ y: 24, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 1.4, delay: 0.55, ease: easeLuxe }}
-            className="block whitespace-nowrap text-[2.5rem] sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl text-gold mt-1 md:mt-3"
+            transition={{ duration: 1.1, delay: 0.3, ease: easeLuxe }}
+            className={`mt-6 ${displayFont} font-bold leading-[1.08] text-balance`}
           >
-            {t('titleLine2')}
-          </motion.span>
-        </h1>
+            <span className="block text-[2.6rem] sm:text-6xl lg:text-7xl text-ivory">{t('titleLine1')}</span>
+            <span className="block text-[2.6rem] sm:text-6xl lg:text-7xl text-gold mt-1">{t('titleLine2')}</span>
+          </motion.h1>
 
-        {/* Subheading */}
-        <motion.p
-          initial={{ y: 40, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1.4, delay: 0.7, ease: easeLuxe }}
-          className="mt-8 md:mt-12 max-w-2xl text-base sm:text-lg md:text-xl leading-relaxed text-ivory/85 text-pretty text-shadow-hero"
-        >
-          {t('subtitle')}
-        </motion.p>
+          <motion.p
+            initial={{ y: 16, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1.1, delay: 0.45, ease: easeLuxe }}
+            className="mt-6 md:mt-8 max-w-xl text-base sm:text-lg leading-relaxed text-ivory/80 text-pretty"
+          >
+            {t('subtitle')}
+          </motion.p>
 
-        {/* CTAs — stack on phones, side-by-side from sm up */}
+          <motion.div
+            initial={{ y: 16, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 1.1, delay: 0.6, ease: easeLuxe }}
+            className="mt-9 md:mt-11 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full max-w-sm sm:max-w-none sm:w-auto"
+          >
+            <Link
+              href="/shop"
+              className={buttonClasses({ variant: 'gold', size: 'lg', className: 'normal-case tracking-normal text-[15px]' })}
+            >
+              {t('ctaShop')}
+              <Arrow />
+            </Link>
+            <a
+              href={whatsappLink()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={buttonClasses({ variant: 'outline', size: 'lg', className: 'normal-case tracking-normal text-[15px]' })}
+            >
+              {t('ctaStory')}
+            </a>
+          </motion.div>
+        </div>
+
+        {/* Arch — signature product on a sand stage */}
         <motion.div
-          initial={{ y: 32, opacity: 0 }}
+          initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1.4, delay: 1.0, ease: easeLuxe }}
-          className="mt-10 md:mt-14 flex flex-col sm:flex-row items-stretch sm:items-center justify-center gap-3 sm:gap-x-8 lg:gap-x-12 w-full max-w-sm sm:max-w-none"
+          transition={{ duration: 1.3, delay: 0.25, ease: easeLuxe }}
+          className="lg:col-span-6 flex justify-center"
         >
-          <Link href="/shop" className={buttonClasses({ variant: 'primary', size: 'lg' })}>
-            {t('ctaShop')}
-            <Arrow />
-          </Link>
-          <Link href="/about" className={buttonClasses({ variant: 'outline', size: 'lg' })}>
-            {t('ctaStory')}
-          </Link>
+          <div className="relative w-[78%] max-w-[420px] sm:w-[60%] lg:w-full">
+            <span aria-hidden className="absolute -inset-3 sm:-inset-4 arch border border-gold/60" />
+            <span aria-hidden className="absolute -inset-6 sm:-inset-8 arch border border-gold/20" />
+            <div className="relative aspect-[4/5] arch overflow-hidden bg-white">
+              <Image
+                src={HERO_PRODUCT_IMAGE}
+                alt={locale === 'ar' ? 'كنافة' : 'כנאפה'}
+                fill
+                priority
+                sizes="(min-width: 1024px) 420px, 70vw"
+                className="object-contain p-[8%] pt-[18%]"
+              />
+            </div>
+          </div>
         </motion.div>
       </div>
 
-      {/* Scroll cue — vertical line above text "גלול למטה" */}
-      <ScrollCue
-        label={t('scrollCue')}
-        className="absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2"
-      />
+      {/* Gold baseline */}
+      <span aria-hidden className="absolute bottom-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-gold/60 to-transparent" />
     </section>
   );
 }

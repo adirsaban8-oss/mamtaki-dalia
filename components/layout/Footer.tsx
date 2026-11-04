@@ -19,9 +19,8 @@ export function Footer({ locale }: Props) {
   const navLinks = [
     { href: '/' as const, label: t('home') },
     { href: '/shop' as const, label: t('shop') },
-    { href: '/about' as const, label: t('story') },
-    { href: '/gallery' as const, label: t('gallery') },
-    { href: '/contact' as const, label: t('contact') },
+    { href: '/#story' as const, label: t('story') },
+    { href: '#contact' as const, label: t('contact') },
   ];
 
   const infoLinks = [
@@ -30,10 +29,11 @@ export function Footer({ locale }: Props) {
     { label: t('kosher'), href: '#' },
     { label: t('terms'), href: '#' },
     { label: t('privacy'), href: '#' },
+    { label: locale === 'ar' ? 'حقوق الصور' : 'קרדיט לתמונות', href: `/${locale}/credits` },
   ];
 
   return (
-    <footer className="relative bg-cedar text-ivory pt-14 md:pt-20 pb-10 overflow-hidden">
+    <footer id="contact" className="relative bg-cedar text-ivory pt-14 md:pt-20 pb-10 overflow-hidden">
       {/* Subtle arabesque corners */}
       <div aria-hidden className="absolute -top-24 -start-24 w-[500px] h-[500px] text-gold-light pointer-events-none">
         <ArabesquePattern opacity={0.04} className="absolute inset-0" />
@@ -82,7 +82,7 @@ export function Footer({ locale }: Props) {
               {orderedCategories.map((cat) => (
                 <li key={cat}>
                   <Link
-                    href="/shop"
+                    href={`/shop#cat-${cat}`}
                     className="text-[11px] sm:text-sm text-ivory/70 hover:text-gold-light transition-colors duration-500 block leading-snug"
                   >
                     {categoryLabels[cat][locale]}

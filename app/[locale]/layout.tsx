@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import {
   Frank_Ruhl_Libre,
-  Heebo,
-  Reem_Kufi,
-  Tajawal,
+  IBM_Plex_Sans_Hebrew,
+  Amiri,
+  IBM_Plex_Sans_Arabic,
   Cormorant_Garamond,
   Inter,
 } from 'next/font/google';
@@ -13,7 +13,6 @@ import { notFound } from 'next/navigation';
 
 import '../globals.css';
 import { locales, type Locale } from '@/i18n/locales';
-import { CartDrawer } from '@/components/cart/CartDrawer';
 import { ApolloProvider } from '@/components/providers/ApolloProvider';
 import { AccessibilityFAB } from '@/components/layout/AccessibilityFAB';
 
@@ -24,23 +23,26 @@ const frank = Frank_Ruhl_Libre({
   display: 'swap',
 });
 
-const heebo = Heebo({
+// Body: IBM Plex Sans Hebrew + Arabic share one design, so mixed
+// Hebrew/Arabic text keeps the same colour and rhythm.
+const plexHebrew = IBM_Plex_Sans_Hebrew({
   subsets: ['hebrew', 'latin'],
-  weight: ['300', '400', '500', '700'],
+  weight: ['300', '400', '500', '600', '700'],
   variable: '--font-heebo',
   display: 'swap',
 });
 
-const reem = Reem_Kufi({
+// Arabic display: classical Naskh, the Arabic counterpart of Frank Ruhl.
+const amiri = Amiri({
   subsets: ['arabic', 'latin'],
-  weight: ['400', '500', '700'],
+  weight: ['400', '700'],
   variable: '--font-reem',
   display: 'swap',
 });
 
-const tajawal = Tajawal({
+const plexArabic = IBM_Plex_Sans_Arabic({
   subsets: ['arabic', 'latin'],
-  weight: ['300', '400', '500', '700'],
+  weight: ['300', '400', '500', '600', '700'],
   variable: '--font-tajawal',
   display: 'swap',
 });
@@ -65,7 +67,7 @@ export const metadata: Metadata = {
     template: '%s · ממתקי דלית אל כרמל',
   },
   description:
-    'מורשת של ארבעה דורות. כנאפה, בקלאוה ולילות ביירות, מעשה ידי המשפחה בלב הכרמל הדרוזי. משלוחים לכל הארץ.',
+    'קטלוג ממתקי דלית אל כרמל: כנאפה, בקלאווה ופיסטוק חלבי, מגשי לילות ביירות, קינוחים ועוגות — מעשה ידי המשפחה בלב הכרמל.',
   applicationName: 'Mamtaki Dalia',
   authors: [{ name: 'Abu Hassan & Family' }],
   openGraph: {
@@ -95,9 +97,9 @@ export default async function LocaleLayout({
       dir="rtl"
       className={[
         frank.variable,
-        heebo.variable,
-        reem.variable,
-        tajawal.variable,
+        plexHebrew.variable,
+        amiri.variable,
+        plexArabic.variable,
         cormorant.variable,
         inter.variable,
         'h-full antialiased',
@@ -107,7 +109,6 @@ export default async function LocaleLayout({
         <NextIntlClientProvider locale={locale as Locale}>
           <ApolloProvider>
             {children}
-            <CartDrawer />
             <AccessibilityFAB />
           </ApolloProvider>
         </NextIntlClientProvider>

@@ -20,12 +20,10 @@ export type Translated = Record<Locale, string>;
 export type ProductCategory =
   | 'kanafeh'
   | 'baklava'
-  | 'beirut-nights'
-  | 'maamoul'
-  | 'halawa'
-  | 'awameh'
-  | 'ice-cream'
-  | 'gift-boxes';
+  | 'trays'
+  | 'fruit-desserts'
+  | 'cakes'
+  | 'frozen';
 
 export type ProductBadge = 'kosher' | 'bestseller' | 'new' | 'vegan' | 'seasonal';
 
@@ -50,41 +48,39 @@ export type Product = {
   confirmed: boolean;
   image?: string;
   gallery?: string[];
+  /** Allergen list as shown to the customer, e.g. "חלב, חמאה, אגוזים, גלוטן". */
+  allergens?: Translated;
+  /** Storage & serving instructions. */
+  storage?: Translated;
 };
 
 /* ─── Category labels & eyebrows ─────────────────────────────────── */
 
 export const categoryLabels: Record<ProductCategory, Translated> = {
   kanafeh: { he: 'כנאפה', ar: 'كنافة' },
-  baklava: { he: 'בקלאוה', ar: 'بقلاوة' },
-  'beirut-nights': { he: 'לילות ביירות', ar: 'ليالي بيروت' },
-  maamoul: { he: 'מעמול וקינוחי חמאה', ar: 'معمول وحلويات الزبدة' },
-  halawa: { he: 'חלאוה וקינוחי טחינה', ar: 'حلاوة وحلويات الطحينة' },
-  awameh: { he: 'עוואמה ומטוגנים', ar: 'عوامة والمقليات' },
-  'ice-cream': { he: 'גלידות מקומיות', ar: 'مثلجات محلية' },
-  'gift-boxes': { he: 'מארזי שי', ar: 'علب هدايا' },
+  baklava: { he: 'בקלאווה ומאפי פילו', ar: 'بقلاوة ومعجنات الفيلو' },
+  trays: { he: 'מגשי קינוחים', ar: 'صواني الحلويات' },
+  'fruit-desserts': { he: 'קינוחי פירות', ar: 'حلويات الفواكه' },
+  cakes: { he: 'עוגות וקינוחים אישיים', ar: 'كعكات وحلويات فردية' },
+  frozen: { he: 'ארטיקים וקפואים', ar: 'مثلجات' },
 };
 
 export const categoryEyebrow: Record<ProductCategory, Translated> = {
-  kanafeh: { he: 'הסיגנציה של הבית · מאז 1985', ar: 'توقيع البيت · منذ ١٩٨٥' },
-  baklava: { he: 'שכבות פילו, עבודת יד', ar: 'طبقات فيلو، صناعة يدوية' },
-  'beirut-nights': { he: 'קינוחים קרים, אשתא ופיסטוק', ar: 'حلويات باردة، قشطة وفستق' },
-  maamoul: { he: 'תבניות עץ מסורתיות', ar: 'قوالب خشب تقليدية' },
-  halawa: { he: 'טחינה גולמית, חבטות יד', ar: 'طحينة خام، دق يدوي' },
-  awameh: { he: 'מטוגנים בחמאה צלולה', ar: 'مقلية بالسمن الصافي' },
-  'ice-cream': { he: 'ביתי, יומי, פרי הכרמל', ar: 'بيتي، يومي، من ثمار الكرمل' },
-  'gift-boxes': { he: 'נארזים ביד, נשלחים לכל הארץ', ar: 'تُعبَّأ يدوياً، تُشحن لكل البلاد' },
+  kanafeh: { he: 'הסיגנציה של הבית', ar: 'توقيع البيت' },
+  baklava: { he: 'שכבות פילו, פיסטוק חלבי, עבודת יד', ar: 'طبقات فيلو، فستق حلبي، صناعة يدوية' },
+  trays: { he: 'מגשים לאירוח ולשמחות', ar: 'صواني للضيافة والمناسبات' },
+  'fruit-desserts': { he: 'קרם קטיפתי ופירות טריים', ar: 'كريمة مخملية وفواكه طازجة' },
+  cakes: { he: 'לרגעים המתוקים של החיים', ar: 'للحظات الحلوة في الحياة' },
+  frozen: { he: 'מרעננים, ביתיים, מהמקפיא', ar: 'منعشة، بيتية، من الثلاجة' },
 };
 
 export const orderedCategories: ProductCategory[] = [
   'kanafeh',
   'baklava',
-  'beirut-nights',
-  'maamoul',
-  'halawa',
-  'awameh',
-  'ice-cream',
-  'gift-boxes',
+  'trays',
+  'fruit-desserts',
+  'cakes',
+  'frozen',
 ];
 
 /* ─── Testimonials ────────────────────────────────────────────────── */
