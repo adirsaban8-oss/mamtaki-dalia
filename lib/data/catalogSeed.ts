@@ -62,6 +62,9 @@ const FREEZER: Translated = {
 };
 
 const DAIRY_NUTS_GLUTEN = 'חלב, חמאה, אגוזים, גלוטן';
+/** Cakes & choux: the sheet left these blank — eggs added on purpose
+ *  (better to over-warn). Owner should confirm. */
+const CAKE = 'חלב, חמאה, ביצים, גלוטן · עשוי להכיל אגוזים';
 
 const SEEDS: Seed[] = [
   // ── כנאפה ──────────────────────────────────────────────────────────
@@ -89,6 +92,8 @@ const SEEDS: Seed[] = [
       he: 'כנאפה בתבנית אישית, מוכנה לחימום על המנגל או בתנור — חמה, נמתחת ומוגשת ישר מהאש.',
       ar: 'كنافة في صينية فردية، جاهزة للتسخين على الشواية أو في الفرن — ساخنة ومطاطية وتُقدَّم مباشرة من النار.',
     },
+    allergens: DAIRY_NUTS_GLUTEN,
+    storage: FRIDGE,
   },
 
   // ── בקלאווה ומאפי פילו ─────────────────────────────────────────────
@@ -116,6 +121,8 @@ const SEEDS: Seed[] = [
       he: 'בקלאווה בסגנון טורקי, דקה ופריכה, עם שכבה נדיבה של פיסטוק חלבי.',
       ar: 'بقلاوة على الطريقة التركية، رقيقة ومقرمشة، مع طبقة سخية من الفستق الحلبي.',
     },
+    allergens: DAIRY_NUTS_GLUTEN,
+    storage: FRIDGE,
   },
   {
     slug: 'bird-nest-baklava',
@@ -128,6 +135,8 @@ const SEEDS: Seed[] = [
       he: 'קן הציפור הוא בצק קדאיף ממולא בפיסטוק חלבי שלם.',
       ar: 'عش البلبل هو عجينة قطايف محشوة بالفستق الحلبي الكامل.',
     },
+    allergens: DAIRY_NUTS_GLUTEN,
+    storage: FRIDGE,
   },
   {
     slug: 'fatir-by-weight',
@@ -165,6 +174,8 @@ const SEEDS: Seed[] = [
       he: 'רולדות בצק בקלאווה במילוי כפול של פיסטוק חלבי וקרם מלבי.',
       ar: 'لفائف من عجينة البقلاوة بحشوة مزدوجة من الفستق الحلبي وكريمة المهلبية.',
     },
+    allergens: DAIRY_NUTS_GLUTEN,
+    storage: FRIDGE,
   },
 
   // ── מגשי קינוחים ───────────────────────────────────────────────────
@@ -218,6 +229,8 @@ const SEEDS: Seed[] = [
       he: 'עוגת סולת ספוגה במי סוכר.',
       ar: 'كعكة سميد منقوعة بالقطر.',
     },
+    allergens: DAIRY_NUTS_GLUTEN,
+    storage: FRIDGE,
   },
 
   // ── קינוחי פירות ───────────────────────────────────────────────────
@@ -245,6 +258,7 @@ const SEEDS: Seed[] = [
       ar: 'حلوى فواكه منعشة أساسها المانجو والكريمة.',
     },
     storage: FREEZER,
+    allergens: 'חלב, חמאה, אגוזים · ללא גלוטן',
   },
   {
     slug: 'fruit-dessert-raspberry',
@@ -257,6 +271,7 @@ const SEEDS: Seed[] = [
       ar: 'حلوى فواكه منعشة أساسها توت العليق والكريمة.',
     },
     storage: FREEZER,
+    allergens: 'חלב, חמאה, אגוזים · ללא גלוטן',
   },
   {
     slug: 'fruit-dessert-pistachio',
@@ -269,6 +284,7 @@ const SEEDS: Seed[] = [
       ar: 'حلوى فردية من كريمة الفستق الحلبي الغنية والمخملية.',
     },
     storage: FREEZER,
+    allergens: 'חלב, חמאה, אגוזים · ללא גלוטן',
   },
 
   // ── עוגות וקינוחים אישיים ─────────────────────────────────────────
@@ -283,6 +299,7 @@ const SEEDS: Seed[] = [
       ar: 'كعكة شوكولاتة فردية محشوة بشوكولاتة الحليب الذائبة.',
     },
     storage: FREEZER,
+    allergens: CAKE,
   },
   {
     slug: 'lava-cake-white-chocolate',
@@ -295,6 +312,7 @@ const SEEDS: Seed[] = [
       ar: 'كعكة شوكولاتة فردية محشوة بالشوكولاتة البيضاء الذائبة.',
     },
     storage: FREEZER,
+    allergens: CAKE,
   },
   {
     slug: 'profiteroles',
@@ -307,6 +325,7 @@ const SEEDS: Seed[] = [
       ar: 'بروفيترول هشة بحشوة سخية من كريمة الباتسيير.',
     },
     storage: FREEZER,
+    allergens: CAKE,
   },
   {
     slug: 'birthday-cake',
@@ -319,10 +338,11 @@ const SEEDS: Seed[] = [
       ar: 'كعكة عيد ميلاد مستطيلة واحتفالية. الأحجام والتصميم حسب الطلب.',
     },
     storage: FREEZER,
+    allergens: CAKE,
   },
   {
     slug: 'cake-26cm',
-    category: 'cakes',
+    category: 'frozen',
     unit: 'per_piece',
     name: { he: 'עוגה בקוטר 26 ס״מ', ar: 'كعكة بقطر ٢٦ سم' },
     note: { he: 'עוגה עגולה לאירוח', ar: 'كعكة دائرية للضيافة' },
@@ -331,6 +351,7 @@ const SEEDS: Seed[] = [
       ar: 'كعكة طبقات دائرية بقطر ٢٦ سم — مناسبة للضيافة والمناسبات.',
     },
     storage: FREEZER,
+    allergens: CAKE,
   },
 
   // ── ארטיקים וקפואים ───────────────────────────────────────────────
@@ -345,6 +366,7 @@ const SEEDS: Seed[] = [
       ar: 'بوظة منعشة على عصا بنكهات متنوعة.',
     },
     storage: { he: 'לשמור במקפיא.', ar: 'تُحفظ في الفريزر.' },
+    allergens: 'חלב',
   },
 ];
 
@@ -375,6 +397,8 @@ function translateAllergens(he: string): string {
     .replace('חלב', 'حليب')
     .replace('חמאה', 'زبدة')
     .replace('אגוזים', 'مكسرات')
+    .replace('ביצים', 'بيض')
+    .replace('עשוי להכיל אגוזים', 'قد يحتوي على مكسرات')
     .replace('ללא גלוטן', 'خالٍ من الغلوتين')
     .replace('גלוטן', 'غلوتين');
 }
