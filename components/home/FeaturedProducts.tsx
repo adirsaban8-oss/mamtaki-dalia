@@ -60,7 +60,7 @@ export function FeaturedProducts({ locale }: Props) {
         <div className="mt-12 md:mt-16 flex justify-center">
           <Link
             href="/shop"
-            className="group inline-flex items-center gap-4 text-[15px] font-medium text-cedar hover:text-gold-deep transition-colors duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+            className="group inline-flex items-center gap-4 text-[15px] font-medium text-heading hover:text-gold-deep transition-colors duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
           >
             <span>{t('viewAll')}</span>
             <span aria-hidden className="h-px w-12 bg-current transition-[width] duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] group-hover:w-20" />

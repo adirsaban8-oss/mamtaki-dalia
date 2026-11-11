@@ -202,7 +202,7 @@ export function CheckoutForm({ locale }: Props) {
           <span aria-hidden className="block h-px w-12 bg-gold" />
         </div>
         <h1
-          className={`mt-6 ${displayFont} font-black text-[2.5rem] md:text-5xl lg:text-6xl text-cedar tracking-display leading-[1.05]`}
+          className={`mt-6 ${displayFont} font-black text-[2.5rem] md:text-5xl lg:text-6xl text-heading tracking-display leading-[1.05]`}
         >
           {t('title')}
         </h1>
@@ -356,7 +356,7 @@ export function CheckoutForm({ locale }: Props) {
         {/* RIGHT — order summary (sticky on desktop) */}
         <aside className="lg:sticky lg:top-28 self-start">
           <div className="bg-cream-card border border-gold-deep/40 rounded-[2px] p-6 md:p-8">
-            <h2 className={`${displayFont} font-black text-xl md:text-2xl text-cedar tracking-display mb-5`}>
+            <h2 className={`${displayFont} font-black text-xl md:text-2xl text-heading tracking-display mb-5`}>
               {t('orderSummary')}
             </h2>
 
@@ -372,7 +372,7 @@ export function CheckoutForm({ locale }: Props) {
                 <ul className="divide-y divide-hairline">
                   {lineRows.map((row) => (
                     <li key={row.id} className="py-3 flex items-baseline justify-between gap-3 text-sm">
-                      <span className="text-cedar leading-tight">
+                      <span className="text-heading leading-tight">
                         {row.name}
                         <span className="ms-2 text-coffee-muted">×{row.qty}</span>
                       </span>
@@ -400,7 +400,7 @@ export function CheckoutForm({ locale }: Props) {
                     </p>
                   )}
                   <div className="flex justify-between pt-3 border-t border-hairline mt-3 items-baseline">
-                    <dt className={`${displayFont} text-lg text-cedar`}>{t('total')}</dt>
+                    <dt className={`${displayFont} text-lg text-heading`}>{t('total')}</dt>
                     <dd className={`${displayFont} font-black text-2xl text-burgundy tabular-nums`}>
                       ₪{total.toFixed(0)}
                     </dd>
@@ -454,9 +454,9 @@ function buildCustomerNote(form: FormState, locale: Locale): string {
 }
 
 const inputClass =
-  'w-full h-12 px-4 bg-cream-card border border-gold-deep/40 text-cedar text-[15px] focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors duration-300 rounded-[2px]';
+  'w-full h-12 px-4 bg-cream-card border border-gold-deep/40 text-heading text-[15px] focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors duration-300 rounded-[2px]';
 const textareaClass =
-  'w-full px-4 py-3 bg-cream-card border border-gold-deep/40 text-cedar text-[15px] focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors duration-300 rounded-[2px] leading-relaxed';
+  'w-full px-4 py-3 bg-cream-card border border-gold-deep/40 text-heading text-[15px] focus:outline-none focus:border-gold focus:ring-1 focus:ring-gold transition-colors duration-300 rounded-[2px] leading-relaxed';
 
 function Section({
   title,
@@ -470,7 +470,7 @@ function Section({
   return (
     <section>
       <h2
-        className={`${displayFont} font-black text-xl md:text-[22px] text-cedar tracking-display mb-5 pb-3 border-b border-gold-deep/20`}
+        className={`${displayFont} font-black text-xl md:text-[22px] text-heading tracking-display mb-5 pb-3 border-b border-gold-deep/20`}
       >
         {title}
       </h2>
@@ -532,13 +532,13 @@ function PaymentOption({
         className="mt-1 accent-gold"
       />
       {icon && (
-        <span className="shrink-0 w-10 h-10 inline-flex items-center justify-center border border-gold-deep/30 rounded-[2px] bg-cream-card text-cedar">
+        <span className="shrink-0 w-10 h-10 inline-flex items-center justify-center border border-gold-deep/30 rounded-[2px] bg-cream-card text-heading">
           {icon}
         </span>
       )}
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-3 flex-wrap">
-          <span className="text-cedar font-medium">{title}</span>
+          <span className="text-heading font-medium">{title}</span>
           {badge && (
             <span className="px-2 py-0.5 text-[10px] tracking-eyebrow uppercase font-display-en bg-sand text-coffee-muted rounded-[2px]">
               {badge}

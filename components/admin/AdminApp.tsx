@@ -37,7 +37,7 @@ export function AdminApp({ tab, locale }: Props) {
   };
 
   if (!hydrated) {
-    return <div className="min-h-screen bg-ivory" />;
+    return <div className="min-h-screen bg-page" />;
   }
 
   if (!authed) {
@@ -45,7 +45,7 @@ export function AdminApp({ tab, locale }: Props) {
   }
 
   return (
-    <div className="min-h-screen bg-ivory">
+    <div className="min-h-screen bg-page">
       <AdminHeader locale={locale} active={tab} onLogout={onLogout} />
       <main className="mx-auto max-w-7xl px-5 md:px-10 py-10 md:py-14">
         <AnimatePresence mode="wait">
@@ -127,7 +127,7 @@ function AdminGate({ locale, onSuccess }: { locale: Locale; onSuccess: () => voi
               setPin(e.target.value);
               setError(false);
             }}
-            className={`w-full h-14 px-4 bg-ivory border ${error ? 'border-burgundy' : 'border-gold-deep/40'} text-cedar font-display-en text-2xl tracking-[0.5em] text-center focus:outline-none focus:border-gold transition-colors duration-300 rounded-[2px]`}
+            className={`w-full h-14 px-4 bg-page border ${error ? 'border-burgundy' : 'border-gold-deep/40'} text-heading font-display-en text-2xl tracking-[0.5em] text-center focus:outline-none focus:border-gold transition-colors duration-300 rounded-[2px]`}
             maxLength={6}
             placeholder="••••"
           />
@@ -184,7 +184,7 @@ function AdminHeader({
           >
             {locale === 'ar' ? 'عرض الموقع' : 'הצג את האתר'}
           </Link>
-          <span aria-hidden className="h-4 w-px bg-ivory/20" />
+          <span aria-hidden className="h-4 w-px bg-page/20" />
           <button
             type="button"
             onClick={onLogout}

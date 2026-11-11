@@ -79,7 +79,7 @@ export function MenuCard({ product, index = 0, variant = 'card' }: Props) {
         {/* Text */}
         <div className="flex flex-1 flex-col items-center text-center px-3 sm:px-5 pt-4 sm:pt-5 pb-5 sm:pb-6">
           <h3
-            className={`${displayFont} font-bold text-cedar text-[17px] sm:text-xl leading-[1.2] text-balance`}
+            className={`${displayFont} font-bold text-heading text-[17px] sm:text-xl leading-[1.2] text-balance`}
           >
             {product.name[locale]}
           </h3>
@@ -127,7 +127,7 @@ function CatalogRow({ product, index, locale, displayFont, priceLabel, priceSuff
           {/* Thumb — featured image if available; monogram otherwise.
               Smaller on phones so the name column gets enough width. */}
           {product.image ? (
-            <div className="relative w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-ivory border border-gold-deep/30 rounded-[2px] overflow-hidden shrink-0">
+            <div className="relative w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-page border border-gold-deep/30 rounded-[2px] overflow-hidden shrink-0">
               <Image
                 src={product.image}
                 alt=""
@@ -145,7 +145,7 @@ function CatalogRow({ product, index, locale, displayFont, priceLabel, priceSuff
           {/* Name + tasting note */}
           <div className="min-w-0">
             <h3
-              className={`${displayFont} font-bold tracking-display text-cedar text-base sm:text-xl md:text-2xl leading-tight`}
+              className={`${displayFont} font-bold tracking-display text-heading text-base sm:text-xl md:text-2xl leading-tight`}
             >
               {product.name[locale]}
             </h3>
@@ -180,6 +180,7 @@ function formatPrice(product: Product, locale: Locale): string {
 
 function formatPriceSuffix(product: Product, locale: Locale): string {
   if (!product.price) return '';
+  if (product.unitLabel) return `/ ${product.unitLabel[locale]}`;
   switch (product.unit) {
     case 'per_kg':
       return locale === 'ar' ? '/ كغ' : '/ ק״ג';

@@ -105,7 +105,7 @@ export default async function LocaleLayout({
         'h-full antialiased',
       ].join(' ')}
     >
-      <body className="min-h-full flex flex-col bg-ivory text-coffee">
+      <body className="min-h-full flex flex-col bg-page text-coffee">
         <NextIntlClientProvider locale={locale as Locale}>
           <ApolloProvider>
             {children}

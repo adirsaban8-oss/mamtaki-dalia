@@ -153,7 +153,7 @@ export function OrdersBoard({ locale }: Props) {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder={locale === 'ar' ? 'بحث: اسم، رقم، هاتف' : 'חיפוש: שם, מספר, טלפון'}
-            className="h-11 px-4 bg-cream-card border border-gold-deep/40 text-cedar text-sm focus:outline-none focus:border-gold transition-colors duration-300 rounded-[2px] w-full md:w-72"
+            className="h-11 px-4 bg-cream-card border border-gold-deep/40 text-heading text-sm focus:outline-none focus:border-gold transition-colors duration-300 rounded-[2px] w-full md:w-72"
           />
           <button
             type="button"
@@ -179,7 +179,7 @@ export function OrdersBoard({ locale }: Props) {
       <section className="space-y-5">
         {filtered.length === 0 ? (
           <div className="bg-cream-card border border-gold-deep/30 rounded-[2px] py-16 text-center">
-            <p className={`${displayFont} text-xl text-cedar`}>
+            <p className={`${displayFont} text-xl text-heading`}>
               {locale === 'ar' ? 'لا توجد طلبات في هذا الفلتر' : 'אין הזמנות במצב זה'}
             </p>
           </div>
@@ -218,7 +218,7 @@ function SummaryTile({
 }) {
   const accentClass =
     accent === 'cedar'
-      ? 'text-cedar'
+      ? 'text-heading'
       : accent === 'burgundy'
         ? 'text-burgundy'
         : accent === 'gold'
@@ -248,7 +248,7 @@ function FilterTab({ label, active, count, onClick }: { label: string; active: b
     <button
       type="button"
       onClick={onClick}
-      className={`px-4 md:px-5 h-11 inline-flex items-center gap-2 font-display-en text-[11px] tracking-eyebrow uppercase transition-colors duration-500 ${active ? 'bg-cedar text-ivory' : 'text-coffee-muted hover:text-cedar'}`}
+      className={`px-4 md:px-5 h-11 inline-flex items-center gap-2 font-display-en text-[11px] tracking-eyebrow uppercase transition-colors duration-500 ${active ? 'bg-cedar text-ivory' : 'text-coffee-muted hover:text-heading'}`}
     >
       <span>{label}</span>
       <span className={`tabular-nums ${active ? 'text-gold-light' : 'text-gold-deep/60'}`}>
@@ -312,10 +312,10 @@ function OrderCard({
           <p className="font-display-en text-[10px] tracking-eyebrow uppercase text-coffee-muted">
             {locale === 'ar' ? 'رقم الطلب' : 'מספר הזמנה'}
           </p>
-          <p className={`${displayFont} font-black text-3xl text-cedar tabular-nums mt-1`}>
+          <p className={`${displayFont} font-black text-3xl text-heading tabular-nums mt-1`}>
             #{order.orderNumber}
           </p>
-          <p className={`mt-5 ${displayFont} font-black text-xl text-cedar leading-tight`}>
+          <p className={`mt-5 ${displayFont} font-black text-xl text-heading leading-tight`}>
             {order.customerName}
           </p>
           <div className="mt-2 flex items-center gap-3">
@@ -347,7 +347,7 @@ function OrderCard({
           <ul className="mt-3 space-y-2">
             {order.items.map((item, idx) => (
               <li key={idx} className="flex items-baseline justify-between gap-3 text-sm">
-                <span className={`${displayFont} text-cedar`}>
+                <span className={`${displayFont} text-heading`}>
                   {item.productName}
                   <span className="ms-2 text-coffee-muted">×{item.quantity} {item.unitLabel}</span>
                 </span>
@@ -379,7 +379,7 @@ function OrderCard({
           <p className="font-display-en text-[10px] tracking-eyebrow uppercase text-coffee-muted">
             {locale === 'ar' ? 'التوصيل' : 'משלוח'}
           </p>
-          <p className={`mt-3 ${displayFont} text-cedar font-medium leading-snug`}>
+          <p className={`mt-3 ${displayFont} text-heading font-medium leading-snug`}>
             {order.deliveryAddress}
           </p>
           <p className="mt-3 font-display-en text-[12px] tracking-eyebrow uppercase text-ink/70">
@@ -406,7 +406,7 @@ function OrderCard({
           <button
             type="button"
             onClick={onMarkSent}
-            className="w-full h-14 bg-pistachio hover:bg-pistachio/85 text-cedar font-display-en text-sm tracking-eyebrow uppercase rounded-[2px] transition-colors duration-500 flex items-center justify-center gap-3"
+            className="w-full h-14 bg-pistachio hover:bg-pistachio/85 text-heading font-display-en text-sm tracking-eyebrow uppercase rounded-[2px] transition-colors duration-500 flex items-center justify-center gap-3"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
               <path d="M 4 12 L 10 18 L 20 6" />

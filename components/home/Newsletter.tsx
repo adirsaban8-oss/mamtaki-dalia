@@ -82,7 +82,7 @@ export function Newsletter() {
               }}
               placeholder={t('placeholder')}
               aria-label={t('placeholder')}
-              className={`flex-1 h-14 px-5 bg-ivory text-cedar text-base placeholder:text-coffee-muted/60 focus:outline-none focus:ring-2 focus:ring-gold transition-all duration-300 rounded-[2px] border ${error ? 'border-gold ring-2 ring-gold' : 'border-transparent'}`}
+              className={`flex-1 h-14 px-5 bg-page text-heading text-base placeholder:text-coffee-muted/60 focus:outline-none focus:ring-2 focus:ring-gold transition-all duration-300 rounded-[2px] border ${error ? 'border-gold ring-2 ring-gold' : 'border-transparent'}`}
             />
             <button
               type="submit"

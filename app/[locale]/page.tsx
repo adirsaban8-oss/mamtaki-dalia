@@ -2,7 +2,6 @@ import { setRequestLocale } from 'next-intl/server';
 import { Header } from '@/components/layout/Header';
 import { Hero } from '@/components/home/Hero';
 import { Ticker } from '@/components/home/Ticker';
-import { FeaturedProducts } from '@/components/home/FeaturedProducts';
 import { Story } from '@/components/home/Story';
 import { ValueProps } from '@/components/home/ValueProps';
 import { CategoryArches } from '@/components/home/CategoryArches';
@@ -21,7 +20,6 @@ export default async function HomePage({ params }: PageProps<'/[locale]'>) {
         <Hero />
         <CategoryArches />
         <Ticker />
-        <FeaturedProducts locale={locale as Locale} />
         <Story locale={locale as Locale} />
         <ValueProps />
         <OrderBand />

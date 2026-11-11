@@ -100,7 +100,7 @@ export function AccessibilityFAB() {
         onClick={() => setOpen((v) => !v)}
         aria-label={t('open')}
         aria-expanded={open}
-        className="fixed start-4 bottom-4 z-[55] w-12 h-12 sm:w-14 sm:h-14 inline-flex items-center justify-center bg-cedar text-gold-light hover:bg-burgundy hover:text-ivory transition-colors duration-500 rounded-full shadow-deep border border-gold/40"
+        className="fixed start-4 bottom-4 z-[55] w-12 h-12 sm:w-14 sm:h-14 inline-flex items-center justify-center bg-cedar border border-gold/50 text-gold-light hover:bg-gold hover:text-black transition-colors duration-500 rounded-full shadow-deep border border-gold/40"
       >
         <AccessibilityIcon />
       </button>
@@ -127,7 +127,7 @@ export function AccessibilityFAB() {
               className="fixed start-4 bottom-20 sm:bottom-24 z-[60] w-72 bg-cream-card border border-gold-deep/40 rounded-[2px] shadow-deep p-5"
             >
               <header className="flex items-center justify-between mb-4">
-                <h2 className="font-display-en text-[11px] tracking-eyebrow uppercase text-cedar">
+                <h2 className="font-display-en text-[11px] tracking-eyebrow uppercase text-heading">
                   {t('title')}
                 </h2>
                 <button
@@ -154,7 +154,7 @@ export function AccessibilityFAB() {
                         key={step}
                         type="button"
                         onClick={() => update({ textScale: step })}
-                        className={`h-9 inline-flex items-center justify-center transition-colors duration-300 ${active ? 'bg-cedar text-ivory' : 'bg-cream-card text-cedar hover:bg-sand'}`}
+                        className={`h-9 inline-flex items-center justify-center transition-colors duration-300 ${active ? 'bg-cedar text-ivory' : 'bg-cream-card text-heading hover:bg-sand'}`}
                         style={{ fontSize: step === 0 ? '13px' : step === 1 ? '15px' : '17px' }}
                       >
                         A
@@ -216,7 +216,7 @@ function Toggle({
 }) {
   return (
     <label className="flex items-center justify-between py-2 cursor-pointer">
-      <span className="text-sm text-cedar">{label}</span>
+      <span className="text-sm text-heading">{label}</span>
       <button
         type="button"
         role="switch"

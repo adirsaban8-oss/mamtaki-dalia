@@ -28,7 +28,7 @@ export function CategoryArches() {
   const displayFont = locale === 'ar' ? 'font-display-ar' : 'font-display-he';
 
   return (
-    <section className="relative bg-ivory py-14 md:py-20" aria-labelledby="categories-heading">
+    <section className="relative bg-page py-14 md:py-20" aria-labelledby="categories-heading">
       <div className="mx-auto max-w-7xl px-5 md:px-10">
         <header className="flex flex-col items-center text-center mb-10 md:mb-14">
           <span className="text-[13px] font-medium text-gold-deep">
@@ -36,7 +36,7 @@ export function CategoryArches() {
           </span>
           <h2
             id="categories-heading"
-            className={`mt-3 ${displayFont} font-bold text-cedar text-3xl md:text-5xl leading-[1.1] text-balance`}
+            className={`mt-3 ${displayFont} font-bold text-heading text-3xl md:text-5xl leading-[1.1] text-balance`}
           >
             {locale === 'ar' ? 'من مطبخنا' : 'מהמטבח שלנו'}
           </h2>
@@ -69,7 +69,7 @@ export function CategoryArches() {
                     />
                   </div>
                 </div>
-                <p className={`mt-5 ${displayFont} font-bold text-cedar text-base md:text-lg leading-tight group-hover:text-gold-deep transition-colors duration-500`}>
+                <p className={`mt-5 ${displayFont} font-bold text-heading text-base md:text-lg leading-tight group-hover:text-gold-deep transition-colors duration-500`}>
                   {categoryLabels[category][locale]}
                 </p>
               </Link>

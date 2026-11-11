@@ -17,7 +17,7 @@ export function Wordmark({ locale, variant = 'dark', size = 'md' }: Props) {
   const t = useTranslations('Brand');
 
   const colorMark = variant === 'light' ? 'text-gold-light' : 'text-gold';
-  const colorName = variant === 'light' ? 'text-ivory' : 'text-cedar';
+  const colorName = variant === 'light' ? 'text-ivory' : 'text-heading';
   const colorTagline = variant === 'light' ? 'text-gold-light/80' : 'text-coffee-muted';
 
   const nameSize =

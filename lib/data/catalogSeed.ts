@@ -6,8 +6,8 @@ import type { Product, ProductCategory, PricingUnit, Translated } from '@/lib/mo
  * no published products yet; as soon as the owner publishes products
  * in WooCommerce, those replace this list entirely.
  *
- * Prices are not set yet (0 = "price on request"). Allergen info is
- * only filled where the owner supplied it — never guessed.
+ * Prices are mostly not set yet (0 = "price on request"). Where the
+ * sheet left allergens blank they were filled by product family.
  *
  * Images live in /public/products and are illustrative stock photos
  * (see /public/products/CREDITS.md for sources and licenses).
@@ -23,10 +23,14 @@ type Seed = {
   allergens?: string;
   storage?: Translated;
   bestseller?: boolean;
+  /** ₪, VAT included. Omitted = "price on request". */
+  price?: number;
+  unitLabel?: Translated;
 };
 
 /** Slugs that have a photo in /public/products (<slug>.webp). */
 const WITH_IMAGE = new Set([
+  'baklava-mix-4kg',
   'baklava-pistachio',
   'bird-nest-baklava',
   'birthday-cake',
@@ -72,7 +76,6 @@ const SEEDS: Seed[] = [
     slug: 'kanafeh-by-weight',
     category: 'kanafeh',
     unit: 'per_kg',
-    bestseller: true,
     name: { he: 'כנאפה במשקל', ar: 'كنافة بالوزن' },
     note: { he: 'קדאיף זהוב · גבינה נמתחת · פיסטוק חלבי', ar: 'قطايف ذهبية · جبنة مطاطية · فستق حلبي' },
     description: {
@@ -98,10 +101,24 @@ const SEEDS: Seed[] = [
 
   // ── בקלאווה ומאפי פילו ─────────────────────────────────────────────
   {
+    slug: 'baklava-mix-4kg',
+    category: 'baklava',
+    unit: 'per_box',
+    price: 440,
+    unitLabel: { he: 'מארז 4 ק״ג', ar: 'علبة ٤ كغ' },
+    name: { he: 'מארז מיקס בקלאוות 4 ק״ג', ar: 'علبة ميكس بقلاوة ٤ كغ' },
+    note: { he: 'מיקס מהמובחרים של אבו חסן', ar: 'تشكيلة من أفضل أصناف أبو حسن' },
+    description: {
+      he: 'מארז חגיגי של 4 ק״ג: מיקס בקלאוות שונות מהמובחרים של אבו חסן. מושלם לאירוח, לאירועים ולמתנה.',
+      ar: 'علبة احتفالية وزنها ٤ كغ: تشكيلة بقلاوة متنوعة من أفضل أصناف أبو حسن. مثالية للضيافة والمناسبات والهدايا.',
+    },
+    allergens: DAIRY_NUTS_GLUTEN,
+    storage: FRIDGE,
+  },
+  {
     slug: 'baklava-pistachio',
     category: 'baklava',
     unit: 'per_kg',
-    bestseller: true,
     name: { he: 'בקלאווה פיסטוק חלבי', ar: 'بقلاوة فستق حلبي' },
     note: { he: 'שכבות פילו פריכות · פיסטוק חלבי', ar: 'طبقات فيلو مقرمشة · فستق حلبي' },
     description: {
@@ -128,7 +145,6 @@ const SEEDS: Seed[] = [
     slug: 'bird-nest-baklava',
     category: 'baklava',
     unit: 'per_kg',
-    bestseller: true,
     name: { he: 'בקלאווה קן הציפור', ar: 'بقلاوة عش البلبل' },
     note: { he: 'קדאיף · פיסטוק חלבי שלם', ar: 'قطايف · فستق حلبي كامل' },
     description: {
@@ -183,7 +199,6 @@ const SEEDS: Seed[] = [
     slug: 'layali-beirut-tray',
     category: 'trays',
     unit: 'per_box',
-    bestseller: true,
     name: { he: 'מגש לילות ביירות', ar: 'صينية ليالي بيروت' },
     note: { he: 'סולת · קציפת שמנת · פיסטוק חלבי', ar: 'سميد · كريمة مخفوقة · فستق حلبي' },
     description: {
@@ -380,8 +395,9 @@ export const seedCatalog: Product[] = SEEDS.map((s) => ({
   tastingNote: s.note,
   description: s.description ?? EMPTY,
   ingredients: EMPTY,
-  price: 0,
+  price: s.price ?? 0,
   unit: s.unit,
+  unitLabel: s.unitLabel,
   category: s.category,
   badges: s.bestseller ? ['bestseller'] : [],
   inStock: true,
@@ -394,12 +410,12 @@ export const seedCatalog: Product[] = SEEDS.map((s) => ({
 
 function translateAllergens(he: string): string {
   return he
+    .replace('עשוי להכיל אגוזים', 'قد يحتوي على مكسرات')
+    .replace('ללא גלוטן', 'خالٍ من الغلوتين')
     .replace('חלב', 'حليب')
     .replace('חמאה', 'زبدة')
     .replace('אגוזים', 'مكسرات')
     .replace('ביצים', 'بيض')
-    .replace('עשוי להכיל אגוזים', 'قد يحتوي على مكسرات')
-    .replace('ללא גלוטן', 'خالٍ من الغلوتين')
     .replace('גלוטן', 'غلوتين');
 }
 

@@ -37,7 +37,7 @@ export function SectionHeading({
   const onLight = tone === 'dark'; // 'dark' tone = dark text on light bg
 
   const eyebrowColor = onLight ? 'text-gold-deep' : 'text-gold-light/95';
-  const titleColor = onLight ? 'text-cedar' : 'text-ivory';
+  const titleColor = onLight ? 'text-heading' : 'text-ivory';
   const bodyColor = onLight ? 'text-coffee-muted' : 'text-ivory/80';
 
   return (

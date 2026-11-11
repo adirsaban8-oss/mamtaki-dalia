@@ -6,6 +6,7 @@
 export type PhotoCredit = { slug: string; creator: string; license: string; source: string };
 
 export const photoCredits: PhotoCredit[] = [
+  { "slug": "baklava-mix-4kg", "creator": "Anthony Rahayel", "license": "Pexels License", "source": "https://www.pexels.com/photo/tray-of-freshly-baked-pistachio-baklava-in-dubai-37871273/" },
   { "slug": "baklava-pistachio", "creator": "Jacob  Yavin", "license": "Pexels License", "source": "https://www.pexels.com/photo/a-close-up-shot-of-delicious-baklava-5323489/" },
   { "slug": "bird-nest-baklava", "creator": "Towfiqu barbhuiya", "license": "Pexels License", "source": "https://www.pexels.com/photo/sweet-kataifi-baklavas-25810607/" },
   { "slug": "birthday-cake", "creator": "Bruno Mattos", "license": "Pexels License", "source": "https://www.pexels.com/photo/elegant-white-cake-with-floral-decoration-30233124/" },

@@ -12,7 +12,7 @@ export function CartIcon({ variant = 'dark' }: Props) {
   const open = useCart((s) => s.open);
   const count = useCart((s) => s.items.length);
 
-  const color = variant === 'light' ? 'text-ivory' : 'text-cedar';
+  const color = variant === 'light' ? 'text-ivory' : 'text-heading';
   const hover = variant === 'light' ? 'hover:text-gold-light' : 'hover:text-burgundy';
 
   return (

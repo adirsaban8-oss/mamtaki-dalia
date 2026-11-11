@@ -43,7 +43,7 @@ export function WeightSelector({
     <div className="space-y-4">
       {/* Label */}
       <div className="flex items-baseline justify-between">
-        <label className={`${displayFont} font-black text-base text-cedar`}>
+        <label className={`${displayFont} font-black text-base text-heading`}>
           {t('weightLabel')}
         </label>
         <span className="font-display-en text-[11px] tracking-eyebrow uppercase text-coffee-muted">
@@ -67,7 +67,7 @@ export function WeightSelector({
               role="radio"
               aria-checked={active}
               onClick={() => setQuick(v)}
-              className={`relative h-12 inline-flex items-center justify-center transition-colors duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${active ? 'bg-cedar text-ivory' : 'bg-cream-card text-cedar hover:bg-sand'} ${!isLast ? 'border-e border-gold-deep/30' : ''}`}
+              className={`relative h-12 inline-flex items-center justify-center transition-colors duration-500 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${active ? 'bg-cedar text-ivory' : 'bg-cream-card text-heading hover:bg-sand'} ${!isLast ? 'border-e border-gold-deep/30' : ''}`}
             >
               <span className="font-display-en text-[13px] tabular-nums">
                 {v.toFixed(v % 1 === 0 ? 0 : 2).replace(/0$/, '')}
@@ -88,7 +88,7 @@ export function WeightSelector({
             onClick={dec}
             disabled={weight <= min}
             aria-label="−"
-            className="w-12 inline-flex items-center justify-center text-cedar hover:bg-sand disabled:opacity-30 transition-colors duration-300 border-e border-gold-deep/30"
+            className="w-12 inline-flex items-center justify-center text-heading hover:bg-sand disabled:opacity-30 transition-colors duration-300 border-e border-gold-deep/30"
           >
             <svg width="14" height="2" viewBox="0 0 14 2" aria-hidden><path d="M 0 1 L 14 1" stroke="currentColor" strokeWidth="1.4" /></svg>
           </button>
@@ -100,7 +100,7 @@ export function WeightSelector({
             transition={{ duration: 0.35, ease: easeLuxe }}
             className="flex-1 inline-flex items-baseline justify-center gap-1 px-4"
           >
-            <span className={`${displayFont} font-black text-2xl text-cedar tabular-nums`}>
+            <span className={`${displayFont} font-black text-2xl text-heading tabular-nums`}>
               {weight.toFixed(2)}
             </span>
             <span className="font-display-en text-[11px] tracking-eyebrow uppercase text-coffee-muted">
@@ -113,7 +113,7 @@ export function WeightSelector({
             onClick={inc}
             disabled={weight >= max}
             aria-label="+"
-            className="w-12 inline-flex items-center justify-center text-cedar hover:bg-sand disabled:opacity-30 transition-colors duration-300 border-s border-gold-deep/30"
+            className="w-12 inline-flex items-center justify-center text-heading hover:bg-sand disabled:opacity-30 transition-colors duration-300 border-s border-gold-deep/30"
           >
             <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden>
               <path d="M 0 7 L 14 7 M 7 0 L 7 14" stroke="currentColor" strokeWidth="1.4" />

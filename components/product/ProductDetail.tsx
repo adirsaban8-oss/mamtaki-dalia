@@ -16,6 +16,8 @@ import { ArabesquePattern } from '@/components/ornaments/ArabesquePattern';
 
 const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 
+const PACK_SIZES = [1, 2, 3, 4, 5];
+
 type Props = { product: Product; locale: Locale };
 
 /**
@@ -32,6 +34,8 @@ export function ProductDetail({ product, locale }: Props) {
   const displayFont = locale === 'ar' ? 'font-display-ar' : 'font-display-he';
 
   const [openSection, setOpenSection] = useState<string | null>('allergens');
+  /** Packs sold by weight come in whole kilos: 1, 2, 3 … */
+  const [packKg, setPackKg] = useState(1);
 
   const { products: allProducts } = useProducts();
   const related = useMemo(
@@ -59,29 +63,33 @@ export function ProductDetail({ product, locale }: Props) {
     },
     {
       key: 'order',
-      title: locale === 'ar' ? 'الطلب والاستلام' : 'הזמנה ואיסוף',
+      title: locale === 'ar' ? 'التوصيل' : 'משלוחים',
       body:
         locale === 'ar'
-          ? 'نحضّر كل طلب طازجاً. يُفضَّل الطلب مسبقاً عبر واتساب أو الهاتف وتنسيق الاستلام من المحل في دالية الكرمل أو التوصيل.'
-          : 'כל הזמנה מוכנה טרייה. מומלץ להזמין מראש בוואטסאפ או בטלפון ולתאם איסוף מהחנות בדלית אל כרמל או משלוח.',
+          ? 'نوصل إلى الشمال وغوش دان والمركز والشارون، في أيام توصيل ثابتة لكل منطقة. للمناسبات والكميات الكبيرة: 054-3910078.'
+          : 'משלוחים לצפון, לגוש דן, למרכז ולשרון, בימי אספקה קבועים לכל אזור. לאירועים ולכמויות גדולות: 054-3910078.',
     },
   ].filter((x): x is { key: string; title: string; body: string } => Boolean(x));
 
   const hasPrice = product.price > 0;
-  const priceSuffix =
-    product.unit === 'per_kg'
+  const byKg = product.unit === 'per_kg';
+  const kgLabel = (n: number) => (locale === 'ar' ? `${n} كغ` : `${n} ק״ג`);
+  const priceSuffix = product.unitLabel
+    ? `/ ${product.unitLabel[locale]}`
+    : product.unit === 'per_kg'
       ? locale === 'ar' ? '/ كغ' : '/ ק״ג'
       : product.unit === 'per_piece'
         ? locale === 'ar' ? '/ قطعة' : '/ יחידה'
         : locale === 'ar' ? '/ صينية' : '/ מגש';
 
+  const packText = byKg ? ` — ${locale === 'ar' ? 'علبة' : 'מארז'} ${kgLabel(packKg)}` : '';
   const orderMessage =
     locale === 'ar'
-      ? `مرحباً، أود أن أطلب: ${product.name.ar}`
-      : `שלום, אשמח להזמין: ${product.name.he}`;
+      ? `مرحباً، أود أن أطلب: ${product.name.ar}${packText}`
+      : `שלום, אשמח להזמין: ${product.name.he}${packText}`;
 
   return (
-    <article className="relative overflow-x-clip bg-ivory">
+    <article className="relative overflow-x-clip bg-page">
       <div
         aria-hidden
         className="absolute -top-12 -end-24 w-[500px] h-[500px] text-gold pointer-events-none"
@@ -104,7 +112,7 @@ export function ProductDetail({ product, locale }: Props) {
             </Link>
           </li>
           <li aria-hidden>·</li>
-          <li className="text-cedar truncate">{product.name[locale]}</li>
+          <li className="text-heading truncate">{product.name[locale]}</li>
         </ol>
       </nav>
 
@@ -129,7 +137,7 @@ export function ProductDetail({ product, locale }: Props) {
           </div>
 
           <h1
-            className={`${displayFont} font-bold leading-[1.1] text-cedar text-4xl md:text-5xl text-balance`}
+            className={`${displayFont} font-bold leading-[1.1] text-heading text-4xl md:text-5xl text-balance`}
           >
             {product.name[locale]}
           </h1>
@@ -163,6 +171,38 @@ export function ProductDetail({ product, locale }: Props) {
             </p>
           </div>
 
+          {/* Pack size — weight products are sold in whole-kilo packs */}
+          {byKg && (
+            <fieldset className="mt-8">
+              <legend className="text-[13px] font-medium text-gold-deep mb-3">
+                {locale === 'ar' ? 'حجم العلبة' : 'גודל המארז'}
+              </legend>
+              <div className="flex flex-wrap gap-2">
+                {PACK_SIZES.map((n) => (
+                  <button
+                    key={n}
+                    type="button"
+                    onClick={() => setPackKg(n)}
+                    aria-pressed={packKg === n}
+                    className={`h-11 min-w-[4.5rem] px-4 border rounded-[2px] text-[15px] font-medium transition-colors duration-300 ${
+                      packKg === n
+                        ? 'bg-gold border-gold text-black'
+                        : 'border-gold-deep/50 text-heading hover:border-gold'
+                    }`}
+                  >
+                    {kgLabel(n)}
+                  </button>
+                ))}
+              </div>
+              {hasPrice && (
+                <p className="mt-4 text-[15px] text-coffee-muted">
+                  {locale === 'ar' ? 'المجموع: ' : 'סה״כ: '}
+                  <span className={`${displayFont} text-xl font-bold text-gold`}>₪{product.price * packKg}</span>
+                </p>
+              )}
+            </fieldset>
+          )}
+
           {/* Order CTA — catalog site: orders go through WhatsApp */}
           <a
             href={whatsappLink(orderMessage)}
@@ -175,7 +215,7 @@ export function ProductDetail({ product, locale }: Props) {
           </a>
           <a
             href="tel:+972525986266"
-            className="mt-3 text-center text-sm text-coffee-muted hover:text-cedar transition-colors duration-500"
+            className="mt-3 text-center text-sm text-coffee-muted hover:text-heading transition-colors duration-500"
           >
             {locale === 'ar' ? 'أو اتصلوا: ' : 'או בטלפון: '}
             <span dir="ltr" className="font-medium">052-5986266</span>
@@ -199,7 +239,7 @@ export function ProductDetail({ product, locale }: Props) {
       </div>
 
       {/* Related */}
-      <section className="relative bg-ivory py-12 md:py-20 border-t border-hairline/60">
+      <section className="relative bg-page py-12 md:py-20 border-t border-hairline/60">
         <div className="mx-auto max-w-7xl px-5 md:px-10">
           <header className="flex flex-col items-center text-center mb-10 md:mb-12">
             <div className="flex items-center gap-5 text-gold-deep">
@@ -209,7 +249,7 @@ export function ProductDetail({ product, locale }: Props) {
               </span>
               <span aria-hidden className="block h-px w-12 bg-gold" />
             </div>
-            <h2 className={`mt-6 ${displayFont} font-black text-3xl md:text-5xl text-cedar tracking-display leading-[1.05] text-balance`}>
+            <h2 className={`mt-6 ${displayFont} font-black text-3xl md:text-5xl text-heading tracking-display leading-[1.05] text-balance`}>
               {t('relatedHeading')}
             </h2>
           </header>
@@ -320,7 +360,7 @@ function AccordionItem({
         aria-expanded={isOpen}
         className="w-full flex items-center justify-between py-5 text-start group"
       >
-        <span className="text-[15px] font-medium text-cedar group-hover:text-gold-deep transition-colors duration-500">
+        <span className="text-[15px] font-medium text-heading group-hover:text-gold-deep transition-colors duration-500">
           {title}
         </span>
         <motion.span

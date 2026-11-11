@@ -15,7 +15,7 @@ export default async function CheckoutSuccessPage({
   return (
     <>
       <Header overHero={false} />
-      <main className="flex-1 pt-24 md:pt-28 bg-ivory">
+      <main className="flex-1 pt-24 md:pt-28 bg-page">
         <CheckoutSuccess locale={locale as Locale} />
       </main>
       <Footer locale={locale as Locale} />

@@ -65,7 +65,7 @@ export function CheckoutSuccess({ locale }: Props) {
         </div>
 
         <h1
-          className={`mt-6 ${displayFont} font-black text-[2.5rem] md:text-5xl lg:text-6xl text-cedar tracking-display leading-[1.05] text-balance`}
+          className={`mt-6 ${displayFont} font-black text-[2.5rem] md:text-5xl lg:text-6xl text-heading tracking-display leading-[1.05] text-balance`}
         >
           {t('title')}
         </h1>

@@ -20,11 +20,13 @@ export function Footer({ locale }: Props) {
     { href: '/' as const, label: t('home') },
     { href: '/shop' as const, label: t('shop') },
     { href: '/#story' as const, label: t('story') },
+    { href: '/delivery' as const, label: t('delivery') },
+    { href: '/events' as const, label: t('events') },
     { href: '#contact' as const, label: t('contact') },
   ];
 
   const infoLinks = [
-    { label: t('shippingPolicy'), href: '#' },
+    { label: t('shippingPolicy'), href: `/${locale}/delivery` },
     { label: t('returns'), href: '#' },
     { label: t('kosher'), href: '#' },
     { label: t('terms'), href: '#' },
@@ -120,6 +122,10 @@ export function Footer({ locale }: Props) {
                 </a>
                 <a href="tel:+97246263309" className="hover:text-gold-light transition-colors duration-500 block">
                   04-6263309
+                </a>
+                <a href="tel:+972543910078" className="hover:text-gold-light transition-colors duration-500 block">
+                  {locale === 'ar' ? 'مناسبات: ' : 'אירועים: '}
+                  <span dir="ltr" className="whitespace-nowrap">054-3910078</span>
                 </a>
               </p>
               <p>

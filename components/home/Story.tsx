@@ -97,7 +97,7 @@ export async function Story({ locale }: Props) {
           {/* Display heading — weight 900 */}
           <h2
             id="story-heading"
-            className={`mt-6 md:mt-8 ${displayFont} font-black tracking-display leading-[1.05] text-cedar text-balance text-4xl md:text-5xl lg:text-6xl`}
+            className={`mt-6 md:mt-8 ${displayFont} font-black tracking-display leading-[1.05] text-heading text-balance text-4xl md:text-5xl lg:text-6xl`}
           >
             {t('title')}
           </h2>
@@ -137,7 +137,7 @@ export async function Story({ locale }: Props) {
           <div className="mt-8 md:mt-10">
             <Link
               href="/shop"
-              className="group inline-flex items-center gap-4 font-display-en text-[12px] tracking-eyebrow uppercase text-cedar hover:text-burgundy transition-colors duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+              className="group inline-flex items-center gap-4 font-display-en text-[12px] tracking-eyebrow uppercase text-heading hover:text-burgundy transition-colors duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
             >
               <span>{t('cta')}</span>
               <span

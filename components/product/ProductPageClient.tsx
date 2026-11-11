@@ -38,7 +38,7 @@ export function ProductPageClient({ slug, locale }: Props) {
         <p className="font-display-en text-[12px] tracking-eyebrow uppercase text-gold-deep">
           404
         </p>
-        <h1 className={`mt-6 ${displayFont} font-black text-3xl md:text-4xl text-cedar text-balance`}>
+        <h1 className={`mt-6 ${displayFont} font-black text-3xl md:text-4xl text-heading text-balance`}>
           {locale === 'ar' ? 'هذا المنتج غير موجود بعد' : 'המוצר הזה עוד לא קיים'}
         </h1>
         <p className="mt-4 text-base text-ink/70 leading-relaxed">
@@ -48,7 +48,7 @@ export function ProductPageClient({ slug, locale }: Props) {
         </p>
         <Link
           href="/shop"
-          className="mt-8 inline-flex items-center gap-3 font-display-en text-[12px] tracking-eyebrow uppercase text-cedar hover:text-burgundy transition-colors duration-500"
+          className="mt-8 inline-flex items-center gap-3 font-display-en text-[12px] tracking-eyebrow uppercase text-heading hover:text-burgundy transition-colors duration-500"
         >
           <span>{locale === 'ar' ? 'العودة إلى القائمة' : 'חזרה לקטלוג'}</span>
           <span aria-hidden className="h-px w-12 bg-current" />

@@ -31,13 +31,13 @@ export function Hero() {
     >
       {/* Khatam tile — 7% so it reads as texture, never as pattern noise */}
       <div aria-hidden className="absolute inset-0 -z-10 pattern-khatam opacity-[0.07]" />
-      {/* Soft emerald glow behind the arch */}
+      {/* Soft gold glow behind the arch */}
       <div
         aria-hidden
         className="absolute inset-0 -z-10"
         style={{
           background:
-            'radial-gradient(60% 70% at 28% 55%, rgba(31,77,63,0.55) 0%, transparent 70%)',
+            'radial-gradient(60% 70% at 28% 55%, rgba(201,167,102,0.16) 0%, transparent 70%)',
         }}
       />
 
@@ -118,7 +118,7 @@ export function Hero() {
                 className="object-cover"
               />
               {/* Soft inner vignette so the photo melts into the ink field */}
-              <span aria-hidden className="absolute inset-0 shadow-[inset_0_-40px_80px_rgba(12,23,19,0.35)]" />
+              <span aria-hidden className="absolute inset-0 shadow-[inset_0_-40px_80px_rgba(0,0,0,0.35)]" />
             </div>
           </div>
         </motion.div>

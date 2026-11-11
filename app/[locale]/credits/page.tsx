@@ -22,9 +22,9 @@ export default async function CreditsPage({ params }: PageProps<'/[locale]/credi
   return (
     <>
       <Header overHero={false} />
-      <main className="flex-1 pt-28 md:pt-36 pb-20 bg-ivory">
+      <main className="flex-1 pt-28 md:pt-36 pb-20 bg-page">
         <div className="mx-auto max-w-3xl px-5">
-          <h1 className={`${displayFont} font-bold text-cedar text-4xl md:text-5xl`}>
+          <h1 className={`${displayFont} font-bold text-heading text-4xl md:text-5xl`}>
             {ar ? 'حقوق الصور' : 'קרדיט לתמונות'}
           </h1>
           <p className="mt-5 text-ink/75 leading-relaxed">
@@ -35,10 +35,10 @@ export default async function CreditsPage({ params }: PageProps<'/[locale]/credi
           <ul className="mt-10 divide-y divide-hairline border-y border-hairline">
             {photoCredits.map((c) => (
               <li key={c.slug} className="py-4 flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-1">
-                <span className="font-medium text-cedar">{nameOf(c.slug)}</span>
+                <span className="font-medium text-heading">{nameOf(c.slug)}</span>
                 <span className="text-sm text-coffee-muted" dir="ltr">
                   {c.creator ? `${c.creator} · ` : ''}
-                  <a href={c.source} target="_blank" rel="noopener noreferrer" className="underline hover:text-cedar">
+                  <a href={c.source} target="_blank" rel="noopener noreferrer" className="underline hover:text-heading">
                     {c.license}
                   </a>
                 </span>

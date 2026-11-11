@@ -32,7 +32,7 @@ export function InstagramFeed() {
 
   return (
     <section
-      className="relative bg-ivory py-12 md:py-20"
+      className="relative bg-page py-12 md:py-20"
       aria-labelledby="instagram-heading"
     >
       <div className="mx-auto max-w-7xl px-5 md:px-10">
@@ -49,7 +49,7 @@ export function InstagramFeed() {
           </span>
           <h2
             id="instagram-heading"
-            className={`mt-5 ${displayFont} font-black text-3xl md:text-5xl text-cedar tracking-display leading-[1.1] text-balance`}
+            className={`mt-5 ${displayFont} font-black text-3xl md:text-5xl text-heading tracking-display leading-[1.1] text-balance`}
           >
             {t('title')}
           </h2>
@@ -77,7 +77,7 @@ export function InstagramFeed() {
             href="https://www.instagram.com/mamtaki_dalia/"
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-4 font-display-en text-[12px] tracking-eyebrow uppercase text-cedar hover:text-burgundy transition-colors duration-700"
+            className="group inline-flex items-center gap-4 font-display-en text-[12px] tracking-eyebrow uppercase text-heading hover:text-burgundy transition-colors duration-700"
           >
             <InstagramGlyph />
             <span>{t('follow')}</span>
@@ -128,7 +128,7 @@ function InstagramTile({ index, letter, variant }: TileProps) {
         aria-hidden
         className="absolute inset-0 bg-gold/0 group-hover:bg-gold/30 transition-colors duration-700 flex items-center justify-center"
       >
-        <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 text-cedar">
+        <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-100 text-heading">
           <InstagramGlyph />
         </span>
       </span>

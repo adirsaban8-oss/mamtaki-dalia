@@ -90,7 +90,7 @@ export function ValueProps() {
               </span>
 
               {/* Card heading — 20px, display, weight 900 */}
-              <h3 className={`mt-8 ${displayFont} font-black text-xl md:text-[22px] tracking-display text-cedar leading-tight`}>
+              <h3 className={`mt-8 ${displayFont} font-black text-xl md:text-[22px] tracking-display text-heading leading-tight`}>
                 {t(`items.${key}.title`)}
               </h3>
 

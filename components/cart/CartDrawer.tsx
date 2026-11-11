@@ -69,7 +69,7 @@ export function CartDrawer() {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ duration: 0.7, ease: easeLuxe }}
-            className="fixed inset-y-0 end-0 z-[70] w-full sm:w-[480px] bg-ivory shadow-deep flex flex-col"
+            className="fixed inset-y-0 end-0 z-[70] w-full sm:w-[480px] bg-page shadow-deep flex flex-col"
             style={{
               // Animate from the writing-mode end: right in LTR, left in RTL.
               // x: '100%' is text-end-side because the panel is anchored to end-0.
@@ -77,14 +77,14 @@ export function CartDrawer() {
           >
             {/* Header */}
             <header className="flex items-center justify-between px-6 md:px-8 h-20 border-b border-hairline/60">
-              <h2 className={`${displayFont} font-black text-2xl tracking-display text-cedar`}>
+              <h2 className={`${displayFont} font-black text-2xl tracking-display text-heading`}>
                 {t('title')} <span className="text-coffee-muted text-base font-medium">({items.length})</span>
               </h2>
               <button
                 type="button"
                 onClick={close}
                 aria-label={t('close')}
-                className="w-10 h-10 inline-flex items-center justify-center text-cedar hover:text-burgundy transition-colors duration-500"
+                className="w-10 h-10 inline-flex items-center justify-center text-heading hover:text-burgundy transition-colors duration-500"
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" aria-hidden>
                   <path d="M 5 5 L 19 19" />
@@ -110,7 +110,7 @@ export function CartDrawer() {
             {items.length > 0 && (
               <footer className="border-t border-hairline/60 bg-cream-card px-6 md:px-8 py-6 space-y-5">
                 <div className="flex items-baseline justify-between">
-                  <span className={`${displayFont} text-base text-cedar`}>{t('subtotal')}</span>
+                  <span className={`${displayFont} text-base text-heading`}>{t('subtotal')}</span>
                   <span className={`${displayFont} font-black text-2xl text-burgundy`}>
                     ₪{subtotal.toFixed(0)}
                   </span>
@@ -129,7 +129,7 @@ export function CartDrawer() {
                 <button
                   type="button"
                   onClick={close}
-                  className="block mx-auto font-display-en text-[12px] tracking-eyebrow uppercase text-cedar hover:text-burgundy transition-colors duration-500"
+                  className="block mx-auto font-display-en text-[12px] tracking-eyebrow uppercase text-heading hover:text-burgundy transition-colors duration-500"
                 >
                   {t('continueShopping')}
                 </button>
@@ -190,7 +190,7 @@ function CartLineItem({ item, locale }: { item: CartItem; locale: Locale }) {
 
       <div className="flex-1 min-w-0">
         <div className="flex items-start justify-between gap-3">
-          <h3 className={`${displayFont} text-base font-black text-cedar leading-tight min-w-0`}>
+          <h3 className={`${displayFont} text-base font-black text-heading leading-tight min-w-0`}>
             {product.name[locale]}
           </h3>
           <span className={`${displayFont} text-base font-black text-burgundy tabular-nums shrink-0`}>
@@ -208,11 +208,11 @@ function CartLineItem({ item, locale }: { item: CartItem; locale: Locale }) {
               onClick={() => setQuantity(product.id, item.quantity - step)}
               disabled={item.quantity <= min}
               aria-label={t('decreaseWeight')}
-              className="w-8 h-8 inline-flex items-center justify-center text-cedar hover:bg-sand disabled:opacity-30 transition-colors duration-300"
+              className="w-8 h-8 inline-flex items-center justify-center text-heading hover:bg-sand disabled:opacity-30 transition-colors duration-300"
             >
               <svg width="10" height="2" viewBox="0 0 10 2" aria-hidden><path d="M 0 1 L 10 1" stroke="currentColor" strokeWidth="1.2" /></svg>
             </button>
-            <span className="px-2.5 font-display-en text-sm text-cedar tabular-nums min-w-[3rem] text-center">
+            <span className="px-2.5 font-display-en text-sm text-heading tabular-nums min-w-[3rem] text-center">
               {qtyLabel}
             </span>
             <button
@@ -220,7 +220,7 @@ function CartLineItem({ item, locale }: { item: CartItem; locale: Locale }) {
               onClick={() => setQuantity(product.id, item.quantity + step)}
               disabled={item.quantity >= max}
               aria-label={t('increaseWeight')}
-              className="w-8 h-8 inline-flex items-center justify-center text-cedar hover:bg-sand disabled:opacity-30 transition-colors duration-300"
+              className="w-8 h-8 inline-flex items-center justify-center text-heading hover:bg-sand disabled:opacity-30 transition-colors duration-300"
             >
               <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden>
                 <path d="M 0 5 L 10 5 M 5 0 L 5 10" stroke="currentColor" strokeWidth="1.2" />
@@ -277,7 +277,7 @@ function EmptyState({ locale, onClose }: { locale: Locale; onClose: () => void }
         <circle cx="60" cy="76" r="2" fill="currentColor" opacity="0.4" />
       </svg>
 
-      <h3 className={`mt-8 ${displayFont} font-black text-2xl text-cedar`}>{t('emptyTitle')}</h3>
+      <h3 className={`mt-8 ${displayFont} font-black text-2xl text-heading`}>{t('emptyTitle')}</h3>
       <p className="mt-3 text-base text-coffee-muted leading-relaxed max-w-xs">{t('emptyBody')}</p>
 
       <Link

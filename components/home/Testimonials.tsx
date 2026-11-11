@@ -24,7 +24,7 @@ export function Testimonials() {
 
   return (
     <section
-      className="relative bg-ivory py-12 md:py-20"
+      className="relative bg-page py-12 md:py-20"
       aria-labelledby="reviews-heading"
     >
       <div className="mx-auto max-w-7xl px-5 md:px-10">
@@ -48,7 +48,7 @@ export function Testimonials() {
 
           <h2
             id="reviews-heading"
-            className={`mt-6 md:mt-8 ${displayFont} font-black tracking-display leading-[1.05] text-balance text-cedar text-4xl md:text-5xl lg:text-6xl`}
+            className={`mt-6 md:mt-8 ${displayFont} font-black tracking-display leading-[1.05] text-balance text-heading text-4xl md:text-5xl lg:text-6xl`}
           >
             {t('title')}
           </h2>
@@ -111,7 +111,7 @@ function TestimonialCard({ item, locale, displayFont, index }: CardProps) {
 
       {/* Quote — 20px italic, Display font, cedar */}
       <blockquote className="relative mt-6">
-        <p className={`${displayFont} italic text-[19px] md:text-xl leading-[1.55] text-cedar text-pretty`}>
+        <p className={`${displayFont} italic text-[19px] md:text-xl leading-[1.55] text-heading text-pretty`}>
           {item.quote[locale]}
         </p>
       </blockquote>
@@ -121,7 +121,7 @@ function TestimonialCard({ item, locale, displayFont, index }: CardProps) {
 
       {/* Attribution */}
       <figcaption className="mt-5 flex flex-col">
-        <span className={`${displayFont} text-base font-black text-cedar`}>
+        <span className={`${displayFont} text-base font-black text-heading`}>
           {item.author[locale]}
         </span>
         <span className="font-display-en text-[11px] tracking-eyebrow uppercase text-coffee-muted mt-1">

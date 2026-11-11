@@ -70,7 +70,7 @@ export function CatalogManager({ locale }: Props) {
           <p className="font-display-en text-[10px] tracking-eyebrow uppercase text-coffee-muted">
             {locale === 'ar' ? 'إدارة الكتالوج' : 'ניהול הקטלוג'}
           </p>
-          <h2 className={`${displayFont} font-black text-2xl md:text-3xl text-cedar tracking-display mt-1`}>
+          <h2 className={`${displayFont} font-black text-2xl md:text-3xl text-heading tracking-display mt-1`}>
             {locale === 'ar' ? `${products.length} منتج في القائمة` : `${products.length} מוצרים בתפריט`}
           </h2>
         </div>
@@ -81,7 +81,7 @@ export function CatalogManager({ locale }: Props) {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder={locale === 'ar' ? 'بحث' : 'חיפוש'}
-            className="h-11 px-4 bg-cream-card border border-gold-deep/40 text-cedar text-sm focus:outline-none focus:border-gold transition-colors duration-300 rounded-[2px] w-full md:w-56"
+            className="h-11 px-4 bg-cream-card border border-gold-deep/40 text-heading text-sm focus:outline-none focus:border-gold transition-colors duration-300 rounded-[2px] w-full md:w-56"
           />
         </div>
       </section>
@@ -89,7 +89,7 @@ export function CatalogManager({ locale }: Props) {
       {/* Empty state */}
       {products.length === 0 && (
         <div className="bg-cream-card border border-gold-deep/30 rounded-[2px] py-16 px-8 text-center">
-          <p className={`${displayFont} font-black text-2xl md:text-3xl text-cedar`}>
+          <p className={`${displayFont} font-black text-2xl md:text-3xl text-heading`}>
             {locale === 'ar' ? 'القائمة فارغة' : 'התפריט ריק'}
           </p>
           <p className="mt-3 text-base text-ink/70 leading-relaxed max-w-md mx-auto">
@@ -105,7 +105,7 @@ export function CatalogManager({ locale }: Props) {
         {Array.from(grouped.entries()).map(([category, items]) => (
           <div key={category}>
             <div className="flex items-center justify-between gap-4 mb-5 pb-3 border-b border-gold-deep/20">
-              <h3 className={`${displayFont} font-black text-xl md:text-2xl text-cedar tracking-display`}>
+              <h3 className={`${displayFont} font-black text-xl md:text-2xl text-heading tracking-display`}>
                 {categoryLabels[category][locale]}
                 <span className="ms-3 font-display-en text-[11px] tracking-eyebrow uppercase text-coffee-muted">
                   · {items.length}
@@ -114,7 +114,7 @@ export function CatalogManager({ locale }: Props) {
               <button
                 type="button"
                 onClick={() => setCreatingFor(category)}
-                className="font-display-en text-[11px] tracking-eyebrow uppercase text-cedar hover:text-burgundy transition-colors duration-500"
+                className="font-display-en text-[11px] tracking-eyebrow uppercase text-heading hover:text-burgundy transition-colors duration-500"
               >
                 {locale === 'ar' ? '+ منتج جديد' : '+ מוצר חדש'}
               </button>
@@ -191,7 +191,7 @@ function ProductRow({
   return (
     <li className={`bg-cream-card border border-gold-deep/30 rounded-[2px] p-4 md:p-5 flex gap-4 ${!isVisible ? 'opacity-60' : ''}`}>
       {/* Image or monogram */}
-      <div className="shrink-0 w-20 h-20 bg-ivory border border-gold-deep/30 rounded-[2px] flex items-center justify-center overflow-hidden">
+      <div className="shrink-0 w-20 h-20 bg-page border border-gold-deep/30 rounded-[2px] flex items-center justify-center overflow-hidden">
         {product.image ? (
           // eslint-disable-next-line @next/next/no-img-element
           <img src={product.image} alt="" className="w-full h-full object-cover" />
@@ -204,7 +204,7 @@ function ProductRow({
 
       <div className="flex-1 min-w-0">
         <div className="flex items-start justify-between gap-3">
-          <h4 className={`${displayFont} font-black text-cedar text-base leading-tight truncate`}>
+          <h4 className={`${displayFont} font-black text-heading text-base leading-tight truncate`}>
             {product.name[locale] || product.name.he || product.name.ar || '(unnamed)'}
           </h4>
           <span className="font-display-en text-sm text-burgundy tabular-nums shrink-0">
@@ -227,7 +227,7 @@ function ProductRow({
           <ToggleChip
             label={isVisible ? (locale === 'ar' ? 'ظاهر' : 'גלוי') : (locale === 'ar' ? 'مخفي' : 'מוסתר')}
             active={isVisible}
-            activeClass="bg-cedar/10 text-cedar border-cedar/30"
+            activeClass="bg-cedar/10 text-heading border-heading/30"
             inactiveClass="bg-sand/60 text-coffee-muted border-gold-deep/30"
             onClick={onToggleVisible}
           />
@@ -235,15 +235,15 @@ function ProductRow({
             <Link
               href={`/shop/${product.slug}`}
               target="_blank"
-              className="text-coffee-muted hover:text-cedar transition-colors duration-300"
+              className="text-coffee-muted hover:text-heading transition-colors duration-300"
               aria-label="Preview"
             >
               ↗
             </Link>
-            <button type="button" onClick={onDuplicate} className="text-coffee-muted hover:text-cedar transition-colors duration-300" aria-label="Duplicate">
+            <button type="button" onClick={onDuplicate} className="text-coffee-muted hover:text-heading transition-colors duration-300" aria-label="Duplicate">
               ⎘
             </button>
-            <button type="button" onClick={onEdit} className="text-cedar hover:text-burgundy transition-colors duration-300 underline underline-offset-4">
+            <button type="button" onClick={onEdit} className="text-heading hover:text-burgundy transition-colors duration-300 underline underline-offset-4">
               {locale === 'ar' ? 'تحرير' : 'עריכה'}
             </button>
             <button type="button" onClick={onDelete} className="text-coffee-muted hover:text-burgundy transition-colors duration-300" aria-label="Delete">
@@ -364,10 +364,10 @@ function ProductFormModal({
         exit={{ y: 20, opacity: 0 }}
         transition={{ duration: 0.5, ease: easeLuxe }}
         onClick={(e) => e.stopPropagation()}
-        className="w-full max-w-3xl bg-ivory rounded-[2px] shadow-deep my-8"
+        className="w-full max-w-3xl bg-page rounded-[2px] shadow-deep my-8"
       >
         <header className="px-6 md:px-10 py-5 border-b border-gold-deep/30 flex items-center justify-between">
-          <h3 className={`${displayFont} font-black text-xl md:text-2xl text-cedar tracking-display`}>
+          <h3 className={`${displayFont} font-black text-xl md:text-2xl text-heading tracking-display`}>
             {isNew
               ? (locale === 'ar' ? 'منتج جديد' : 'מוצר חדש')
               : (locale === 'ar' ? 'تحرير المنتج' : 'עריכת מוצר')}
@@ -551,7 +551,7 @@ function ProductFormModal({
                     key={badge}
                     type="button"
                     onClick={() => toggleBadge(badge)}
-                    className={`px-3 h-9 inline-flex items-center font-display-en text-[11px] tracking-eyebrow uppercase border transition-colors duration-300 rounded-[2px] ${active ? 'border-gold bg-gold text-ivory' : 'border-gold-deep/40 text-coffee-muted hover:border-gold hover:text-cedar'}`}
+                    className={`px-3 h-9 inline-flex items-center font-display-en text-[11px] tracking-eyebrow uppercase border transition-colors duration-300 rounded-[2px] ${active ? 'border-gold bg-gold text-ivory' : 'border-gold-deep/40 text-coffee-muted hover:border-gold hover:text-heading'}`}
                   >
                     {badge === 'bestseller' && (locale === 'ar' ? 'الأكثر مبيعاً' : 'מומלץ')}
                     {badge === 'new' && (locale === 'ar' ? 'جديد' : 'חדש')}
@@ -573,7 +573,7 @@ function ProductFormModal({
                 onChange={(e) => set('inStock', e.target.checked)}
                 className="w-4 h-4 accent-gold"
               />
-              <span className="text-sm text-cedar">{locale === 'ar' ? 'متوفر في المخزون' : 'במלאי'}</span>
+              <span className="text-sm text-heading">{locale === 'ar' ? 'متوفر في المخزون' : 'במלאי'}</span>
             </label>
             <label className="flex items-center gap-3 cursor-pointer">
               <input
@@ -582,7 +582,7 @@ function ProductFormModal({
                 onChange={(e) => set('visible', e.target.checked)}
                 className="w-4 h-4 accent-gold"
               />
-              <span className="text-sm text-cedar">{locale === 'ar' ? 'ظاهر في الموقع' : 'גלוי באתר'}</span>
+              <span className="text-sm text-heading">{locale === 'ar' ? 'ظاهر في الموقع' : 'גלוי באתר'}</span>
             </label>
           </div>
 
@@ -591,7 +591,7 @@ function ProductFormModal({
             <button
               type="button"
               onClick={onClose}
-              className="font-display-en text-[12px] tracking-eyebrow uppercase text-coffee-muted hover:text-cedar transition-colors duration-500 px-4 h-12"
+              className="font-display-en text-[12px] tracking-eyebrow uppercase text-coffee-muted hover:text-heading transition-colors duration-500 px-4 h-12"
             >
               {locale === 'ar' ? 'إلغاء' : 'ביטול'}
             </button>
@@ -611,9 +611,9 @@ function ProductFormModal({
 }
 
 const inputClass =
-  'w-full h-11 px-3 bg-cream-card border border-gold-deep/40 text-cedar text-sm focus:outline-none focus:border-gold transition-colors duration-300 rounded-[2px]';
+  'w-full h-11 px-3 bg-cream-card border border-gold-deep/40 text-heading text-sm focus:outline-none focus:border-gold transition-colors duration-300 rounded-[2px]';
 const textareaClass =
-  'w-full px-3 py-2.5 bg-cream-card border border-gold-deep/40 text-cedar text-sm focus:outline-none focus:border-gold transition-colors duration-300 rounded-[2px] leading-relaxed';
+  'w-full px-3 py-2.5 bg-cream-card border border-gold-deep/40 text-heading text-sm focus:outline-none focus:border-gold transition-colors duration-300 rounded-[2px] leading-relaxed';
 
 function Field({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) {
   return (

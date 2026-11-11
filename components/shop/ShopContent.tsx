@@ -57,7 +57,7 @@ export function ShopContent({ locale }: Props) {
 
 
   return (
-    <section className="relative overflow-x-clip bg-ivory pb-12 md:pb-20">
+    <section className="relative overflow-x-clip bg-page pb-12 md:pb-20">
       {/* Decorative arabesque */}
       <div
         aria-hidden
@@ -76,7 +76,7 @@ export function ShopContent({ locale }: Props) {
           <span aria-hidden className="block h-px w-12 bg-gold" />
         </div>
         <h1
-          className={`mt-6 md:mt-8 ${displayFont} font-black tracking-display leading-[1.05] text-cedar text-balance text-4xl md:text-6xl lg:text-7xl`}
+          className={`mt-6 md:mt-8 ${displayFont} font-black tracking-display leading-[1.05] text-heading text-balance text-4xl md:text-6xl lg:text-7xl`}
         >
           {t('title')}
         </h1>
@@ -88,14 +88,14 @@ export function ShopContent({ locale }: Props) {
       {/* Category index — sticky, scrolls sideways on phones */}
       <nav
         aria-label={locale === 'ar' ? 'الفئات' : 'קטגוריות'}
-        className="sticky top-16 sm:top-[72px] z-30 mb-10 md:mb-14 bg-ivory/95 backdrop-blur border-y border-hairline"
+        className="sticky top-16 sm:top-[72px] z-30 mb-10 md:mb-14 bg-page/95 backdrop-blur border-y border-hairline"
       >
         <div className="mx-auto max-w-7xl px-4 md:px-10 flex gap-2 overflow-x-auto scrollbar-hide py-3 md:justify-center">
           {Array.from(filteredByCategory.keys()).map((category) => (
             <a
               key={category}
               href={`#cat-${category}`}
-              className="shrink-0 h-9 px-4 inline-flex items-center rounded-full border border-hairline bg-cream-card text-[13px] font-medium text-cedar hover:border-gold hover:text-gold-deep transition-colors duration-500 whitespace-nowrap"
+              className="shrink-0 h-9 px-4 inline-flex items-center rounded-full border border-hairline bg-cream-card text-[13px] font-medium text-heading hover:border-gold hover:text-gold-deep transition-colors duration-500 whitespace-nowrap"
             >
               {categoryLabels[category][locale]}
             </a>
@@ -112,7 +112,7 @@ export function ShopContent({ locale }: Props) {
           <CatalogEmptyState locale={locale} displayFont={displayFont} />
         ) : totalCount === 0 ? (
           <div className="py-24 text-center">
-            <p className={`${displayFont} text-2xl text-cedar`}>
+            <p className={`${displayFont} text-2xl text-heading`}>
               {locale === 'ar' ? 'لا توجد نتائج' : 'אין מוצרים שתואמים את הסינון'}
             </p>
             <button
@@ -188,7 +188,7 @@ function CatalogEmptyState({ locale, displayFont }: { locale: Locale; displayFon
         <circle cx="40" cy="40" r="28" opacity="0.4" />
         <path d="M 40 18 L 47 30 L 60 32 L 50 42 L 53 56 L 40 50 L 27 56 L 30 42 L 20 32 L 33 30 Z" />
       </svg>
-      <p className={`mt-8 ${displayFont} font-black text-2xl md:text-3xl text-cedar tracking-display leading-tight text-balance`}>
+      <p className={`mt-8 ${displayFont} font-black text-2xl md:text-3xl text-heading tracking-display leading-tight text-balance`}>
         {locale === 'ar' ? 'القائمة قيد التحضير' : 'התפריט בהכנה'}
       </p>
       <p className="mt-4 text-base text-ink/70 leading-relaxed text-pretty">
@@ -200,7 +200,7 @@ function CatalogEmptyState({ locale, displayFont }: { locale: Locale; displayFon
         href="https://www.instagram.com/mamtaki_dalia/"
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-8 inline-flex items-center gap-3 font-display-en text-[12px] tracking-eyebrow uppercase text-cedar hover:text-burgundy transition-colors duration-500"
+        className="mt-8 inline-flex items-center gap-3 font-display-en text-[12px] tracking-eyebrow uppercase text-heading hover:text-burgundy transition-colors duration-500"
       >
         <span>@mamtaki_dalia</span>
         <span aria-hidden className="h-px w-12 bg-current" />
@@ -233,7 +233,7 @@ function CategorySection({ category, items, locale, displayFont }: SectionProps)
         </div>
         <h2
           id={`heading-${category}`}
-          className={`mt-4 md:mt-5 ${displayFont} font-bold leading-[1.1] text-cedar text-balance text-3xl md:text-4xl lg:text-5xl`}
+          className={`mt-4 md:mt-5 ${displayFont} font-bold leading-[1.1] text-heading text-balance text-3xl md:text-4xl lg:text-5xl`}
         >
           {categoryLabels[category][locale]}
         </h2>

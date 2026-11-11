@@ -52,6 +52,8 @@ export type Product = {
   allergens?: Translated;
   /** Storage & serving instructions. */
   storage?: Translated;
+  /** Overrides the "/ ק״ג" style price suffix, e.g. "מארז 4 ק״ג". */
+  unitLabel?: Translated;
 };
 
 /* ─── Category labels & eyebrows ─────────────────────────────────── */

@@ -12,13 +12,13 @@ const sizeMap: Record<ButtonSize, string> = {
 
 const variantMap: Record<ButtonVariant, string> = {
   primary:
-    'bg-cedar text-ivory border border-cedar hover:bg-cedar-light hover:border-gold focus-visible:bg-cedar-light',
+    'bg-cedar text-ivory border border-heading hover:bg-cedar-light hover:border-gold focus-visible:bg-cedar-light',
   gold:
-    'bg-gold text-cedar border border-gold hover:bg-gold-light hover:border-gold-light focus-visible:bg-gold-light',
+    'bg-gold text-black border border-gold hover:bg-gold-light hover:border-gold-light focus-visible:bg-gold-light',
   outline:
     'bg-transparent text-ivory border border-gold-light/70 hover:border-gold hover:bg-gold/10 focus-visible:border-gold',
   ghost:
-    'bg-transparent text-cedar border border-transparent hover:text-burgundy',
+    'bg-transparent text-heading border border-transparent hover:text-burgundy',
 };
 
 const baseClasses =

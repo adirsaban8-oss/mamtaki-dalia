@@ -12,31 +12,33 @@
 
 @theme {
   /* ── Palette ─────────────────────────────────────────────────────
-     Surfaces are always warm cream; no #FFFFFF. Dark sections lean
-     on cedar + burgundy. Gold is the antique-leaf hue, not neon. */
+     Black and gold, matching the brand logo. Surfaces are near-black,
+     text is warm ivory, accents are antique gold. */
 
-  --color-ivory: #F6F0E6;          /* main page background — parchment */
-  --color-sand: #EBE4DA;           /* section variation — sand */
-  --color-cream-card: #FFFFFF;     /* product cards — white so cut-out photos blend in */
+  --color-page: #0C0A08;          /* main page background — black */
+  --color-heading: #EBDAB4;       /* headings on black — champagne gold */
+  --color-ivory: #F4ECDD;          /* main page background — parchment */
+  --color-sand: #13110E;           /* section variation — sand */
+  --color-cream-card: #17140F;     /* product cards — white so cut-out photos blend in */
 
-  --color-cedar: #14231E;          /* deep forest — header / dark sections */
-  --color-cedar-deep: #0C1713;     /* hero photo edge stop, deepest grade */
-  --color-cedar-light: #1F4D3F;    /* sage on dark backgrounds */
-  --color-ink: #2A2622;            /* body paragraph on cream (lower chroma) */
+  --color-cedar: #070605;          /* deep forest — header / dark sections */
+  --color-cedar-deep: #000000;     /* hero photo edge stop, deepest grade */
+  --color-cedar-light: #1B1712;    /* sage on dark backgrounds */
+  --color-ink: #E8DFCF;            /* body paragraph on cream (lower chroma) */
 
-  --color-gold: #C3A477;           /* antique gold — primary accent */
-  --color-gold-light: #E6D6B8;     /* champagne — hover / highlights */
-  --color-gold-deep: #9C7A45;      /* bronze — borders */
+  --color-gold: #C9A766;           /* antique gold — primary accent */
+  --color-gold-light: #E9D7AE;     /* champagne — hover / highlights */
+  --color-gold-deep: #B38E52;      /* bronze — borders */
 
-  --color-burgundy: #6B2735;       /* deep wine — primary CTA */
-  --color-burgundy-deep: #4A1B25;  /* mahogany — pressed / hover */
+  --color-burgundy: #E2C58C;       /* deep wine — primary CTA */
+  --color-burgundy-deep: #C9A766;  /* mahogany — pressed / hover */
 
   --color-pistachio: #93A55B;      /* muted green accent */
   --color-copper: #B87654;         /* rose gold detail */
 
-  --color-coffee: #2A1F15;         /* body text on cream */
-  --color-coffee-muted: #6B5A47;   /* muted body on cream */
-  --color-hairline: #E5D5C6;       /* warm hairline borders on cream */
+  --color-coffee: #ECE3D3;         /* body text on cream */
+  --color-coffee-muted: #B4A68E;   /* muted body on cream */
+  --color-hairline: #2F281E;       /* warm hairline borders on cream */
 
   /* ── Shadows ─────────────────────────────────────────────────────
      Tuned exactly to the spec. Card hover lifts with burgundy ghost. */
@@ -91,11 +93,11 @@
    ================================================================== */
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 html {
-  background-color: var(--color-ivory);
+  background-color: var(--color-page);
   color: var(--color-coffee);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -110,7 +112,7 @@ html[lang="ar"] body {
 }
 
 body {
-  background-color: var(--color-ivory);
+  background-color: var(--color-page);
   color: var(--color-coffee);
   min-height: 100dvh;
   font-feature-settings: "ss01", "ss02", "kern";
@@ -119,8 +121,8 @@ body {
 
 /* Selection — burgundy on parchment */
 ::selection {
-  background-color: var(--color-burgundy);
-  color: var(--color-ivory);
+  background-color: var(--color-gold);
+  color: #000;
 }
 
 /* Crisp focus ring in gold — accessible and on-brand */
@@ -180,16 +182,15 @@ html.a11y-text-largest {
 }
 
 html.a11y-contrast {
-  --color-ivory: #FFF8E8;
-  --color-sand: #F5E6C8;
-  --color-cedar: #0D2017;
-  --color-cedar-deep: #060F0A;
-  --color-gold: #B8860B;
-  --color-gold-deep: #7A5A20;
-  --color-burgundy: #5A0E1A;
-  --color-coffee: #000000;
-  --color-coffee-muted: #2A2622;
-  --color-ink: #000000;
+  --color-page: #000000;
+  --color-sand: #000000;
+  --color-cream-card: #0A0A0A;
+  --color-heading: #FFF1CC;
+  --color-gold: #F0C878;
+  --color-gold-deep: #E0B868;
+  --color-coffee: #FFFFFF;
+  --color-coffee-muted: #E6E0D4;
+  --color-ink: #FFFFFF;
   --color-hairline: #8B6F3D;
 }
 html.a11y-contrast img {
@@ -249,7 +250,7 @@ html[lang="he"] .tracking-eyebrow { letter-spacing: 0.06em; }
     top: 50%;
     width: 7px;
     height: 7px;
-    background: var(--color-ivory);
+    background: var(--color-page);
     border: 1px solid var(--color-gold);
     transform: translate(-50%, -50%) rotate(45deg);
   }
