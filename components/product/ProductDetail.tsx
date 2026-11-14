@@ -105,15 +105,15 @@ export function ProductDetail({ product, locale }: Props) {
 
       {/* Breadcrumb */}
       <nav aria-label="Breadcrumb" className="relative mx-auto max-w-7xl px-5 md:px-10 pt-8 md:pt-10">
-        <ol className="flex items-center gap-3 font-display-en text-[11px] tracking-eyebrow uppercase text-coffee-muted">
+        <ol className="flex items-center gap-3 text-[13px] text-coffee-muted">
           <li>
-            <Link href="/" className="hover:text-burgundy transition-colors duration-500">
+            <Link href="/" className="inline-block py-2 hover:text-burgundy transition-colors duration-500">
               {locale === 'ar' ? 'الرئيسية' : 'בית'}
             </Link>
           </li>
           <li aria-hidden>·</li>
           <li>
-            <Link href="/shop" className="hover:text-burgundy transition-colors duration-500">
+            <Link href="/shop" className="inline-block py-2 hover:text-burgundy transition-colors duration-500">
               {locale === 'ar' ? 'القائمة' : 'הקטלוג'}
             </Link>
           </li>
@@ -123,7 +123,7 @@ export function ProductDetail({ product, locale }: Props) {
       </nav>
 
       {/* Hero — 2 column desktop */}
-      <div className="relative mx-auto max-w-7xl px-5 md:px-10 pt-10 md:pt-14 pb-16 md:pb-24 grid lg:grid-cols-12 gap-10 lg:gap-16">
+      <div className="relative mx-auto max-w-7xl px-5 md:px-10 pt-5 md:pt-14 pb-14 md:pb-24 grid lg:grid-cols-12 gap-8 lg:gap-16">
         {/* Left — Monogram seal in place of a photo */}
         <div className="lg:col-span-6 order-1">
           <MonogramSeal product={product} label={categoryLabels[product.category]?.[locale] ?? ''} />
@@ -183,20 +183,20 @@ export function ProductDetail({ product, locale }: Props) {
               <legend className="text-[13px] font-medium text-gold-deep mb-3">
                 {locale === 'ar' ? 'الكمية — بقفزات 200 غرام' : 'כמות — בקפיצות של 200 גרם'}
               </legend>
-              <div className="flex flex-wrap items-center gap-3">
-                <div className="inline-flex items-stretch h-12 border border-gold-deep/50 rounded-[2px]">
+              <div className="grid grid-cols-3 sm:flex sm:flex-wrap items-center gap-2 sm:gap-3">
+                <div className="col-span-3 sm:col-auto flex sm:inline-flex items-stretch h-12 border border-gold-deep/50 rounded-[2px]">
                   <button
                     type="button"
                     onClick={() => setGrams((g) => Math.max(MIN_GRAMS, g - STEP_GRAMS))}
                     disabled={grams <= MIN_GRAMS}
                     aria-label={locale === 'ar' ? 'أقل 200 غرام' : 'הפחתת 200 גרם'}
-                    className="w-12 text-2xl leading-none text-heading hover:bg-gold hover:text-black disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-heading transition-colors duration-300"
+                    className="w-16 sm:w-12 text-2xl leading-none text-heading hover:bg-gold hover:text-black disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-heading transition-colors duration-300"
                   >
                     −
                   </button>
                   <output
                     aria-live="polite"
-                    className={`${displayFont} min-w-[7.5rem] px-3 inline-flex items-center justify-center border-x border-gold-deep/50 text-lg font-bold text-heading`}
+                    className={`${displayFont} flex-1 sm:flex-none min-w-[7.5rem] px-3 inline-flex items-center justify-center border-x border-gold-deep/50 text-lg font-bold text-heading`}
                   >
                     {weightLabel(grams)}
                   </output>
@@ -205,7 +205,7 @@ export function ProductDetail({ product, locale }: Props) {
                     onClick={() => setGrams((g) => Math.min(MAX_GRAMS, g + STEP_GRAMS))}
                     disabled={grams >= MAX_GRAMS}
                     aria-label={locale === 'ar' ? 'زيادة 200 غرام' : 'הוספת 200 גרם'}
-                    className="w-12 text-2xl leading-none text-heading hover:bg-gold hover:text-black disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-heading transition-colors duration-300"
+                    className="w-16 sm:w-12 text-2xl leading-none text-heading hover:bg-gold hover:text-black disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-heading transition-colors duration-300"
                   >
                     +
                   </button>
@@ -249,13 +249,13 @@ export function ProductDetail({ product, locale }: Props) {
           </a>
           <a
             href="tel:+972525986266"
-            className="mt-3 text-center text-sm text-coffee-muted hover:text-heading transition-colors duration-500"
+            className="mt-1 py-3 text-center text-[15px] text-coffee-muted hover:text-heading transition-colors duration-500"
           >
             {locale === 'ar' ? 'أو اتصلوا: ' : 'או בטלפון: '}
             <span dir="ltr" className="font-medium">052-5986266</span>
           </a>
 
-          <p className="mt-5 text-xs text-coffee-muted leading-relaxed text-center">
+          <p className="mt-2 text-[13px] text-coffee-muted leading-relaxed text-center">
             {locale === 'ar'
               ? 'الأسعار تشمل الضريبة. المنتجات قد تحتوي على مسببات حساسية. '
               : 'המחירים כוללים מע״מ. המוצרים עלולים להכיל אלרגנים. '}
@@ -283,6 +283,31 @@ export function ProductDetail({ product, locale }: Props) {
             ))}
           </div>
         </div>
+      </div>
+
+      {/* Phone-only order bar — the order button never scrolls away */}
+      <div className="lg:hidden fixed bottom-0 inset-x-0 z-50 flex gap-2 px-3 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] bg-cedar/95 backdrop-blur-md border-t border-gold/40">
+        <a
+          href={whatsappLink(orderMessage)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex-[2] h-12 inline-flex items-center justify-center gap-2 rounded-[2px] bg-gold text-black text-[15px] font-bold"
+        >
+          <WhatsAppIcon />
+          {locale === 'ar' ? 'للطلب عبر واتساب' : 'להזמנה בוואטסאפ'}
+          {hasPrice && (
+            <>
+              <span aria-hidden>·</span>
+              <span dir="ltr">₪{byKg ? Math.round((product.price * grams) / 1000) : product.price}</span>
+            </>
+          )}
+        </a>
+        <Link
+          href="/shop"
+          className="flex-1 h-12 inline-flex items-center justify-center rounded-[2px] border border-gold/60 text-gold-light text-[15px] font-bold"
+        >
+          {locale === 'ar' ? 'الكتالوج' : 'לקטלוג'}
+        </Link>
       </div>
 
       {/* Related */}
@@ -319,7 +344,7 @@ function MonogramSeal({ product, label }: { product: Product; label: string }) {
   // arch set just outside it. Falls back to the typographic seal.
   if (product.image) {
     return (
-      <div className="relative mx-auto w-full max-w-[520px] bg-sand rounded-[4px] p-6 sm:p-10">
+      <div className="relative mx-auto w-full max-w-[300px] sm:max-w-[520px] bg-sand rounded-[4px] p-5 sm:p-10">
         <div className="relative">
           <span aria-hidden className="absolute -inset-2 sm:-inset-3 arch border border-gold/70 pointer-events-none" />
           <div className="relative aspect-[4/5] arch overflow-hidden bg-sand">

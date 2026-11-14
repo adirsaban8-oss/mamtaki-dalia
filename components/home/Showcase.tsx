@@ -132,7 +132,7 @@ export function Showcase() {
             href={INSTAGRAM}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 text-[15px] font-medium text-gold hover:text-gold-light transition-colors duration-500"
+            className="inline-flex items-center gap-3 h-11 text-[15px] font-medium text-gold hover:text-gold-light transition-colors duration-500"
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden>
               <rect x="3" y="3" width="18" height="18" rx="5" />

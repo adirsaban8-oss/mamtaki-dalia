@@ -103,7 +103,7 @@ export function EventsForm() {
         <button type="submit" className={buttonClasses({ variant: 'gold', size: 'lg', className: 'normal-case tracking-normal text-[15px]' })}>
           {L.submit}
         </button>
-        <a href="tel:+972543910078" className="text-sm text-coffee-muted hover:text-gold transition-colors">
+        <a href="tel:+972543910078" className="py-3 text-[15px] text-coffee-muted hover:text-gold transition-colors">
           {ar ? 'أو اتصلوا: ' : 'או התקשרו: '}
           <span dir="ltr" className="font-medium text-gold">{EVENTS_PHONE_DISPLAY}</span>
         </a>

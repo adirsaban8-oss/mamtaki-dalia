@@ -89,13 +89,13 @@ export function Header({ overHero = true }: Props) {
 
         {/* Utilities — tighter gap on phones, generous from md+ */}
         <div className="flex items-center gap-1 sm:gap-4 md:gap-6 shrink-0">
-          <LanguageSwitcher variant={onDark ? 'light' : 'dark'} />
+          <LanguageSwitcher variant={onDark ? 'light' : 'dark'} className="h-11 px-2" />
           <span aria-hidden className={`hidden md:block h-5 w-px ${onDark ? 'bg-gold/30' : 'bg-hairline'}`} />
           <a
             href={whatsappLink()}
             target="_blank"
             rel="noopener noreferrer"
-            className={`inline-flex items-center gap-2 h-9 sm:h-10 px-3 sm:px-4 border rounded-[2px] text-[12px] sm:text-[13px] font-medium transition-colors duration-500 ${onDark ? 'border-gold/60 text-gold-light hover:bg-gold hover:text-black' : 'border-gold/50 text-gold-light hover:bg-gold hover:text-black'}`}
+            className={`inline-flex items-center gap-2 h-11 sm:h-10 px-3.5 sm:px-4 border rounded-[2px] text-[12px] sm:text-[13px] font-medium transition-colors duration-500 ${onDark ? 'border-gold/60 text-gold-light hover:bg-gold hover:text-black' : 'border-gold/50 text-gold-light hover:bg-gold hover:text-black'}`}
           >
             <WhatsAppIcon />
             <span className="hidden sm:inline">{locale === 'ar' ? 'للطلبات' : 'להזמנות'}</span>
@@ -105,7 +105,7 @@ export function Header({ overHero = true }: Props) {
           <button
             type="button"
             onClick={() => setMenuOpen((v) => !v)}
-            className={`lg:hidden inline-flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 transition-colors duration-500 ${onDark ? 'text-ivory' : 'text-heading'}`}
+            className={`lg:hidden inline-flex items-center justify-center w-11 h-11 transition-colors duration-500 ${onDark ? 'text-ivory' : 'text-heading'}`}
             aria-label={menuOpen ? t('menuClose') : t('menuOpen')}
             aria-expanded={menuOpen}
           >
@@ -135,13 +135,13 @@ export function Header({ overHero = true }: Props) {
           closed: { height: 0, opacity: 0 },
         }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-        className="lg:hidden overflow-hidden bg-page border-t border-hairline/60"
+        className="lg:hidden overflow-hidden bg-page border-t border-hairline/60 max-h-[calc(100dvh-4rem)]"
       >
-        <nav className="px-5 py-8 flex flex-col gap-6" aria-label="Primary mobile">
+        <nav className="px-5 py-6 flex flex-col gap-1" aria-label="Primary mobile">
           <Link
             href="/shop"
             onClick={() => setMenuOpen(false)}
-            className="inline-flex items-center justify-center h-12 rounded-[2px] bg-gold text-black text-lg font-bold"
+            className="inline-flex items-center justify-center h-12 mb-3 rounded-[2px] bg-gold text-black text-lg font-bold"
           >
             {locale === 'ar' ? 'الكتالوج والأسعار' : 'לקטלוג ולמחירים'}
           </Link>
@@ -150,7 +150,7 @@ export function Header({ overHero = true }: Props) {
               key={item.href}
               href={item.href}
               onClick={() => setMenuOpen(false)}
-              className="text-lg font-medium text-heading hover:text-gold-deep transition-colors"
+              className="py-3 text-lg font-medium text-heading hover:text-gold-deep transition-colors border-b border-hairline/50 last:border-b-0"
             >
               {item.label}
             </Link>

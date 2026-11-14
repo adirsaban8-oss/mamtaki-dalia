@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import {
   Frank_Ruhl_Libre,
   IBM_Plex_Sans_Hebrew,
@@ -77,6 +77,13 @@ export const metadata: Metadata = {
     locale: 'he_IL',
     alternateLocale: ['ar_IL'],
   },
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  themeColor: '#0C0A08',
 };
 
 export function generateStaticParams() {

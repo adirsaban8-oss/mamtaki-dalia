@@ -16,6 +16,8 @@ export function MobileBar() {
   const ar = locale === 'ar';
 
   if (pathname.startsWith('/admin') || pathname.startsWith('/checkout')) return null;
+  // Product pages render their own order bar; keep only the spacer.
+  if (pathname.startsWith('/shop/')) return <div aria-hidden className="h-[4.5rem] lg:hidden" />;
   const inCatalog = pathname === '/shop';
 
   const cell =

@@ -49,19 +49,19 @@ export function LegalPage({ slug, locale }: Props) {
 
           <nav
             aria-label={ar ? 'صفحات قانونية أخرى' : 'עמודי מידע נוספים'}
-            className="mt-14 pt-8 border-t border-hairline flex flex-wrap gap-x-6 gap-y-3 text-[15px]"
+            className="mt-14 pt-8 border-t border-hairline flex flex-wrap gap-x-6 gap-y-1 text-[15px]"
           >
             {legalSlugs
               .filter((s) => s !== slug)
               .map((s) => (
-                <Link key={s} href={`/${s}`} className="text-gold underline underline-offset-4 hover:text-gold-light">
+                <Link key={s} href={`/${s}`} className="py-2 text-gold underline underline-offset-4 hover:text-gold-light">
                   {legalDocs[locale][s].title}
                 </Link>
               ))}
-            <Link href="/delivery" className="text-gold underline underline-offset-4 hover:text-gold-light">
+            <Link href="/delivery" className="py-2 text-gold underline underline-offset-4 hover:text-gold-light">
               {ar ? 'التوصيل' : 'משלוחים'}
             </Link>
-            <Link href="/shop" className="text-gold underline underline-offset-4 hover:text-gold-light">
+            <Link href="/shop" className="py-2 text-gold underline underline-offset-4 hover:text-gold-light">
               {ar ? 'إلى الكتالوج' : 'לקטלוג המוצרים'}
             </Link>
           </nav>

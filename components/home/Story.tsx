@@ -74,7 +74,7 @@ export async function Story({ locale }: Props) {
             {/* Caption strip below the image — date stamp */}
             <div className="mt-6 flex items-center gap-4 ms-1">
               <span aria-hidden className="block h-px w-12 bg-gold" />
-              <span className="font-display-en text-[11px] tracking-eyebrow uppercase text-coffee-muted">
+              <span className="text-[13px] text-coffee-muted">
                 {t('caption')}
               </span>
             </div>
@@ -116,7 +116,7 @@ export async function Story({ locale }: Props) {
               {t('pullQuote')}
             </p>
             <span aria-hidden className="mt-5 block h-px w-16 bg-gold" />
-            <cite className="mt-3 block not-italic font-display-en text-[11px] tracking-eyebrow uppercase text-coffee-muted">
+            <cite className="mt-3 block not-italic text-[13px] text-coffee-muted">
               — {t('quoteAttribution')}
             </cite>
           </blockquote>
@@ -134,7 +134,7 @@ export async function Story({ locale }: Props) {
           <div className="mt-8 md:mt-10">
             <Link
               href="/shop"
-              className="group inline-flex items-center gap-4 font-display-en text-[12px] tracking-eyebrow uppercase text-heading hover:text-burgundy transition-colors duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
+              className="group inline-flex items-center gap-4 h-11 font-display-en text-[12px] tracking-eyebrow uppercase text-heading hover:text-burgundy transition-colors duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)]"
             >
               <span>{t('cta')}</span>
               <span

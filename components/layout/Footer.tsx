@@ -59,17 +59,17 @@ export function Footer({ locale }: Props) {
         {/* Hairline above columns */}
         <div aria-hidden className="h-px w-full bg-gold-light/15 mb-10 md:mb-12" />
 
-        {/* 4 columns — even on phone, per user request. Mobile text is
-            scaled down so the 4 columns still fit a 375px viewport. */}
-        <div className="grid grid-cols-4 gap-3 sm:gap-6 md:gap-12">
+        {/* 2 columns on phones (readable text, finger-sized links),
+            4 columns from md up. */}
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-4 md:gap-12">
           {/* Navigation */}
           <FooterColumn title={t('navigation')} displayFont={displayFont}>
-            <ul className="space-y-2 sm:space-y-3">
+            <ul className="md:space-y-3">
               {navLinks.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-[11px] sm:text-sm text-ivory/70 hover:text-gold-light transition-colors duration-500 block leading-snug"
+                    className="text-[15px] md:text-sm text-ivory/75 hover:text-gold-light transition-colors duration-500 block leading-snug py-2.5 md:py-0"
                   >
                     {item.label}
                   </Link>
@@ -80,12 +80,12 @@ export function Footer({ locale }: Props) {
 
           {/* Categories */}
           <FooterColumn title={t('categories')} displayFont={displayFont}>
-            <ul className="space-y-2 sm:space-y-3">
+            <ul className="md:space-y-3">
               {orderedCategories.map((cat) => (
                 <li key={cat}>
                   <Link
                     href={`/shop#cat-${cat}`}
-                    className="text-[11px] sm:text-sm text-ivory/70 hover:text-gold-light transition-colors duration-500 block leading-snug"
+                    className="text-[15px] md:text-sm text-ivory/75 hover:text-gold-light transition-colors duration-500 block leading-snug py-2.5 md:py-0"
                   >
                     {categoryLabels[cat][locale]}
                   </Link>
@@ -96,12 +96,12 @@ export function Footer({ locale }: Props) {
 
           {/* Info */}
           <FooterColumn title={t('info')} displayFont={displayFont}>
-            <ul className="space-y-2 sm:space-y-3">
+            <ul className="md:space-y-3">
               {infoLinks.map((item) => (
                 <li key={item.label}>
                   <Link
                     href={item.href}
-                    className="text-[11px] sm:text-sm text-ivory/70 hover:text-gold-light transition-colors duration-500 block leading-snug"
+                    className="text-[15px] md:text-sm text-ivory/75 hover:text-gold-light transition-colors duration-500 block leading-snug py-2.5 md:py-0"
                   >
                     {item.label}
                   </Link>
@@ -112,37 +112,37 @@ export function Footer({ locale }: Props) {
 
           {/* Contact */}
           <FooterColumn title={t('contact')} displayFont={displayFont}>
-            <address className="not-italic space-y-2 sm:space-y-3 text-[11px] sm:text-sm text-ivory/70 leading-[1.55] sm:leading-[1.7]">
-              <p className={`${displayFont} text-ivory text-[12px] sm:text-base font-bold leading-snug`}>
+            <address className="not-italic space-y-3 text-[15px] md:text-sm text-ivory/75 leading-[1.7]">
+              <p className={`${displayFont} text-ivory text-base font-bold leading-snug`}>
                 {locale === 'ar' ? 'دالية ١٠، دالية الكرمل' : 'דליה 10, דלית אל כרמל'}
               </p>
               <p>
-                <a href="tel:+972525986266" className="hover:text-gold-light transition-colors duration-500 block">
+                <a href="tel:+972525986266" className="hover:text-gold-light transition-colors duration-500 block py-1.5 md:py-0">
                   052-5986266
                 </a>
-                <a href="tel:+97246263309" className="hover:text-gold-light transition-colors duration-500 block">
+                <a href="tel:+97246263309" className="hover:text-gold-light transition-colors duration-500 block py-1.5 md:py-0">
                   04-6263309
                 </a>
-                <a href="tel:+972543910078" className="hover:text-gold-light transition-colors duration-500 block">
+                <a href="tel:+972543910078" className="hover:text-gold-light transition-colors duration-500 block py-1.5 md:py-0">
                   {locale === 'ar' ? 'مناسبات: ' : 'אירועים: '}
                   <span dir="ltr" className="whitespace-nowrap">054-3910078</span>
                 </a>
               </p>
               <p>
-                <a href="mailto:amal3591@gmail.com" className="hover:text-gold-light transition-colors duration-500 break-all">
+                <a href="mailto:amal3591@gmail.com" className="hover:text-gold-light transition-colors duration-500 break-all inline-block py-1.5 md:py-0">
                   amal3591@gmail.com
                 </a>
               </p>
-              <p className="font-display-en text-[9px] sm:text-[11px] tracking-eyebrow uppercase text-gold-light/80 pt-1 sm:pt-2">
+              <p className="text-[13px] font-medium text-gold-light/80 pt-2">
                 {t('hours')}
               </p>
-              <p className="text-[10px] sm:text-xs text-ivory/60 leading-snug">{t('hoursValue')}</p>
+              <p className="text-[13px] md:text-xs text-ivory/65 leading-relaxed">{t('hoursValue')}</p>
 
               <a
                 href="https://waze.com/ul?q=דליה%2010%20דלית%20אל%20כרמל"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 sm:gap-2 mt-2 sm:mt-3 px-2 sm:px-3 h-7 sm:h-9 border border-gold-light/30 text-gold-light font-display-en text-[9px] sm:text-[11px] tracking-eyebrow uppercase hover:border-gold transition-colors duration-500 rounded-[2px]"
+                className="inline-flex items-center gap-2 mt-3 px-4 h-11 md:h-9 border border-gold-light/30 text-gold-light font-display-en text-[12px] md:text-[11px] tracking-eyebrow uppercase hover:border-gold transition-colors duration-500 rounded-[2px]"
               >
                 <WazeIcon /> {t('waze')}
               </a>
@@ -156,8 +156,8 @@ export function Footer({ locale }: Props) {
         {/* Bottom bar: social + copyright + credit — horizontal at all
             widths, just tighter spacing on phones. Credit hides on the
             smallest screens so the row never overflows. */}
-        <div className="flex flex-row items-center justify-between gap-2 sm:gap-6">
-          <div className="flex items-center gap-2 sm:gap-4">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-5 sm:gap-6">
+          <div className="flex items-center gap-3 sm:gap-4">
             <SocialIcon href="https://www.instagram.com/mamtaki_dalia/" label="Instagram">
               <InstagramIcon />
             </SocialIcon>
@@ -172,7 +172,7 @@ export function Footer({ locale }: Props) {
             </SocialIcon>
           </div>
 
-          <p className="font-display-en text-[9px] sm:text-[11px] tracking-eyebrow uppercase text-ivory/50 text-center">
+          <p className="text-xs sm:text-[11px] text-ivory/55 text-center">
             © {new Date().getFullYear()} {locale === 'ar' ? 'حلويات دالية الكرمل' : 'ממתקי דלית אל כרמל'}
           </p>
 
@@ -198,7 +198,7 @@ function FooterColumn({
 }) {
   return (
     <div>
-      <h3 className={`${displayFont} font-black text-[12px] sm:text-base text-gold-light mb-3 sm:mb-5 tracking-display leading-snug`}>
+      <h3 className={`${displayFont} font-black text-lg md:text-base text-gold-light mb-2 md:mb-5 tracking-display leading-snug`}>
         {title}
       </h3>
       {children}
@@ -221,7 +221,7 @@ function SocialIcon({
       target="_blank"
       rel="noopener noreferrer"
       aria-label={label}
-      className="w-8 h-8 sm:w-10 sm:h-10 inline-flex items-center justify-center border border-gold-light/30 text-gold-light hover:border-gold hover:text-gold transition-colors duration-500 rounded-[2px]"
+      className="w-11 h-11 sm:w-10 sm:h-10 inline-flex items-center justify-center border border-gold-light/30 text-gold-light hover:border-gold hover:text-gold transition-colors duration-500 rounded-[2px]"
     >
       {children}
     </a>

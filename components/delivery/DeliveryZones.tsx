@@ -50,7 +50,7 @@ export function DeliveryZones() {
   return (
     <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
       {/* Map */}
-      <figure className="lg:col-span-5 mx-auto w-full max-w-[360px]">
+      <figure className="order-2 lg:order-1 lg:col-span-5 mx-auto w-full max-w-[360px]">
         <svg
           viewBox="0 0 330 545"
           role="img"
@@ -112,7 +112,7 @@ export function DeliveryZones() {
 
           {/* Home base */}
           <circle cx="160" cy="165" r="5" fill="#000" stroke="#E9D7AE" strokeWidth="1.5" />
-          <text x="172" y="169" textAnchor="start" fill="#000" fontSize="11" fontWeight={700}>
+          <text x="170" y="169" textAnchor="end" fill="#000" fontSize="12" fontWeight={700}>
             {ar ? 'دالية الكرمل' : 'דלית אל כרמל'}
           </text>
         </svg>
@@ -122,7 +122,7 @@ export function DeliveryZones() {
       </figure>
 
       {/* Check + zone list */}
-      <div className="lg:col-span-7">
+      <div className="order-1 lg:order-2 lg:col-span-7">
         <label htmlFor="place" className={`${displayFont} block text-2xl md:text-3xl font-bold text-heading`}>
           {ar ? 'هل نصل إليكم؟' : 'האם אנחנו מגיעים אליכם?'}
         </label>

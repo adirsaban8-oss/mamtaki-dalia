@@ -111,7 +111,7 @@ export function ShopContent({ locale }: Props) {
             <a
               key={category}
               href={`#cat-${category}`}
-              className="shrink-0 h-9 px-4 inline-flex items-center rounded-full border border-hairline bg-cream-card text-[13px] font-medium text-heading hover:border-gold hover:text-gold-deep transition-colors duration-500 whitespace-nowrap"
+              className="shrink-0 h-11 md:h-9 px-4 inline-flex items-center rounded-full border border-hairline bg-cream-card text-[13px] font-medium text-heading hover:border-gold hover:text-gold-deep transition-colors duration-500 whitespace-nowrap"
             >
               {categoryLabels[category][locale]}
             </a>
