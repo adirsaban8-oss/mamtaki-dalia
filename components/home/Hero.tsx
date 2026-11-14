@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useLocale, useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { whatsappLink } from '@/lib/site';
@@ -7,8 +8,8 @@ import type { Locale } from '@/i18n/locales';
 
 /**
  * Hero — minimal split panel: a light-grey field with the place name set
- * very large, the shop's address and hours, and a black field with the
- * one action that matters: open the catalog. No photo, no ornament; the
+ * very large, the shop's address and hours, and one of the shop's own
+ * photos carrying the one action that matters: open the catalog. The
  * product grid starts right below.
  */
 export function Hero() {
@@ -37,13 +38,22 @@ export function Hero() {
         </address>
       </div>
 
-      {/* Black panel — the action */}
-      <div className="lg:col-span-5 bg-black text-white px-6 sm:px-12 lg:px-20 py-12 md:py-16 lg:py-20 flex flex-col justify-center">
+      {/* Photo panel — the shop's own tray, with the one action on top */}
+      <div className="relative isolate overflow-hidden lg:col-span-5 bg-neutral-800 text-white px-6 sm:px-12 lg:px-20 py-12 md:py-16 lg:py-20 min-h-[380px] flex flex-col justify-end">
+        <Image
+          src="/images/hero.webp"
+          alt={ar ? 'صينية حلويات من المحل' : 'מגש ממתקים מהחנות'}
+          fill
+          priority
+          sizes="(min-width: 1024px) 42vw, 100vw"
+          className="-z-20 object-cover"
+        />
+        <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-black/90 via-black/60 to-black/15" />
         <p className="flex items-center gap-2.5 text-[13px] font-medium">
           <span aria-hidden className="block w-2.5 h-2.5 rounded-full bg-white" />
           {t('eyebrow')}
         </p>
-        <p className="mt-6 text-4xl sm:text-[2.75rem] leading-[1.05] font-light tracking-[-0.03em] text-balance">
+        <p className="mt-6 text-4xl sm:text-[2.75rem] leading-[1.05] font-medium tracking-[-0.03em] text-balance">
           {ar ? 'طلبكم يبدأ من هنا' : 'ההזמנה שלכם מתחילה כאן'}
         </p>
         <div className="mt-7 flex flex-col sm:flex-row lg:flex-col xl:flex-row items-stretch sm:items-center lg:items-stretch xl:items-center gap-4">
