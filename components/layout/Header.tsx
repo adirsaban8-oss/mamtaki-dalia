@@ -49,7 +49,6 @@ export function Header({ overHero = true }: Props) {
     : 'text-coffee hover:text-burgundy';
 
   const navItems = [
-    { href: '/shop', label: t('shop') },
     { href: '/#story', label: t('story') },
     { href: '/delivery', label: t('delivery') },
     { href: '/events', label: t('events') },
@@ -70,7 +69,13 @@ export function Header({ overHero = true }: Props) {
         <Wordmark locale={locale} variant={onDark ? 'light' : 'dark'} />
 
         {/* Desktop nav */}
-        <nav className="hidden lg:flex items-center gap-10" aria-label="Primary">
+        <nav className="hidden lg:flex items-center gap-8 xl:gap-10" aria-label="Primary">
+          <Link
+            href="/shop"
+            className="inline-flex items-center h-10 px-6 rounded-[2px] bg-gold text-black text-[15px] font-bold hover:bg-gold-light transition-colors duration-500"
+          >
+            {locale === 'ar' ? 'الكتالوج والأسعار' : 'לקטלוג ולמחירים'}
+          </Link>
           {navItems.map((item) => (
             <Link
               key={item.href}
@@ -133,6 +138,13 @@ export function Header({ overHero = true }: Props) {
         className="lg:hidden overflow-hidden bg-page border-t border-hairline/60"
       >
         <nav className="px-5 py-8 flex flex-col gap-6" aria-label="Primary mobile">
+          <Link
+            href="/shop"
+            onClick={() => setMenuOpen(false)}
+            className="inline-flex items-center justify-center h-12 rounded-[2px] bg-gold text-black text-lg font-bold"
+          >
+            {locale === 'ar' ? 'الكتالوج والأسعار' : 'לקטלוג ולמחירים'}
+          </Link>
           {navItems.map((item) => (
             <Link
               key={item.href}

@@ -7,6 +7,7 @@ import { ValueProps } from '@/components/home/ValueProps';
 import { CategoryArches } from '@/components/home/CategoryArches';
 import { OrderBand } from '@/components/home/OrderBand';
 import { Showcase } from '@/components/home/Showcase';
+import { CatalogPreview } from '@/components/home/CatalogPreview';
 import { Footer } from '@/components/layout/Footer';
 import type { Locale } from '@/i18n/locales';
 
@@ -20,6 +21,7 @@ export default async function HomePage({ params }: PageProps<'/[locale]'>) {
       <main className="flex-1">
         <Hero />
         <CategoryArches />
+        <CatalogPreview />
         <Ticker />
         <Showcase />
         <Story locale={locale as Locale} />

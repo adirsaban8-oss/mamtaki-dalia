@@ -4,7 +4,7 @@
     "tagline": "Daliyat al-Karmel Sweets · Est. 1985"
   },
   "Nav": {
-    "shop": "החנות",
+    "shop": "קטלוג",
     "story": "הסיפור שלנו",
     "gallery": "גלריה",
     "contact": "צור קשר",
@@ -89,7 +89,8 @@
     "underlineLinks": "הדגש קישורים",
     "reduceMotion": "עצור אנימציות",
     "reset": "איפוס הגדרות",
-    "legalNote": "מציע נגישות לפי תקן ישראלי 5568"
+    "legalNote": "מציע נגישות לפי תקן ישראלי 5568",
+    "statementLink": "להצהרת הנגישות המלאה"
   },
   "Checkout": {
     "eyebrow": "השלמת הזמנה",
@@ -165,7 +166,7 @@
     "info": "מידע",
     "contact": "צרו קשר",
     "home": "בית",
-    "shop": "החנות",
+    "shop": "קטלוג",
     "story": "הסיפור שלנו",
     "gallery": "גלריה",
     "shippingPolicy": "מדיניות משלוחים",

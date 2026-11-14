@@ -34,6 +34,7 @@ export function ShopContent({ locale }: Props) {
   const displayFont = locale === 'ar' ? 'font-display-ar' : 'font-display-he';
 
   const [activeBadges, setActiveBadges] = useState<ProductBadge[]>([]);
+  const [search, setSearch] = useState('');
   const { products: allProducts, loading } = useProducts();
 
   const filteredByCategory = useMemo(() => {
@@ -42,13 +43,18 @@ export function ShopContent({ locale }: Props) {
       const list = allProducts
         .filter((p) => p.category === category)
         .filter((p) => {
+          const q = search.trim().toLowerCase();
+          if (!q) return true;
+          return [p.name.he, p.name.ar, p.tastingNote.he, p.tastingNote.ar].some((s) => s.toLowerCase().includes(q));
+        })
+        .filter((p) => {
           if (activeBadges.length === 0) return true;
           return activeBadges.some((b) => p.badges.includes(b));
         });
       if (list.length > 0) map.set(category, list);
     }
     return map;
-  }, [activeBadges, allProducts]);
+  }, [activeBadges, allProducts, search]);
 
   const totalCount = useMemo(
     () => Array.from(filteredByCategory.values()).reduce((sum, l) => sum + l.length, 0),
@@ -83,6 +89,16 @@ export function ShopContent({ locale }: Props) {
         <p className="mt-6 md:mt-8 max-w-2xl text-base md:text-lg leading-[1.7] text-ink/70 text-pretty">
           {t('body')}
         </p>
+        <label className="mt-7 w-full max-w-md">
+          <span className="sr-only">{locale === 'ar' ? 'بحث في الكتالوج' : 'חיפוש בקטלוג'}</span>
+          <input
+            type="search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder={locale === 'ar' ? 'ابحثوا عن منتج… مثلاً: كنافة' : 'חפשו מוצר… למשל: כנאפה'}
+            className="w-full h-12 px-5 bg-cream-card border border-gold-deep/50 rounded-full text-base text-ivory text-center placeholder:text-coffee-muted/70 focus:border-gold outline-none"
+          />
+        </label>
       </header>
 
       {/* Category index — sticky, scrolls sideways on phones */}
@@ -117,7 +133,10 @@ export function ShopContent({ locale }: Props) {
             </p>
             <button
               type="button"
-              onClick={() => setActiveBadges([])}
+              onClick={() => {
+                setActiveBadges([]);
+                setSearch('');
+              }}
               className="mt-6 font-display-en text-[12px] tracking-eyebrow uppercase text-burgundy hover:text-burgundy-deep transition-colors duration-500"
             >
               {t('clearAll')}

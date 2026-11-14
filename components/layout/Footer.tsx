@@ -26,11 +26,12 @@ export function Footer({ locale }: Props) {
   ];
 
   const infoLinks = [
-    { label: t('shippingPolicy'), href: `/${locale}/delivery` },
-    { label: t('returns'), href: '#' },
-    { label: t('kosher'), href: '#' },
-    { label: t('terms'), href: '#' },
-    { label: t('privacy'), href: '#' },
+    { label: t('shippingPolicy'), href: '/delivery' },
+    { label: t('returns'), href: '/returns' },
+    { label: t('terms'), href: '/terms' },
+    { label: t('privacy'), href: '/privacy' },
+    { label: locale === 'ar' ? 'تصريح إتاحة الوصول' : 'הצהרת נגישות', href: '/accessibility' },
+    { label: t('kosher'), href: '/terms#kosher' },
   ];
 
   return (
@@ -98,12 +99,12 @@ export function Footer({ locale }: Props) {
             <ul className="space-y-2 sm:space-y-3">
               {infoLinks.map((item) => (
                 <li key={item.label}>
-                  <a
+                  <Link
                     href={item.href}
                     className="text-[11px] sm:text-sm text-ivory/70 hover:text-gold-light transition-colors duration-500 block leading-snug"
                   >
                     {item.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -172,7 +173,7 @@ export function Footer({ locale }: Props) {
           </div>
 
           <p className="font-display-en text-[9px] sm:text-[11px] tracking-eyebrow uppercase text-ivory/50 text-center">
-            © {new Date().getFullYear()} Maison Dalia
+            © {new Date().getFullYear()} {locale === 'ar' ? 'حلويات دالية الكرمل' : 'ממתקי דלית אל כרמל'}
           </p>
 
           <p className="hidden sm:block font-display-en text-[10px] tracking-eyebrow uppercase text-ivory/40">

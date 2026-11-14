@@ -16,7 +16,10 @@ import { ArabesquePattern } from '@/components/ornaments/ArabesquePattern';
 
 const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 
-const PACK_SIZES = [1, 2, 3, 4, 5];
+const STEP_GRAMS = 200;
+const MIN_GRAMS = 200;
+const MAX_GRAMS = 10000;
+const QUICK_GRAMS = [1000, 2000, 3000];
 
 type Props = { product: Product; locale: Locale };
 
@@ -34,8 +37,8 @@ export function ProductDetail({ product, locale }: Props) {
   const displayFont = locale === 'ar' ? 'font-display-ar' : 'font-display-he';
 
   const [openSection, setOpenSection] = useState<string | null>('allergens');
-  /** Packs sold by weight come in whole kilos: 1, 2, 3 … */
-  const [packKg, setPackKg] = useState(1);
+  /** Weight products are ordered in 200 g steps. */
+  const [grams, setGrams] = useState(1000);
 
   const { products: allProducts } = useProducts();
   const related = useMemo(
@@ -73,7 +76,10 @@ export function ProductDetail({ product, locale }: Props) {
 
   const hasPrice = product.price > 0;
   const byKg = product.unit === 'per_kg';
-  const kgLabel = (n: number) => (locale === 'ar' ? `${n} كغ` : `${n} ק״ג`);
+  const weightLabel = (g: number) =>
+    g < 1000
+      ? locale === 'ar' ? `${g} غرام` : `${g} גרם`
+      : locale === 'ar' ? `${g / 1000} كغ` : `${g / 1000} ק״ג`;
   const priceSuffix = product.unitLabel
     ? `/ ${product.unitLabel[locale]}`
     : product.unit === 'per_kg'
@@ -82,7 +88,7 @@ export function ProductDetail({ product, locale }: Props) {
         ? locale === 'ar' ? '/ قطعة' : '/ יחידה'
         : locale === 'ar' ? '/ صينية' : '/ מגש';
 
-  const packText = byKg ? ` — ${locale === 'ar' ? 'علبة' : 'מארז'} ${kgLabel(packKg)}` : '';
+  const packText = byKg ? ` — ${weightLabel(grams)}` : '';
   const orderMessage =
     locale === 'ar'
       ? `مرحباً، أود أن أطلب: ${product.name.ar}${packText}`
@@ -171,33 +177,61 @@ export function ProductDetail({ product, locale }: Props) {
             </p>
           </div>
 
-          {/* Pack size — weight products are sold in whole-kilo packs */}
+          {/* Quantity — weight products are sold in 200 g steps */}
           {byKg && (
             <fieldset className="mt-8">
               <legend className="text-[13px] font-medium text-gold-deep mb-3">
-                {locale === 'ar' ? 'حجم العلبة' : 'גודל המארז'}
+                {locale === 'ar' ? 'الكمية — بقفزات 200 غرام' : 'כמות — בקפיצות של 200 גרם'}
               </legend>
-              <div className="flex flex-wrap gap-2">
-                {PACK_SIZES.map((n) => (
+              <div className="flex flex-wrap items-center gap-3">
+                <div className="inline-flex items-stretch h-12 border border-gold-deep/50 rounded-[2px]">
                   <button
-                    key={n}
                     type="button"
-                    onClick={() => setPackKg(n)}
-                    aria-pressed={packKg === n}
-                    className={`h-11 min-w-[4.5rem] px-4 border rounded-[2px] text-[15px] font-medium transition-colors duration-300 ${
-                      packKg === n
+                    onClick={() => setGrams((g) => Math.max(MIN_GRAMS, g - STEP_GRAMS))}
+                    disabled={grams <= MIN_GRAMS}
+                    aria-label={locale === 'ar' ? 'أقل 200 غرام' : 'הפחתת 200 גרם'}
+                    className="w-12 text-2xl leading-none text-heading hover:bg-gold hover:text-black disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-heading transition-colors duration-300"
+                  >
+                    −
+                  </button>
+                  <output
+                    aria-live="polite"
+                    className={`${displayFont} min-w-[7.5rem] px-3 inline-flex items-center justify-center border-x border-gold-deep/50 text-lg font-bold text-heading`}
+                  >
+                    {weightLabel(grams)}
+                  </output>
+                  <button
+                    type="button"
+                    onClick={() => setGrams((g) => Math.min(MAX_GRAMS, g + STEP_GRAMS))}
+                    disabled={grams >= MAX_GRAMS}
+                    aria-label={locale === 'ar' ? 'زيادة 200 غرام' : 'הוספת 200 גרם'}
+                    className="w-12 text-2xl leading-none text-heading hover:bg-gold hover:text-black disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-heading transition-colors duration-300"
+                  >
+                    +
+                  </button>
+                </div>
+                {QUICK_GRAMS.map((g) => (
+                  <button
+                    key={g}
+                    type="button"
+                    onClick={() => setGrams(g)}
+                    aria-pressed={grams === g}
+                    className={`h-12 px-4 border rounded-[2px] text-[15px] font-medium transition-colors duration-300 ${
+                      grams === g
                         ? 'bg-gold border-gold text-black'
                         : 'border-gold-deep/50 text-heading hover:border-gold'
                     }`}
                   >
-                    {kgLabel(n)}
+                    {weightLabel(g)}
                   </button>
                 ))}
               </div>
               {hasPrice && (
                 <p className="mt-4 text-[15px] text-coffee-muted">
                   {locale === 'ar' ? 'المجموع: ' : 'סה״כ: '}
-                  <span className={`${displayFont} text-xl font-bold text-gold`}>₪{product.price * packKg}</span>
+                  <span className={`${displayFont} text-xl font-bold text-gold`}>
+                    ₪{Math.round((product.price * grams) / 1000)}
+                  </span>
                 </p>
               )}
             </fieldset>
@@ -220,6 +254,19 @@ export function ProductDetail({ product, locale }: Props) {
             {locale === 'ar' ? 'أو اتصلوا: ' : 'או בטלפון: '}
             <span dir="ltr" className="font-medium">052-5986266</span>
           </a>
+
+          <p className="mt-5 text-xs text-coffee-muted leading-relaxed text-center">
+            {locale === 'ar'
+              ? 'الأسعار تشمل الضريبة. المنتجات قد تحتوي على مسببات حساسية. '
+              : 'המחירים כוללים מע״מ. המוצרים עלולים להכיל אלרגנים. '}
+            <Link href="/terms" className="text-gold underline underline-offset-4">
+              {locale === 'ar' ? 'الشروط' : 'תקנון'}
+            </Link>
+            {' · '}
+            <Link href="/returns" className="text-gold underline underline-offset-4">
+              {locale === 'ar' ? 'الإلغاء والإرجاع' : 'ביטולים והחזרות'}
+            </Link>
+          </p>
 
           {/* Accordion */}
           <div className="mt-10 border-t border-hairline">

@@ -6,6 +6,7 @@ import { useLocale } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import type { Locale } from '@/i18n/locales';
 import type { Product } from '@/lib/mockData';
+import { whatsappLink } from '@/lib/site';
 
 const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 
@@ -45,11 +46,11 @@ export function MenuCard({ product, index = 0, variant = 'card' }: Props) {
       whileInView={{ y: 0, opacity: 1 }}
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.8, ease: easeLuxe, delay: (index % 4) * 0.06 }}
-      className="group relative h-full"
+      className="group relative h-full flex flex-col bg-cream-card border border-hairline hover:border-gold transition-colors duration-500 rounded-[4px] overflow-hidden"
     >
       <Link
         href={`/shop/${product.slug}`}
-        className="flex h-full flex-col bg-cream-card border border-hairline group-hover:border-gold transition-colors duration-500 rounded-[4px] overflow-hidden focus:outline-none"
+        className="flex flex-1 flex-col"
         aria-label={product.name[locale]}
       >
         {/* Photo — white stage, product inset so every cut-out sits alike */}
@@ -77,7 +78,7 @@ export function MenuCard({ product, index = 0, variant = 'card' }: Props) {
         </div>
 
         {/* Text */}
-        <div className="flex flex-1 flex-col items-center text-center px-3 sm:px-5 pt-4 sm:pt-5 pb-5 sm:pb-6">
+        <div className="flex flex-1 flex-col items-center text-center px-3 sm:px-5 pt-4 sm:pt-5 pb-3 sm:pb-4">
           <h3
             className={`${displayFont} font-bold text-heading text-[17px] sm:text-xl leading-[1.2] text-balance`}
           >
@@ -95,6 +96,22 @@ export function MenuCard({ product, index = 0, variant = 'card' }: Props) {
           </div>
         </div>
       </Link>
+      <div className="px-3 sm:px-5 pb-4 sm:pb-5">
+        <a
+          href={whatsappLink(
+            locale === 'ar' ? `مرحباً، أود أن أطلب: ${product.name.ar}` : `שלום, אשמח להזמין: ${product.name.he}`
+          )}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${locale === 'ar' ? 'طلب عبر واتساب' : 'הזמנה בוואטסאפ'}: ${product.name[locale]}`}
+          className="flex items-center justify-center gap-2 h-10 rounded-[2px] border border-gold/60 text-gold-light text-[13px] sm:text-sm font-medium hover:bg-gold hover:text-black hover:border-gold transition-colors duration-300"
+        >
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+            <path d="M12.04 2c-5.52 0-10 4.48-10 10 0 1.77.46 3.43 1.27 4.86L2 22l5.27-1.38c1.38.75 2.95 1.18 4.77 1.18 5.52 0 10-4.48 10-10s-4.48-9.8-10-9.8zM16.5 14.81c-.21-.1-1.23-.61-1.42-.68-.19-.07-.33-.1-.47.1-.14.2-.54.68-.66.82-.12.14-.24.16-.45.06-.21-.1-.88-.32-1.68-1.03-.62-.55-1.04-1.24-1.16-1.45-.12-.21-.01-.32.09-.42.09-.09.21-.24.32-.36.1-.12.14-.2.21-.34.07-.14.04-.26-.02-.36-.05-.1-.47-1.14-.65-1.55-.17-.41-.34-.36-.47-.36-.12 0-.26-.02-.4-.02s-.36.05-.55.26c-.19.21-.72.7-.72 1.71 0 1 .74 1.97.84 2.11.1.14 1.45 2.22 3.51 3.11.49.21.87.34 1.17.43.49.16.94.13 1.29.08.39-.06 1.23-.5 1.4-.99.17-.49.17-.91.12-.99-.05-.08-.19-.13-.4-.23z" />
+          </svg>
+          {locale === 'ar' ? 'للطلب' : 'להזמנה'}
+        </a>
+      </div>
     </motion.article>
   );
 }

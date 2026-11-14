@@ -5,6 +5,7 @@ import { useLocale } from 'next-intl';
 import type { Locale } from '@/i18n/locales';
 import { findPlace, zones, type ZoneId } from '@/lib/deliveryZones';
 import { EVENTS_PHONE_DISPLAY, whatsappLink } from '@/lib/site';
+import { Link } from '@/i18n/navigation';
 
 /** Simplified outline of Israel north of Be'er Sheva (schematic only). */
 const OUTLINE =
@@ -150,7 +151,10 @@ export function DeliveryZones() {
               {ar
                 ? `نوصل إلى ${match.place[1]} — منطقة ${match.zone.name.ar}.`
                 : `אנחנו מגיעים ל${match.place[0]} — אזור ${match.zone.name.he}.`}
-              {match.zone.days && <> {match.zone.days[locale]}</>}
+              {match.zone.days && <> {match.zone.days[locale]}</>}{' '}
+              <Link href="/shop" className="text-gold font-bold underline underline-offset-4 whitespace-nowrap">
+                {ar ? 'إلى الكتالوج' : 'לקטלוג המוצרים'}
+              </Link>
             </p>
           )}
           {query.trim().length >= 2 && match.kind === 'south' && (

@@ -5,6 +5,8 @@ import { motion } from 'framer-motion';
 import { useLocale } from 'next-intl';
 import type { Locale } from '@/i18n/locales';
 import type { Translated } from '@/lib/mockData';
+import { Link } from '@/i18n/navigation';
+import { buttonClasses } from '@/components/ui/Button';
 
 const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 
@@ -119,7 +121,13 @@ export function Showcase() {
           ))}
         </div>
 
-        <div className="mt-10 flex justify-center">
+        <div className="mt-10 flex flex-col items-center gap-6">
+          <Link
+            href="/shop"
+            className={buttonClasses({ variant: 'gold', size: 'lg', className: 'normal-case tracking-normal text-[15px] w-full max-w-sm sm:w-auto' })}
+          >
+            {ar ? 'كل المنتجات والأسعار' : 'לכל המוצרים והמחירים'}
+          </Link>
           <a
             href={INSTAGRAM}
             target="_blank"

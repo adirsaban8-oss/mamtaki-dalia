@@ -1,5 +1,6 @@
 'use client';
 
+import { Link } from '@/i18n/navigation';
 import { useState } from 'react';
 import { useLocale } from 'next-intl';
 import type { Locale } from '@/i18n/locales';
@@ -107,6 +108,12 @@ export function EventsForm() {
           <span dir="ltr" className="font-medium text-gold">{EVENTS_PHONE_DISPLAY}</span>
         </a>
       </div>
+      <p className="sm:col-span-2 text-xs text-coffee-muted leading-relaxed">
+        {ar ? 'التفاصيل تُرسل عبر واتساب ولا تُحفظ في الموقع. ' : 'הפרטים נשלחים בוואטסאפ ואינם נשמרים באתר. '}
+        <Link href="/privacy" className="text-gold underline underline-offset-4">
+          {ar ? 'سياسة الخصوصية' : 'מדיניות הפרטיות'}
+        </Link>
+      </p>
     </form>
   );
 }
