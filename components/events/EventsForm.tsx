@@ -85,7 +85,7 @@ export function EventsForm() {
       </div>
       <div>
         <label htmlFor="ev-date" className={label}>{L.date}</label>
-        <input id="ev-date" type="date" value={f.date} onChange={set('date')} className={`${input} [color-scheme:dark]`} />
+        <input id="ev-date" type="date" value={f.date} onChange={set('date')} className={`${input}`} />
       </div>
       <div>
         <label htmlFor="ev-guests" className={label}>{L.guests}</label>
