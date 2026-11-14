@@ -1,9 +1,11 @@
 'use client';
 
+import Image from 'next/image';
 import { useLocale } from 'next-intl';
 import type { Locale } from '@/i18n/locales';
 import { buttonClasses } from '@/components/ui/Button';
 import { whatsappLink } from '@/lib/site';
+import { Link } from '@/i18n/navigation';
 
 /**
  * Closing call-to-action for the catalog: order by WhatsApp or phone.
@@ -15,8 +17,17 @@ export function OrderBand() {
   const ar = locale === 'ar';
 
   return (
-    <section className="relative isolate overflow-hidden bg-cedar-light text-ivory py-14 md:py-20">
-      <div aria-hidden className="absolute inset-0 -z-10 pattern-khatam opacity-[0.08]" />
+    <section className="relative isolate overflow-hidden bg-cedar text-ivory py-20 md:py-32">
+      {/* The shop's own tartlets in the branded box, under a deep scrim */}
+      <Image
+        src="/images/order-band.webp"
+        alt=""
+        fill
+        sizes="100vw"
+        className="-z-20 object-cover"
+      />
+      <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-b from-black/80 via-black/70 to-black/85" />
+      <div aria-hidden className="absolute inset-0 -z-10 pattern-khatam opacity-[0.06]" />
       <span aria-hidden className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-gold/60 to-transparent" />
       <div className="mx-auto max-w-3xl px-5 flex flex-col items-center text-center">
         <span className="text-[13px] font-medium text-gold-light">
@@ -45,6 +56,12 @@ export function OrderBand() {
           >
             <span dir="ltr">052-5986266</span>
           </a>
+          <Link
+            href="/events"
+            className={buttonClasses({ variant: 'outline', size: 'lg', className: 'normal-case tracking-normal text-[15px]' })}
+          >
+            {ar ? 'طلب عرض سعر لمناسبة' : 'הצעת מחיר לאירוע'}
+          </Link>
         </div>
       </div>
     </section>

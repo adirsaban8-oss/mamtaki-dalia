@@ -9,14 +9,14 @@ import { categoryLabels, orderedCategories, type ProductCategory } from '@/lib/m
 
 const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 
-/** One representative cut-out per category. */
+/** One representative photo per category. */
 const CATEGORY_IMAGE: Record<ProductCategory, string> = {
-  kanafeh: '/products/kanafeh-by-weight.webp',
-  baklava: '/products/baklava-pistachio.webp',
-  trays: '/products/layali-beirut-tray.webp',
-  'fruit-desserts': '/products/fruit-dessert-strawberry.webp',
-  cakes: '/products/birthday-cake.webp',
-  frozen: '/products/ice-cream-popsicles.webp',
+  baklava: '/products/bird-nest-baklava.webp',
+  kanafeh: '/products/red-kanafeh.webp',
+  trays: '/products/turkish-baklava-tray.webp',
+  cakes: '/products/dessert-mango.webp',
+  'fruit-desserts': '/products/dessert-berries.webp',
+  frozen: '/products/layali-beirut-tray.webp',
 };
 
 /**
@@ -43,7 +43,7 @@ export function CategoryArches() {
           <span aria-hidden className="rule-diamond block w-28 mt-6" />
         </header>
 
-        <ul className="-mx-5 px-5 md:mx-0 md:px-0 flex md:grid md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6 overflow-x-auto md:overflow-visible scrollbar-hide snap-x snap-mandatory">
+        <ul className="-mx-5 px-5 md:mx-0 md:px-0 flex md:grid md:grid-cols-4 gap-4 md:gap-6 overflow-x-auto md:overflow-visible scrollbar-hide snap-x snap-mandatory">
           {orderedCategories.map((category, idx) => (
             <motion.li
               key={category}
@@ -64,7 +64,7 @@ export function CategoryArches() {
                       src={CATEGORY_IMAGE[category]}
                       alt=""
                       fill
-                      sizes="(min-width: 1024px) 15vw, (min-width: 768px) 30vw, 40vw"
+                      sizes="(min-width: 768px) 25vw, 40vw"
                       className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
                     />
                   </div>

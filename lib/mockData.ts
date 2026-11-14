@@ -59,11 +59,11 @@ export type Product = {
 /* ─── Category labels & eyebrows ─────────────────────────────────── */
 
 export const categoryLabels: Record<ProductCategory, Translated> = {
-  kanafeh: { he: 'כנאפה', ar: 'كنافة' },
-  baklava: { he: 'בקלאווה ומאפי פילו', ar: 'بقلاوة ومعجنات الفيلو' },
-  trays: { he: 'מגשי קינוחים', ar: 'صواني الحلويات' },
+  kanafeh: { he: 'כנאפה ועוואמה', ar: 'كنافة وعوّامة' },
+  baklava: { he: 'בקלאווה', ar: 'بقلاوة' },
+  trays: { he: 'מגשים ומארזים', ar: 'صواني وعلب' },
   'fruit-desserts': { he: 'קינוחי פירות', ar: 'حلويات الفواكه' },
-  cakes: { he: 'עוגות וקינוחים אישיים', ar: 'كعكات وحلويات فردية' },
+  cakes: { he: 'קינוחים אישיים', ar: 'حلويات فردية' },
   frozen: { he: 'ארטיקים וקפואים', ar: 'مثلجات' },
 };
 
@@ -77,12 +77,10 @@ export const categoryEyebrow: Record<ProductCategory, Translated> = {
 };
 
 export const orderedCategories: ProductCategory[] = [
-  'kanafeh',
   'baklava',
+  'kanafeh',
   'trays',
-  'fruit-desserts',
   'cakes',
-  'frozen',
 ];
 
 /* ─── Testimonials ────────────────────────────────────────────────── */

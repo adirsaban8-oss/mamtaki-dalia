@@ -1,16 +1,13 @@
 import type { Product, ProductCategory, PricingUnit, Translated } from '@/lib/mockData';
 
 /**
- * Starter catalog, transcribed from the owner's product sheet
- * ("מוצרים – ממתקי דלית אל כרמל"). It is shown whenever WordPress has
- * no published products yet; as soon as the owner publishes products
- * in WooCommerce, those replace this list entirely.
+ * Starter catalog: the owner's product list and prices. It is shown
+ * whenever WordPress has no published products yet; as soon as the
+ * owner publishes products in WooCommerce, those replace this list.
  *
- * Prices are mostly not set yet (0 = "price on request"). Where the
- * sheet left allergens blank they were filled by product family.
- *
- * Images live in /public/products and are illustrative stock photos
- * (see /public/products/CREDITS.md for sources and licenses).
+ * Allergens were filled by product family and should be confirmed by
+ * the owner. Images in /public/products are the business's own photos,
+ * given one shared catalog grade.
  */
 
 type Seed = {
@@ -28,34 +25,12 @@ type Seed = {
   unitLabel?: Translated;
 };
 
-/** Slugs that have a photo in /public/products (<slug>.webp). */
-const WITH_IMAGE = new Set([
-  'baklava-mix-4kg',
-  'baklava-pistachio',
-  'bird-nest-baklava',
-  'birthday-cake',
-  'cake-26cm',
-  'fatir-by-weight',
-  'fruit-dessert-mango',
-  'fruit-dessert-pistachio',
-  'fruit-dessert-raspberry',
-  'fruit-dessert-strawberry',
-  'harissa-semolina-cake',
-  'ice-cream-popsicles',
-  'kanafeh-by-weight',
-  'kanafeh-for-grill',
-  'kremschnitt-tray',
-  'lava-cake-milk-chocolate',
-  'lava-cake-white-chocolate',
-  'layali-beirut-tray',
-  'profiteroles',
-  'trabzon-by-weight',
-  'trabzon-pistachio-malabi',
-  'trilece-tray',
-  'turkish-baklava-pistachio',
-]);
-
 const FRIDGE: Translated = {
+  he: 'לשמור בקופסה סגורה במקרר. מומלץ להוציא כרבע שעה לפני ההגשה.',
+  ar: 'يُحفظ في علبة مغلقة في الثلاجة. يُفضَّل إخراجه قبل التقديم بربع ساعة.',
+};
+
+const KANAFEH_FRIDGE: Translated = {
   he: 'לשמור במקרר. לחמם דקה במיקרוגל או בתנור לפני ההגשה.',
   ar: 'يُحفظ في الثلاجة. يُسخَّن دقيقة في الميكروويف أو الفرن قبل التقديم.',
 };
@@ -66,43 +41,270 @@ const FREEZER: Translated = {
 };
 
 const DAIRY_NUTS_GLUTEN = 'חלב, חמאה, אגוזים, גלוטן';
-/** Cakes & choux: the sheet left these blank — eggs added on purpose
- *  (better to over-warn). Owner should confirm. */
+/** Cakes, mousse & choux: eggs added on purpose (better to over-warn).
+ *  Owner should confirm. */
 const CAKE = 'חלב, חמאה, ביצים, גלוטן · עשוי להכיל אגוזים';
 
+const PORTION_NOTE = {
+  he: ' זמין גם במנה אישית ב־40 ₪.',
+  ar: ' متوفر أيضاً كحصة فردية بـ40 ₪.',
+};
+
+/**
+ * The owner's full product list with prices (WhatsApp, Nov 2026).
+ * Prices are in ₪ and include VAT. Weight products are sold in
+ * whole-kilo packs (1, 2, 3 … kg).
+ */
 const SEEDS: Seed[] = [
-  // ── כנאפה ──────────────────────────────────────────────────────────
+  // ── בקלאווה — 110 ₪ לק״ג ───────────────────────────────────────────
   {
-    slug: 'kanafeh-by-weight',
-    category: 'kanafeh',
+    slug: 'baklava-pistachio',
+    category: 'baklava',
     unit: 'per_kg',
-    name: { he: 'כנאפה במשקל', ar: 'كنافة بالوزن' },
-    note: { he: 'קדאיף זהוב · גבינה נמתחת · פיסטוק חלבי', ar: 'قطايف ذهبية · جبنة مطاطية · فستق حلبي' },
+    price: 110,
+    name: { he: 'בקלאווה פיסטוק חלבי', ar: 'بقلاوة فستق حلبي' },
+    note: { he: 'גלילי פילו ירוקים · פיסטוק חלבי', ar: 'لفائف فيلو خضراء · فستق حلبي' },
     description: {
-      he: 'כנאפה שמימית: שערות קדאיף עם גבינה, סמנה, פיסטוק חלבי וסירופ סוכר.',
-      ar: 'كنافة سماوية: شعيرات القطايف مع الجبنة والسمنة والفستق الحلبي وقطر السكر.',
+      he: 'גלילי פילו דקים במילוי נדיב של פיסטוק חלבי טחון, אפויים בחמאה ומושרים בסירופ — הקלאסיקה הירוקה של הבית.',
+      ar: 'لفائف فيلو رقيقة بحشوة سخية من الفستق الحلبي المطحون، مخبوزة بالزبدة ومسقية بالقطر — الكلاسيكية الخضراء للبيت.',
     },
     allergens: DAIRY_NUTS_GLUTEN,
     storage: FRIDGE,
   },
   {
-    slug: 'kanafeh-for-grill',
-    category: 'kanafeh',
-    unit: 'per_piece',
-    name: { he: 'כנאפה למנגל', ar: 'كنافة للشواء' },
-    note: { he: 'מוכנה לחימום על הגחלים', ar: 'جاهزة للتسخين على الفحم' },
+    slug: 'bird-nest-baklava',
+    category: 'baklava',
+    unit: 'per_kg',
+    price: 110,
+    name: { he: 'קן הציפור', ar: 'عش البلبل' },
+    note: { he: 'קדאיף פריך · פיסטוק חלבי שלם', ar: 'قطايف مقرمشة · فستق حلبي كامل' },
     description: {
-      he: 'כנאפה בתבנית אישית, מוכנה לחימום על המנגל או בתנור — חמה, נמתחת ומוגשת ישר מהאש.',
-      ar: 'كنافة في صينية فردية، جاهزة للتسخين على الشواية أو في الفرن — ساخنة ومطاطية وتُقدَّم مباشرة من النار.',
+      he: 'קני קדאיף זהובים ופריכים, ובמרכז כל אחד ערימה של פיסטוק חלבי שלם. מרשים על כל שולחן אירוח.',
+      ar: 'أعشاش قطايف ذهبية مقرمشة، في وسط كل منها حفنة من الفستق الحلبي الكامل. لافتة على كل مائدة ضيافة.',
+    },
+    allergens: DAIRY_NUTS_GLUTEN,
+    storage: FRIDGE,
+  },
+  {
+    slug: 'baklava-cashew',
+    category: 'baklava',
+    unit: 'per_kg',
+    price: 110,
+    name: { he: 'בקלאווה קשיו קלוי', ar: 'بقلاوة كاجو محمّص' },
+    note: { he: 'שכבות פילו · קשיו קלוי', ar: 'طبقات فيلو · كاجو محمّص' },
+    description: {
+      he: 'ריבועי בקלאווה עשירים בשכבות פילו פריכות ומילוי קשיו קלוי, חמאתי ועדין.',
+      ar: 'مربعات بقلاوة غنية بطبقات فيلو مقرمشة وحشوة كاجو محمّص، زبدية وناعمة.',
+    },
+    allergens: DAIRY_NUTS_GLUTEN,
+    storage: FRIDGE,
+  },
+  {
+    slug: 'baklava-walnut',
+    category: 'baklava',
+    unit: 'per_kg',
+    price: 110,
+    name: { he: 'בקלאווה אגוזים', ar: 'بقلاوة جوز' },
+    note: { he: 'אגוזי מלך · פיסטוק מעל', ar: 'جوز · فستق على الوجه' },
+    description: {
+      he: 'בקלאווה במילוי אגוזי מלך, מעוטרת בפיסטוק חלבי טחון. טעם עמוק וקלאסי.',
+      ar: 'بقلاوة محشوة بالجوز ومزيّنة بالفستق الحلبي المطحون. طعم عميق وكلاسيكي.',
+    },
+    allergens: DAIRY_NUTS_GLUTEN,
+    storage: FRIDGE,
+  },
+  {
+    slug: 'baklava-maadan',
+    category: 'baklava',
+    unit: 'per_kg',
+    price: 110,
+    name: { he: 'בקלאווה מעדן', ar: 'بقلاوة معدان' },
+    note: { he: 'פילו מקופל · מילוי אגוזים', ar: 'فيلو مطوي · حشوة مكسرات' },
+    description: {
+      he: 'משולשי פילו מקופלים ביד, זהובים ומבריקים מסירופ, עם מילוי אגוזים נדיב.',
+      ar: 'مثلثات فيلو مطوية يدوياً، ذهبية لامعة بالقطر، مع حشوة مكسرات سخية.',
+    },
+    allergens: DAIRY_NUTS_GLUTEN,
+    storage: FRIDGE,
+  },
+  {
+    slug: 'baklava-lips',
+    category: 'baklava',
+    unit: 'per_kg',
+    price: 110,
+    name: { he: 'שפתיים', ar: 'شفايف' },
+    note: { he: 'פילו מקומט · אגוזים', ar: 'فيلو مجعّد · مكسرات' },
+    description: {
+      he: 'מאפה פילו מקומט וקראנצ׳י בצורת שפתיים, במילוי אגוזים ומושרה בסירופ.',
+      ar: 'معجنات فيلو مجعّدة ومقرمشة على شكل شفايف، محشوة بالمكسرات ومسقية بالقطر.',
+    },
+    allergens: DAIRY_NUTS_GLUTEN,
+    storage: FRIDGE,
+  },
+  {
+    slug: 'burma',
+    category: 'baklava',
+    unit: 'per_kg',
+    price: 110,
+    name: { he: 'בורמה', ar: 'بورمة' },
+    note: { he: 'גלילי קדאיף · פיסטוק', ar: 'لفائف قطايف · فستق' },
+    description: {
+      he: 'גלילי קדאיף ארוכים וזהובים, במילוי פיסטוק דחוס, נחתכים לפרוסות עבות.',
+      ar: 'لفائف قطايف طويلة وذهبية، محشوة بالفستق المضغوط، تُقطَّع إلى شرائح سميكة.',
+    },
+    allergens: DAIRY_NUTS_GLUTEN,
+    storage: FRIDGE,
+  },
+  {
+    slug: 'kol-wa-shkor',
+    category: 'baklava',
+    unit: 'per_kg',
+    price: 110,
+    name: { he: 'קול ושכור', ar: 'كُل واشكُر' },
+    note: { he: 'ביס אחד · פילו ואגוזים', ar: 'لقمة واحدة · فيلو ومكسرات' },
+    description: {
+      he: 'ביסים קטנים של פילו פריך ואגוזים — "אכול והודה". מושלם למגש אירוח מגוון.',
+      ar: 'لقيمات صغيرة من الفيلو المقرمش والمكسرات — "كُل واشكُر". مثالية لصينية ضيافة متنوعة.',
+    },
+    allergens: DAIRY_NUTS_GLUTEN,
+    storage: FRIDGE,
+  },
+  {
+    slug: 'baklava-lotus',
+    category: 'baklava',
+    unit: 'per_kg',
+    price: 110,
+    name: { he: 'בקלאווה לוטוס', ar: 'بقلاوة لوتس' },
+    note: { he: 'פירורי לוטוס · קרמל', ar: 'فتات لوتس · كراميل' },
+    description: {
+      he: 'בקלאווה בטוויסט מודרני: שכבות פילו עם קרם לוטוס וציפוי פירורי עוגיות לוטוס.',
+      ar: 'بقلاوة بلمسة عصرية: طبقات فيلو مع كريمة اللوتس وتغطية بفتات بسكويت اللوتس.',
+    },
+    allergens: 'חלב, חמאה, אגוזים, גלוטן, סויה',
+    storage: FRIDGE,
+  },
+  {
+    slug: 'awameh',
+    category: 'kanafeh',
+    unit: 'per_kg',
+    price: 110,
+    name: { he: 'עוואמה', ar: 'عوّامة' },
+    note: { he: 'כדורי בצק מטוגנים · סירופ', ar: 'كرات عجين مقلية · قطر' },
+    description: {
+      he: 'כדורי בצק אווריריים, מטוגנים עד שהם זהובים ופריכים מבחוץ, וטבולים בסירופ סוכר.',
+      ar: 'كرات عجين هشة تُقلى حتى تصبح ذهبية ومقرمشة من الخارج، ثم تُغمس في القطر.',
+    },
+    allergens: 'גלוטן',
+    storage: {
+      he: 'הכי טעים ביום הקנייה. לשמור בקופסה סגורה בטמפרטורת החדר.',
+      ar: 'ألذّ في يوم الشراء. تُحفظ في علبة مغلقة بحرارة الغرفة.',
+    },
+  },
+
+  // ── כנאפה — 80 ₪ לק״ג ──────────────────────────────────────────────
+  {
+    slug: 'red-kanafeh',
+    category: 'kanafeh',
+    unit: 'per_kg',
+    price: 80,
+    name: { he: 'כנאפה אדום', ar: 'كنافة حمراء' },
+    note: { he: 'קדאיף אדום · פסי פיסטוק', ar: 'قطايف حمراء · خطوط فستق' },
+    description: {
+      he: 'ריבועי כנאפה בקדאיף אדום ובוהק, עם פסים של פיסטוק חלבי טחון. צבעוני וחגיגי.',
+      ar: 'مربعات كنافة بقطايف حمراء لامعة، مع خطوط من الفستق الحلبي المطحون. ملوّنة واحتفالية.',
+    },
+    allergens: DAIRY_NUTS_GLUTEN,
+    storage: KANAFEH_FRIDGE,
+  },
+  {
+    slug: 'baklava-kanafeh',
+    category: 'kanafeh',
+    unit: 'per_kg',
+    price: 80,
+    name: { he: 'בקלאווה כנאפה', ar: 'بقلاوة كنافة' },
+    note: { he: 'פילו · מילוי כנאפה · פיסטוק', ar: 'فيلو · حشوة كنافة · فستق' },
+    description: {
+      he: 'המפגש בין שני העולמות: כיסי פילו פריכים במילוי כנאפה רכה, עם נקודת פיסטוק חלבי.',
+      ar: 'لقاء العالمين: جيوب فيلو مقرمشة بحشوة كنافة طرية، مع لمسة فستق حلبي.',
+    },
+    allergens: DAIRY_NUTS_GLUTEN,
+    storage: KANAFEH_FRIDGE,
+  },
+  {
+    slug: 'trabzon',
+    category: 'baklava',
+    unit: 'per_kg',
+    price: 80,
+    name: { he: 'טרפזון', ar: 'طرابزون' },
+    note: { he: 'גלילי פילו · פיסטוק', ar: 'لفائف فيلو · فستق' },
+    description: {
+      he: 'גלילי פילו חמאתיים וזהובים, מעוטרים בפס של פיסטוק חלבי טחון.',
+      ar: 'لفائف فيلو زبدية وذهبية، مزيّنة بخط من الفستق الحلبي المطحون.',
     },
     allergens: DAIRY_NUTS_GLUTEN,
     storage: FRIDGE,
   },
 
-  // ── בקלאווה ומאפי פילו ─────────────────────────────────────────────
+  // ── מגשים ──────────────────────────────────────────────────────────
+  {
+    slug: 'turkish-baklava-tray',
+    category: 'trays',
+    unit: 'per_box',
+    price: 350,
+    name: { he: 'מגש בקלאווה טורקית', ar: 'صينية بقلاوة تركية' },
+    note: { he: 'מגש עגול · פיסטוק חלבי', ar: 'صينية دائرية · فستق حلبي' },
+    description: {
+      he: 'מגש עגול ומרשים של בקלאווה טורקית בפרוסות, עם פיסטוק חלבי במרכז ובקצוות. מרכז שולחן לאירוע.',
+      ar: 'صينية دائرية لافتة من البقلاوة التركية المقطّعة، مع فستق حلبي في الوسط والأطراف. قطعة مركزية لمائدة المناسبة.',
+    },
+    allergens: DAIRY_NUTS_GLUTEN,
+    storage: FRIDGE,
+  },
+  {
+    slug: 'layali-beirut-tray',
+    category: 'trays',
+    unit: 'per_box',
+    price: 130,
+    name: { he: 'מגש לילות ביירות', ar: 'صينية ليالي بيروت' },
+    note: { he: 'קרם סולת · שכבת פיסטוק · קפוא', ar: 'كريمة سميد · طبقة فستق · مجمّدة' },
+    description: {
+      he: 'שכבת סולת קטיפתית, קרם חלב עשיר ומעל שכבה עבה של פיסטוק חלבי טחון. מוגש קר.' + PORTION_NOTE.he,
+      ar: 'طبقة سميد مخملية، كريمة حليب غنية، وفوقها طبقة سميكة من الفستق الحلبي المطحون. تُقدَّم باردة.' + PORTION_NOTE.ar,
+    },
+    allergens: 'חלב, אגוזים, גלוטן',
+    storage: FREEZER,
+  },
+  {
+    slug: 'trilece-tray',
+    category: 'trays',
+    unit: 'per_box',
+    price: 130,
+    name: { he: 'מגש טריליצ׳ה', ar: 'صينية تريليتشا' },
+    note: { he: 'שלושה חלבים · קרמל · קפוא', ar: 'ثلاثة أنواع حليب · كراميل · مجمّدة' },
+    description: {
+      he: 'עוגת טריליצ׳ה ספוגית, ספוגה בשלושה סוגי חלב ומכוסה בשכבת קרמל מבריקה.' + PORTION_NOTE.he,
+      ar: 'كعكة تريليتشا إسفنجية مشبعة بثلاثة أنواع من الحليب ومغطاة بطبقة كراميل لامعة.' + PORTION_NOTE.ar,
+    },
+    allergens: CAKE,
+    storage: FREEZER,
+  },
+  {
+    slug: 'kremschnitt-tray',
+    category: 'trays',
+    unit: 'per_box',
+    price: 130,
+    name: { he: 'מגש קרמשניט', ar: 'صينية كريمشنيت' },
+    note: { he: 'בצק עלים · קרם וניל · קפוא', ar: 'عجينة منتفخة · كريمة فانيلا · مجمّدة' },
+    description: {
+      he: 'שכבות בצק עלים פריך וקרם וניל אוורירי, מכוסות בפתיתי בצק ואבקת סוכר.' + PORTION_NOTE.he,
+      ar: 'طبقات من العجينة المنتفخة المقرمشة وكريمة الفانيلا الهشة، مغطاة برقائق العجين والسكر الناعم.' + PORTION_NOTE.ar,
+    },
+    allergens: CAKE,
+    storage: FREEZER,
+  },
   {
     slug: 'baklava-mix-4kg',
-    category: 'baklava',
+    category: 'trays',
     unit: 'per_box',
     price: 440,
     unitLabel: { he: 'מארז 4 ק״ג', ar: 'علبة ٤ كغ' },
@@ -115,273 +317,92 @@ const SEEDS: Seed[] = [
     allergens: DAIRY_NUTS_GLUTEN,
     storage: FRIDGE,
   },
-  {
-    slug: 'baklava-pistachio',
-    category: 'baklava',
-    unit: 'per_kg',
-    name: { he: 'בקלאווה פיסטוק חלבי', ar: 'بقلاوة فستق حلبي' },
-    note: { he: 'שכבות פילו פריכות · פיסטוק חלבי', ar: 'طبقات فيلو مقرمشة · فستق حلبي' },
-    description: {
-      he: 'בקלאווה תורכית מלאה בפיסטוק חלבי.',
-      ar: 'بقلاوة تركية محشوة بالفستق الحلبي.',
-    },
-    allergens: DAIRY_NUTS_GLUTEN,
-    storage: FRIDGE,
-  },
-  {
-    slug: 'turkish-baklava-pistachio',
-    category: 'baklava',
-    unit: 'per_kg',
-    name: { he: 'בקלאווה טורקית פיסטוק חלבי', ar: 'بقلاوة تركية بالفستق الحلبي' },
-    note: { he: 'בסגנון גזיאנטפ · ירוקה ועשירה', ar: 'على طريقة غازي عنتاب · خضراء وغنية' },
-    description: {
-      he: 'בקלאווה בסגנון טורקי, דקה ופריכה, עם שכבה נדיבה של פיסטוק חלבי.',
-      ar: 'بقلاوة على الطريقة التركية، رقيقة ومقرمشة، مع طبقة سخية من الفستق الحلبي.',
-    },
-    allergens: DAIRY_NUTS_GLUTEN,
-    storage: FRIDGE,
-  },
-  {
-    slug: 'bird-nest-baklava',
-    category: 'baklava',
-    unit: 'per_kg',
-    name: { he: 'בקלאווה קן הציפור', ar: 'بقلاوة عش البلبل' },
-    note: { he: 'קדאיף · פיסטוק חלבי שלם', ar: 'قطايف · فستق حلبي كامل' },
-    description: {
-      he: 'קן הציפור הוא בצק קדאיף ממולא בפיסטוק חלבי שלם.',
-      ar: 'عش البلبل هو عجينة قطايف محشوة بالفستق الحلبي الكامل.',
-    },
-    allergens: DAIRY_NUTS_GLUTEN,
-    storage: FRIDGE,
-  },
-  {
-    slug: 'fatir-by-weight',
-    category: 'baklava',
-    unit: 'per_kg',
-    name: { he: 'פטיר במשקל', ar: 'فطير بالوزن' },
-    note: { he: 'משולשי בקלאווה · מלבי · מי סוכר', ar: 'مثلثات بقلاوة · مهلبية · قطر' },
-    description: {
-      he: 'משולשי פטיר מבצק בקלאווה, ממולאים במלבי וספוגים במי סוכר.',
-      ar: 'مثلثات فطير من عجينة البقلاوة، محشوة بالمهلبية ومنقوعة بالقطر.',
-    },
-    allergens: DAIRY_NUTS_GLUTEN,
-    storage: FRIDGE,
-  },
-  {
-    slug: 'trabzon-by-weight',
-    category: 'baklava',
-    unit: 'per_kg',
-    name: { he: 'טרבזון במשקל', ar: 'طرابزون بالوزن' },
-    note: { he: 'בצק בקלאווה · פיסטוק חלבי · גבינה', ar: 'عجينة بقلاوة · فستق حلبي · جبنة' },
-    description: {
-      he: 'טרבזון חלום — בצק בקלאווה ממולא בפיסטוק חלבי וגבינה.',
-      ar: 'طرابزون الأحلام — عجينة بقلاوة محشوة بالفستق الحلبي والجبنة.',
-    },
-    allergens: DAIRY_NUTS_GLUTEN,
-    storage: FRIDGE,
-  },
-  {
-    slug: 'trabzon-pistachio-malabi',
-    category: 'baklava',
-    unit: 'per_kg',
-    name: { he: 'טרבזון במילוי פיסטוק חלבי ומלבי', ar: 'طرابزون محشو بالفستق الحلبي والمهلبية' },
-    note: { he: 'פיסטוק חלבי · קרם מלבי', ar: 'فستق حلبي · كريمة مهلبية' },
-    description: {
-      he: 'רולדות בצק בקלאווה במילוי כפול של פיסטוק חלבי וקרם מלבי.',
-      ar: 'لفائف من عجينة البقلاوة بحشوة مزدوجة من الفستق الحلبي وكريمة المهلبية.',
-    },
-    allergens: DAIRY_NUTS_GLUTEN,
-    storage: FRIDGE,
-  },
 
-  // ── מגשי קינוחים ───────────────────────────────────────────────────
+  // ── קינוחים אישיים — 45 ₪ ──────────────────────────────────────────
   {
-    slug: 'layali-beirut-tray',
-    category: 'trays',
-    unit: 'per_box',
-    name: { he: 'מגש לילות ביירות', ar: 'صينية ليالي بيروت' },
-    note: { he: 'סולת · קציפת שמנת · פיסטוק חלבי', ar: 'سميد · كريمة مخفوقة · فستق حلبي' },
-    description: {
-      he: 'לילות ביירות: עוגת סולת עם קציפת שמנת, פיסטוק חלבי וסירופ סוכר.',
-      ar: 'ليالي بيروت: كعكة سميد مع الكريمة المخفوقة والفستق الحلبي وقطر السكر.',
-    },
-    allergens: DAIRY_NUTS_GLUTEN,
-    storage: FREEZER,
-  },
-  {
-    slug: 'trilece-tray',
-    category: 'trays',
-    unit: 'per_box',
-    name: { he: 'מגש טרליצ׳ה', ar: 'صينية تريليتشة' },
-    note: { he: 'ספוג בחלב · קציפה · קרמל', ar: 'منقوعة بالحليب · كريمة · كراميل' },
-    description: {
-      he: 'עוגת טרליצ׳ה — בצק נימוח ספוג בחלב, ומעליו קציפת שמנת וקרמל.',
-      ar: 'كعكة تريليتشة — عجينة طرية منقوعة بالحليب، تعلوها الكريمة المخفوقة والكراميل.',
-    },
-    allergens: DAIRY_NUTS_GLUTEN,
-    storage: FREEZER,
-  },
-  {
-    slug: 'kremschnitt-tray',
-    category: 'trays',
-    unit: 'per_box',
-    name: { he: 'מגש קרם שניט', ar: 'صينية كريم شنيت' },
-    note: { he: 'בצק פריך · קרם וניל עשיר', ar: 'عجينة مقرمشة · كريمة فانيليا غنية' },
-    description: {
-      he: 'קרם שניט היא עוגת שכבות קלאסית ואהובה, המשלבת בצק בקלאווה פריך וקרם וניל עשיר.',
-      ar: 'الكريم شنيت كعكة طبقات كلاسيكية ومحبوبة تجمع بين عجينة البقلاوة المقرمشة وكريمة الفانيليا الغنية.',
-    },
-    allergens: DAIRY_NUTS_GLUTEN,
-    storage: FREEZER,
-  },
-  {
-    slug: 'harissa-semolina-cake',
-    category: 'trays',
-    unit: 'per_box',
-    name: { he: 'הריסה — עוגת סולת', ar: 'هريسة — كعكة السميد' },
-    note: { he: 'סולת זהובה · מי סוכר', ar: 'سميد ذهبي · قطر' },
-    description: {
-      he: 'עוגת סולת ספוגה במי סוכר.',
-      ar: 'كعكة سميد منقوعة بالقطر.',
-    },
-    allergens: DAIRY_NUTS_GLUTEN,
-    storage: FRIDGE,
-  },
-
-  // ── קינוחי פירות ───────────────────────────────────────────────────
-  {
-    slug: 'fruit-dessert-strawberry',
-    category: 'fruit-desserts',
-    unit: 'per_piece',
-    name: { he: 'קינוח פירות — תות', ar: 'حلوى الفواكه — فراولة' },
-    note: { he: 'תותים טריים · קרם קטיפתי', ar: 'فراولة طازجة · كريمة مخملية' },
-    description: {
-      he: 'קינוח פירות מרענן המבוסס על תותים טריים וקרם.',
-      ar: 'حلوى فواكه منعشة أساسها الفراولة الطازجة والكريمة.',
-    },
-    allergens: 'חלב, חמאה, אגוזים · ללא גלוטן',
-    storage: FREEZER,
-  },
-  {
-    slug: 'fruit-dessert-mango',
-    category: 'fruit-desserts',
-    unit: 'per_piece',
-    name: { he: 'קינוח פירות — מנגו', ar: 'حلوى الفواكه — مانجو' },
-    note: { he: 'מנגו בשל · קרם קטיפתי', ar: 'مانجو ناضجة · كريمة مخملية' },
-    description: {
-      he: 'קינוח פירות מרענן המבוסס על מנגו וקרם.',
-      ar: 'حلوى فواكه منعشة أساسها المانجو والكريمة.',
-    },
-    storage: FREEZER,
-    allergens: 'חלב, חמאה, אגוזים · ללא גלוטן',
-  },
-  {
-    slug: 'fruit-dessert-raspberry',
-    category: 'fruit-desserts',
-    unit: 'per_piece',
-    name: { he: 'קינוח פירות — פטל', ar: 'حلوى الفواكه — توت العليق' },
-    note: { he: 'פטל חמצמץ · קרם קטיפתי', ar: 'توت عليق حامض · كريمة مخملية' },
-    description: {
-      he: 'קינוח פירות מרענן המבוסס על פטל וקרם.',
-      ar: 'حلوى فواكه منعشة أساسها توت العليق والكريمة.',
-    },
-    storage: FREEZER,
-    allergens: 'חלב, חמאה, אגוזים · ללא גלוטן',
-  },
-  {
-    slug: 'fruit-dessert-pistachio',
-    category: 'fruit-desserts',
-    unit: 'per_piece',
-    name: { he: 'קינוח פיסטוק חלבי', ar: 'حلوى الفستق الحلبي' },
-    note: { he: 'קרם פיסטוק חלבי עשיר', ar: 'كريمة فستق حلبي غنية' },
-    description: {
-      he: 'קינוח אישי של קרם פיסטוק חלבי עשיר וקטיפתי.',
-      ar: 'حلوى فردية من كريمة الفستق الحلبي الغنية والمخملية.',
-    },
-    storage: FREEZER,
-    allergens: 'חלב, חמאה, אגוזים · ללא גלוטן',
-  },
-
-  // ── עוגות וקינוחים אישיים ─────────────────────────────────────────
-  {
-    slug: 'lava-cake-milk-chocolate',
+    slug: 'dessert-dubai',
     category: 'cakes',
     unit: 'per_piece',
-    name: { he: 'עוגה חמה — שוקולד חלב', ar: 'كعكة ساخنة — شوكولاتة بالحليب' },
-    note: { he: 'לב נימוח של שוקולד חלב', ar: 'قلب ذائب من شوكولاتة الحليب' },
+    price: 45,
+    name: { he: 'קינוח דובאי', ar: 'حلوى دبي' },
+    note: { he: 'פיסטוק · קדאיף · שוקולד לבן', ar: 'فستق · قطايف · شوكولاتة بيضاء' },
     description: {
-      he: 'עוגת שוקולד אישית, מלאה בשוקולד חלב נימוח.',
-      ar: 'كعكة شوكولاتة فردية محشوة بشوكولاتة الحليب الذائبة.',
+      he: 'קינוח אישי בהשראת שוקולד דובאי: מוס פיסטוק עם קדאיף פריך, בציפוי שוקולד לבן.',
+      ar: 'حلوى فردية مستوحاة من شوكولاتة دبي: موس فستق مع قطايف مقرمشة، بتغطية شوكولاتة بيضاء.',
     },
+    allergens: 'חלב, חמאה, ביצים, גלוטן, אגוזים',
     storage: FREEZER,
-    allergens: CAKE,
   },
   {
-    slug: 'lava-cake-white-chocolate',
+    slug: 'dessert-mango',
     category: 'cakes',
     unit: 'per_piece',
-    name: { he: 'עוגה חמה — שוקולד לבן', ar: 'كعكة ساخنة — شوكولاتة بيضاء' },
-    note: { he: 'לב נימוח של שוקולד לבן', ar: 'قلب ذائب من الشوكولاتة البيضاء' },
+    price: 45,
+    name: { he: 'קינוח מנגו', ar: 'حلوى المانجو' },
+    note: { he: 'מוס מנגו · בצורת פרי', ar: 'موس مانجو · على شكل الثمرة' },
     description: {
-      he: 'עוגת שוקולד אישית, מלאה בשוקולד לבן נימוח.',
-      ar: 'كعكة شوكولاتة فردية محشوة بالشوكولاتة البيضاء الذائبة.',
+      he: 'קינוח אישי בצורת מנגו אמיתי: מוס מנגו קטיפתי בציפוי צבעוני בגוני צהוב, כתום ואדום.',
+      ar: 'حلوى فردية على شكل ثمرة مانجو حقيقية: موس مانجو مخملي بتغطية ملوّنة بالأصفر والبرتقالي والأحمر.',
     },
-    storage: FREEZER,
     allergens: CAKE,
+    storage: FREEZER,
   },
   {
-    slug: 'profiteroles',
+    slug: 'dessert-coffee',
+    category: 'cakes',
+    unit: 'per_piece',
+    price: 45,
+    name: { he: 'קינוח קפה', ar: 'حلوى القهوة' },
+    note: { he: 'מוס קפה · בצורת פול', ar: 'موس قهوة · على شكل حبة' },
+    description: {
+      he: 'קינוח אישי בצורת פול קפה: מוס קפה עשיר בציפוי שוקולד חלב מבריק.',
+      ar: 'حلوى فردية على شكل حبة قهوة: موس قهوة غني بتغطية شوكولاتة بالحليب لامعة.',
+    },
+    allergens: CAKE,
+    storage: FREEZER,
+  },
+  {
+    slug: 'dessert-lotus',
+    category: 'cakes',
+    unit: 'per_piece',
+    price: 45,
+    name: { he: 'קינוח לוטוס', ar: 'حلوى اللوتس' },
+    note: { he: 'מוס לוטוס · ציפוי לבן', ar: 'موس لوتس · تغطية بيضاء' },
+    description: {
+      he: 'קינוח אישי של מוס לוטוס קרמלי, בציפוי שוקולד לבן חלק בצורת ענן.',
+      ar: 'حلوى فردية من موس اللوتس بنكهة الكراميل، بتغطية شوكولاتة بيضاء ناعمة على شكل غيمة.',
+    },
+    allergens: 'חלב, חמאה, ביצים, גלוטן, סויה · עשוי להכיל אגוזים',
+    storage: FREEZER,
+  },
+  {
+    slug: 'dessert-berries',
+    category: 'cakes',
+    unit: 'per_piece',
+    price: 45,
+    name: { he: 'קינוח פירות יער', ar: 'حلوى فواكه الغابة' },
+    note: { he: 'מוס פירות יער · ציפוי ורוד', ar: 'موس فواكه الغابة · تغطية وردية' },
+    description: {
+      he: 'קינוח אישי של מוס פירות יער רענן וחמצמץ, בציפוי ורוד מבריק.',
+      ar: 'حلوى فردية من موس فواكه الغابة المنعش والحامض قليلاً، بتغطية وردية لامعة.',
+    },
+    allergens: CAKE,
+    storage: FREEZER,
+  },
+  {
+    slug: 'profiteroles-box',
     category: 'cakes',
     unit: 'per_box',
-    name: { he: 'פחזניות במילוי קרם פטיסייר', ar: 'بروفيترول بحشوة كريمة الباتسيير' },
-    note: { he: 'בצק רבוך · קרם פטיסייר', ar: 'عجينة شو · كريمة باتسيير' },
+    price: 80,
+    unitLabel: { he: 'קופסה · 8 יח׳', ar: 'علبة · ٨ حبات' },
+    name: { he: 'קופסת פחזניות גדולות', ar: 'علبة بروفيترول كبيرة' },
+    note: { he: '8 יחידות גדולות · אבקת סוכר', ar: '٨ حبات كبيرة · سكر ناعم' },
     description: {
-      he: 'פחזניות אווריריות במילוי נדיב של קרם פטיסייר.',
-      ar: 'بروفيترول هشة بحشوة سخية من كريمة الباتسيير.',
+      he: 'קופסה של 8 פחזניות גדולות במילוי קרם, מפוזרות באבקת סוכר.',
+      ar: 'علبة من ٨ حبات بروفيترول كبيرة محشوة بالكريمة ومرشوشة بالسكر الناعم.',
     },
-    storage: FREEZER,
     allergens: CAKE,
-  },
-  {
-    slug: 'birthday-cake',
-    category: 'cakes',
-    unit: 'per_piece',
-    name: { he: 'עוגת יום הולדת', ar: 'كعكة عيد ميلاد' },
-    note: { he: 'עוגה מלבנית חגיגית', ar: 'كعكة مستطيلة احتفالية' },
-    description: {
-      he: 'עוגת יום הולדת מלבנית וחגיגית. גדלים ועיצוב לפי הזמנה.',
-      ar: 'كعكة عيد ميلاد مستطيلة واحتفالية. الأحجام والتصميم حسب الطلب.',
-    },
     storage: FREEZER,
-    allergens: CAKE,
-  },
-  {
-    slug: 'cake-26cm',
-    category: 'frozen',
-    unit: 'per_piece',
-    name: { he: 'עוגה בקוטר 26 ס״מ', ar: 'كعكة بقطر ٢٦ سم' },
-    note: { he: 'עוגה עגולה לאירוח', ar: 'كعكة دائرية للضيافة' },
-    description: {
-      he: 'עוגת שכבות עגולה בקוטר 26 ס״מ — מתאימה לאירוח ולשמחות.',
-      ar: 'كعكة طبقات دائرية بقطر ٢٦ سم — مناسبة للضيافة والمناسبات.',
-    },
-    storage: FREEZER,
-    allergens: CAKE,
-  },
-
-  // ── ארטיקים וקפואים ───────────────────────────────────────────────
-  {
-    slug: 'ice-cream-popsicles',
-    category: 'frozen',
-    unit: 'per_piece',
-    name: { he: 'ארטיקים', ar: 'بوظة على عصا' },
-    note: { he: 'מרעננים לימים החמים', ar: 'منعشة للأيام الحارة' },
-    description: {
-      he: 'ארטיקים מרעננים במגוון טעמים.',
-      ar: 'بوظة منعشة على عصا بنكهات متنوعة.',
-    },
-    storage: { he: 'לשמור במקפיא.', ar: 'تُحفظ في الفريزر.' },
-    allergens: 'חלב',
   },
 ];
 
@@ -403,7 +424,7 @@ export const seedCatalog: Product[] = SEEDS.map((s) => ({
   inStock: true,
   freshnessHours: 24,
   confirmed: true,
-  image: WITH_IMAGE.has(s.slug) ? `/products/${s.slug}.webp` : undefined,
+  image: `/products/${s.slug}.webp`,
   allergens: s.allergens ? { he: s.allergens, ar: translateAllergens(s.allergens) } : undefined,
   storage: s.storage,
 }));
@@ -416,7 +437,8 @@ function translateAllergens(he: string): string {
     .replace('חמאה', 'زبدة')
     .replace('אגוזים', 'مكسرات')
     .replace('ביצים', 'بيض')
-    .replace('גלוטן', 'غلوتين');
+    .replace('גלוטן', 'غلوتين')
+    .replace('סויה', 'صويا');
 }
 
 /** "kanafeh-by-weight" → "K · B · W". (store/catalog's deriveMonogram is

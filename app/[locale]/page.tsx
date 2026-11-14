@@ -6,6 +6,7 @@ import { Story } from '@/components/home/Story';
 import { ValueProps } from '@/components/home/ValueProps';
 import { CategoryArches } from '@/components/home/CategoryArches';
 import { OrderBand } from '@/components/home/OrderBand';
+import { Showcase } from '@/components/home/Showcase';
 import { Footer } from '@/components/layout/Footer';
 import type { Locale } from '@/i18n/locales';
 
@@ -20,6 +21,7 @@ export default async function HomePage({ params }: PageProps<'/[locale]'>) {
         <Hero />
         <CategoryArches />
         <Ticker />
+        <Showcase />
         <Story locale={locale as Locale} />
         <ValueProps />
         <OrderBand />

@@ -6,10 +6,7 @@ import { Link } from '@/i18n/navigation';
 
 type Props = { locale: Locale };
 
-// To replace: drop a 1200×1600 portrait JPG at /public/images/story-portrait.jpg
-// and swap this constant to `/images/story-portrait.jpg`.
-const STORY_IMAGE =
-  'https://images.unsplash.com/photo-1517686469429-8bdb88b9f907?w=1600&q=85&auto=format&fit=crop';
+const STORY_IMAGE = '/images/story.webp';
 
 /**
  * Story Section — luxury heritage spread, two-column desktop.
@@ -56,7 +53,7 @@ export async function Story({ locale }: Props) {
                 sizes="(min-width: 1024px) 40vw, 90vw"
                 className="object-cover"
                 quality={85}
-                style={{ filter: 'saturate(0.85) contrast(1.02)' }}
+                
               />
               {/* Warm sepia overlay — keeps the photo in our palette */}
               <span
@@ -64,7 +61,7 @@ export async function Story({ locale }: Props) {
                 className="absolute inset-0 mix-blend-multiply pointer-events-none"
                 style={{
                   background:
-                    'linear-gradient(180deg, rgba(201,166,107,0.10) 0%, rgba(28,58,46,0.30) 100%)',
+                    'linear-gradient(180deg, rgba(201,166,107,0.06) 0%, rgba(0,0,0,0.28) 100%)',
                 }}
               />
               {/* Inner hairline 16px inset — the spec's "16px inset" frame */}

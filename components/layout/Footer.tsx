@@ -31,7 +31,6 @@ export function Footer({ locale }: Props) {
     { label: t('kosher'), href: '#' },
     { label: t('terms'), href: '#' },
     { label: t('privacy'), href: '#' },
-    { label: locale === 'ar' ? 'حقوق الصور' : 'קרדיט לתמונות', href: `/${locale}/credits` },
   ];
 
   return (
