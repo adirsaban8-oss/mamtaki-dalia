@@ -32,12 +32,12 @@ export function MobileBar() {
         className="lg:hidden fixed bottom-0 inset-x-0 z-50 flex gap-2 px-3 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] bg-cedar/95 backdrop-blur-md border-t border-gold/40"
       >
         {inCatalog ? (
-          <a href="tel:+972525986266" className={`${cell} bg-gold text-black hover:bg-gold-light`}>
+          <a href="tel:+972525986266" className={`${cell} bg-gold text-white hover:bg-neutral-700`}>
             <PhoneIcon />
             {ar ? 'اتصلوا للطلب' : 'התקשרו להזמנה'}
           </a>
         ) : (
-          <Link href="/shop" className={`${cell} bg-gold text-black hover:bg-gold-light`}>
+          <Link href="/shop" className={`${cell} bg-gold text-white hover:bg-neutral-700`}>
             <GridIcon />
             {ar ? 'الكتالوج والأسعار' : 'לקטלוג ולמחירים'}
           </Link>

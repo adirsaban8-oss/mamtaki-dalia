@@ -35,7 +35,7 @@ export function Footer({ locale }: Props) {
   ];
 
   return (
-    <footer id="contact" className="relative bg-cedar text-ivory pt-14 md:pt-20 pb-10 overflow-hidden">
+    <footer id="contact" className="relative bg-page text-ivory border-t border-hairline pt-14 md:pt-20 pb-10 overflow-hidden">
       {/* Subtle arabesque corners */}
       <div aria-hidden className="absolute -top-24 -start-24 w-[500px] h-[500px] text-gold-light pointer-events-none">
         <ArabesquePattern opacity={0.04} className="absolute inset-0" />

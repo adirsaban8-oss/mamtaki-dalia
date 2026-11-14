@@ -8,7 +8,11 @@ type Props = {
  * background ornament. Tiles seamlessly via <pattern>. Opacity should
  * stay low (4–8%) so it reads as parchment texture, not as content.
  */
+const MINIMAL_LOOK = true;
+
 export function ArabesquePattern({ className, opacity = 0.08 }: Props) {
+  // MINIMAL_LOOK: the monochrome design carries no background ornament.
+  if (MINIMAL_LOOK) return null;
   return (
     <svg
       className={className}

@@ -64,8 +64,8 @@ export function DeliveryZones() {
               </clipPath>
             ))}
             <linearGradient id="south-fade" x1="0" y1="374" x2="0" y2="545" gradientUnits="userSpaceOnUse">
-              <stop offset="0" stopColor="#2A251E" />
-              <stop offset="1" stopColor="#2A251E" stopOpacity="0" />
+              <stop offset="0" stopColor="#EDEDED" />
+              <stop offset="1" stopColor="#EDEDED" stopOpacity="0" />
             </linearGradient>
           </defs>
 
@@ -77,8 +77,8 @@ export function DeliveryZones() {
               key={z.id}
               d={OUTLINE}
               clipPath={`url(#band-${z.id})`}
-              fill="#C9A766"
-              fillOpacity={active === z.id ? 0.95 : active ? 0.28 : 0.55}
+              fill="#000000"
+              fillOpacity={active === z.id ? 1 : active ? 0.12 : 0.22}
               onMouseEnter={() => setHover(z.id)}
               onMouseLeave={() => setHover(null)}
               className="transition-[fill-opacity] duration-300 cursor-pointer"
@@ -87,9 +87,9 @@ export function DeliveryZones() {
 
           {/* Zone dividers */}
           {[209, 264, 297, 374].map((y) => (
-            <line key={y} x1="0" x2="330" y1={y} y2={y} stroke="#0C0A08" strokeWidth="2" />
+            <line key={y} x1="0" x2="330" y1={y} y2={y} stroke="#FFFFFF" strokeWidth="2" />
           ))}
-          <path d={OUTLINE} fill="none" stroke="#E9D7AE" strokeOpacity="0.7" strokeWidth="1.2" />
+          <path d={OUTLINE} fill="none" stroke="#000000" strokeOpacity="0.5" strokeWidth="1" />
 
           {/* Labels */}
           {zones.map((z) => (
@@ -99,19 +99,19 @@ export function DeliveryZones() {
               y={LABEL_Y[z.id]}
               textAnchor="middle"
               className="pointer-events-none"
-              fill={active === z.id ? '#000' : '#0C0A08'}
+              fill={active === z.id ? '#FFF' : '#000'}
               fontSize={z.id === 'dan' ? 15 : 18}
               fontWeight={700}
             >
               {z.name[locale]}
             </text>
           ))}
-          <text x="150" y={LABEL_Y.south} textAnchor="middle" fill="#8D8169" fontSize="15">
+          <text x="150" y={LABEL_Y.south} textAnchor="middle" fill="#8A8A8A" fontSize="15">
             {ar ? 'الجنوب — لا توصيل' : 'דרום — אין משלוחים'}
           </text>
 
           {/* Home base */}
-          <circle cx="160" cy="165" r="5" fill="#000" stroke="#E9D7AE" strokeWidth="1.5" />
+          <circle cx="160" cy="165" r="5" fill="#000" stroke="#FFF" strokeWidth="2" />
           <text x="170" y="169" textAnchor="end" fill="#000" fontSize="12" fontWeight={700}>
             {ar ? 'دالية الكرمل' : 'דלית אל כרמל'}
           </text>

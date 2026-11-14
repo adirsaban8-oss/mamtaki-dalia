@@ -23,7 +23,7 @@ export async function Story({ locale }: Props) {
   return (
     <section
       id="story"
-      className="relative overflow-hidden bg-sand py-12 md:py-20"
+      className="relative overflow-hidden bg-page py-16 md:py-28"
       aria-labelledby="story-heading"
     >
       <div
@@ -39,13 +39,8 @@ export async function Story({ locale }: Props) {
            a 1px gold hairline 16px INSET inside the image itself. */}
         <div className="lg:col-span-6 order-2 lg:order-1">
           <div className="relative aspect-[3/4] max-w-md mx-auto lg:mx-0 lg:ms-auto">
-            {/* Offset frame */}
-            <span
-              aria-hidden
-              className="absolute inset-0 translate-x-4 translate-y-4 rtl:-translate-x-4 border border-gold/60"
-            />
             {/* Image */}
-            <div className="relative w-full h-full overflow-hidden shadow-deep">
+            <div className="relative w-full h-full overflow-hidden">
               <Image
                 src={STORY_IMAGE}
                 alt=""
@@ -54,20 +49,6 @@ export async function Story({ locale }: Props) {
                 className="object-cover"
                 quality={85}
                 
-              />
-              {/* Warm sepia overlay — keeps the photo in our palette */}
-              <span
-                aria-hidden
-                className="absolute inset-0 mix-blend-multiply pointer-events-none"
-                style={{
-                  background:
-                    'linear-gradient(180deg, rgba(201,166,107,0.06) 0%, rgba(0,0,0,0.28) 100%)',
-                }}
-              />
-              {/* Inner hairline 16px inset — the spec's "16px inset" frame */}
-              <span
-                aria-hidden
-                className="absolute inset-4 border border-gold/70 pointer-events-none"
               />
             </div>
 

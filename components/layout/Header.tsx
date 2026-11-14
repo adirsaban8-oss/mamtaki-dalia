@@ -40,13 +40,9 @@ export function Header({ overHero = true }: Props) {
 
   // Above scroll: translucent cedar with backdrop-blur (per spec).
   // After scroll: parchment-cream with soft shadow; height collapses 96→72px.
-  const surface = onDark
-    ? 'bg-cedar/55 backdrop-blur-md border-transparent'
-    : 'bg-page/95 backdrop-blur-md border-hairline/60 shadow-soft';
+  const surface = 'bg-white border-hairline';
 
-  const navLinkColor = onDark
-    ? 'text-ivory/90 hover:text-gold-light'
-    : 'text-coffee hover:text-burgundy';
+  const navLinkColor = 'text-black hover:underline underline-offset-[6px]';
 
   const navItems = [
     { href: '/#story', label: t('story') },
@@ -63,7 +59,7 @@ export function Header({ overHero = true }: Props) {
       className={`fixed inset-x-0 top-0 z-50 border-b transition-colors duration-700 ${surface}`}
     >
       <div
-        className={`mx-auto max-w-7xl px-4 sm:px-5 md:px-10 flex items-center justify-between gap-3 sm:gap-6 transition-[height] duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${scrolled ? 'h-16 sm:h-[72px]' : 'h-16 sm:h-20 md:h-24'}`}
+        className={`mx-auto max-w-7xl px-4 sm:px-5 md:px-10 flex items-center justify-between gap-3 sm:gap-6 transition-[height] duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] ${scrolled ? 'h-16 sm:h-[72px]' : 'h-16 sm:h-20'}`}
       >
         {/* Brand */}
         <Wordmark locale={locale} variant={onDark ? 'light' : 'dark'} />
@@ -72,15 +68,15 @@ export function Header({ overHero = true }: Props) {
         <nav className="hidden lg:flex items-center gap-8 xl:gap-10" aria-label="Primary">
           <Link
             href="/shop"
-            className="inline-flex items-center h-10 px-6 rounded-[2px] bg-gold text-black text-[15px] font-bold hover:bg-gold-light transition-colors duration-500"
+            className="text-[15px] font-medium text-black underline underline-offset-[6px] decoration-1 hover:no-underline"
           >
-            {locale === 'ar' ? 'الكتالوج والأسعار' : 'לקטלוג ולמחירים'}
+            {locale === 'ar' ? 'الكتالوج والأسعار' : 'קטלוג ומחירים'}
           </Link>
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className={`relative text-[15px] font-medium transition-colors duration-500 ${navLinkColor} after:content-[''] after:absolute after:-bottom-2 after:left-1/2 after:w-0 after:h-px after:bg-gold after:transition-[width] after:duration-500 after:-translate-x-1/2 hover:after:w-6`}
+              className={`relative text-[15px] ${navLinkColor} `}
             >
               {item.label}
             </Link>
@@ -90,12 +86,12 @@ export function Header({ overHero = true }: Props) {
         {/* Utilities — tighter gap on phones, generous from md+ */}
         <div className="flex items-center gap-1 sm:gap-4 md:gap-6 shrink-0">
           <LanguageSwitcher variant={onDark ? 'light' : 'dark'} className="h-11 px-2" />
-          <span aria-hidden className={`hidden md:block h-5 w-px ${onDark ? 'bg-gold/30' : 'bg-hairline'}`} />
+          
           <a
             href={whatsappLink()}
             target="_blank"
             rel="noopener noreferrer"
-            className={`inline-flex items-center gap-2 h-11 sm:h-10 px-3.5 sm:px-4 border rounded-[2px] text-[12px] sm:text-[13px] font-medium transition-colors duration-500 ${onDark ? 'border-gold/60 text-gold-light hover:bg-gold hover:text-black' : 'border-gold/50 text-gold-light hover:bg-gold hover:text-black'}`}
+            className="inline-flex items-center gap-2 h-11 sm:h-10 px-3.5 sm:px-5 rounded-full bg-black text-white text-[12px] sm:text-[13px] font-medium hover:bg-neutral-700 transition-colors duration-300"
           >
             <WhatsAppIcon />
             <span className="hidden sm:inline">{locale === 'ar' ? 'للطلبات' : 'להזמנות'}</span>
@@ -105,7 +101,7 @@ export function Header({ overHero = true }: Props) {
           <button
             type="button"
             onClick={() => setMenuOpen((v) => !v)}
-            className={`lg:hidden inline-flex items-center justify-center w-11 h-11 transition-colors duration-500 ${onDark ? 'text-ivory' : 'text-heading'}`}
+            className={`lg:hidden inline-flex items-center justify-center w-11 h-11 transition-colors duration-500 text-black`}
             aria-label={menuOpen ? t('menuClose') : t('menuOpen')}
             aria-expanded={menuOpen}
           >
@@ -141,7 +137,7 @@ export function Header({ overHero = true }: Props) {
           <Link
             href="/shop"
             onClick={() => setMenuOpen(false)}
-            className="inline-flex items-center justify-center h-12 mb-3 rounded-[2px] bg-gold text-black text-lg font-bold"
+            className="inline-flex items-center justify-center h-12 mb-3 rounded-[2px] bg-gold text-white text-lg font-bold"
           >
             {locale === 'ar' ? 'الكتالوج والأسعار' : 'לקטלוג ולמחירים'}
           </Link>

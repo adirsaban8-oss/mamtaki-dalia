@@ -190,7 +190,7 @@ export function ProductDetail({ product, locale }: Props) {
                     onClick={() => setGrams((g) => Math.max(MIN_GRAMS, g - STEP_GRAMS))}
                     disabled={grams <= MIN_GRAMS}
                     aria-label={locale === 'ar' ? 'أقل 200 غرام' : 'הפחתת 200 גרם'}
-                    className="w-16 sm:w-12 text-2xl leading-none text-heading hover:bg-gold hover:text-black disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-heading transition-colors duration-300"
+                    className="w-16 sm:w-12 text-2xl leading-none text-heading hover:bg-gold hover:text-white disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-heading transition-colors duration-300"
                   >
                     −
                   </button>
@@ -205,7 +205,7 @@ export function ProductDetail({ product, locale }: Props) {
                     onClick={() => setGrams((g) => Math.min(MAX_GRAMS, g + STEP_GRAMS))}
                     disabled={grams >= MAX_GRAMS}
                     aria-label={locale === 'ar' ? 'زيادة 200 غرام' : 'הוספת 200 גרם'}
-                    className="w-16 sm:w-12 text-2xl leading-none text-heading hover:bg-gold hover:text-black disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-heading transition-colors duration-300"
+                    className="w-16 sm:w-12 text-2xl leading-none text-heading hover:bg-gold hover:text-white disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-heading transition-colors duration-300"
                   >
                     +
                   </button>
@@ -218,7 +218,7 @@ export function ProductDetail({ product, locale }: Props) {
                     aria-pressed={grams === g}
                     className={`h-12 px-4 border rounded-[2px] text-[15px] font-medium transition-colors duration-300 ${
                       grams === g
-                        ? 'bg-gold border-gold text-black'
+                        ? 'bg-gold border-gold text-white'
                         : 'border-gold-deep/50 text-heading hover:border-gold'
                     }`}
                   >
@@ -291,7 +291,7 @@ export function ProductDetail({ product, locale }: Props) {
           href={whatsappLink(orderMessage)}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-[2] h-12 inline-flex items-center justify-center gap-2 rounded-[2px] bg-gold text-black text-[15px] font-bold"
+          className="flex-[2] h-12 inline-flex items-center justify-center gap-2 rounded-[2px] bg-gold text-white text-[15px] font-bold"
         >
           <WhatsAppIcon />
           {locale === 'ar' ? 'للطلب عبر واتساب' : 'להזמנה בוואטסאפ'}
@@ -326,7 +326,7 @@ export function ProductDetail({ product, locale }: Props) {
             </h2>
           </header>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-2.5 gap-y-10">
             {related.map((p, idx) => (
               <MenuCard key={p.id} product={p} index={idx} />
             ))}
@@ -344,10 +344,9 @@ function MonogramSeal({ product, label }: { product: Product; label: string }) {
   // arch set just outside it. Falls back to the typographic seal.
   if (product.image) {
     return (
-      <div className="relative mx-auto w-full max-w-[300px] sm:max-w-[520px] bg-sand rounded-[4px] p-5 sm:p-10">
+      <div className="relative mx-auto w-full max-w-[320px] sm:max-w-[560px]">
         <div className="relative">
-          <span aria-hidden className="absolute -inset-2 sm:-inset-3 arch border border-gold/70 pointer-events-none" />
-          <div className="relative aspect-[4/5] arch overflow-hidden bg-sand">
+          <div className="relative aspect-[3/4] overflow-hidden bg-sand">
             <Image
               src={product.image}
               alt={product.name.he}
@@ -360,7 +359,7 @@ function MonogramSeal({ product, label }: { product: Product; label: string }) {
           </div>
         </div>
         {label && (
-          <p className="mt-5 text-center text-[13px] font-medium text-gold-deep">{label}</p>
+          <p className="mt-3 text-[13px] text-coffee-muted">{label}</p>
         )}
       </div>
     );

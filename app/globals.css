@@ -15,30 +15,30 @@
      Black and gold, matching the brand logo. Surfaces are near-black,
      text is warm ivory, accents are antique gold. */
 
-  --color-page: #0C0A08;          /* main page background — black */
-  --color-heading: #EBDAB4;       /* headings on black — champagne gold */
-  --color-ivory: #F4ECDD;          /* main page background — parchment */
-  --color-sand: #13110E;           /* section variation — sand */
-  --color-cream-card: #17140F;     /* product cards — white so cut-out photos blend in */
+  --color-page: #FFFFFF;
+  --color-heading: #000000;
+  --color-ivory: #000000;
+  --color-sand: #F4F4F4;
+  --color-cream-card: #FFFFFF;
 
-  --color-cedar: #070605;          /* deep forest — header / dark sections */
-  --color-cedar-deep: #000000;     /* hero photo edge stop, deepest grade */
-  --color-cedar-light: #1B1712;    /* sage on dark backgrounds */
-  --color-ink: #E8DFCF;            /* body paragraph on cream (lower chroma) */
+  --color-cedar: #F4F4F4;
+  --color-cedar-deep: #EDEDED;
+  --color-cedar-light: #E9E9E9;
+  --color-ink: #1A1A1A;
 
-  --color-gold: #C9A766;           /* antique gold — primary accent */
-  --color-gold-light: #E9D7AE;     /* champagne — hover / highlights */
-  --color-gold-deep: #B38E52;      /* bronze — borders */
+  --color-gold: #000000;
+  --color-gold-light: #000000;
+  --color-gold-deep: #6E6E6E;
 
-  --color-burgundy: #E2C58C;       /* deep wine — primary CTA */
-  --color-burgundy-deep: #C9A766;  /* mahogany — pressed / hover */
+  --color-burgundy: #000000;
+  --color-burgundy-deep: #333333;
 
   --color-pistachio: #93A55B;      /* muted green accent */
   --color-copper: #B87654;         /* rose gold detail */
 
-  --color-coffee: #ECE3D3;         /* body text on cream */
-  --color-coffee-muted: #B4A68E;   /* muted body on cream */
-  --color-hairline: #2F281E;       /* warm hairline borders on cream */
+  --color-coffee: #1A1A1A;
+  --color-coffee-muted: #6E6E6E;
+  --color-hairline: #E4E4E4;
 
   /* ── Shadows ─────────────────────────────────────────────────────
      Tuned exactly to the spec. Card hover lifts with burgundy ghost. */
@@ -80,11 +80,11 @@
 /* Bridge Next/font CSS variables into Tailwind's font scale so we
    get `font-display-he`, `font-body-ar`, etc. */
 @theme inline {
-  --font-display-he: var(--font-frank);
+  --font-display-he: var(--font-heebo);
   --font-body-he: var(--font-heebo);
-  --font-display-ar: var(--font-reem);
+  --font-display-ar: var(--font-tajawal);
   --font-body-ar: var(--font-tajawal);
-  --font-display-en: var(--font-cormorant);
+  --font-display-en: var(--font-inter);
   --font-body-en: var(--font-inter);
 }
 
@@ -93,7 +93,7 @@
    ================================================================== */
 
 :root {
-  color-scheme: dark;
+  color-scheme: light;
 }
 
 html {
@@ -121,8 +121,8 @@ body {
 
 /* Selection — burgundy on parchment */
 ::selection {
-  background-color: var(--color-gold);
-  color: #000;
+  background-color: #000;
+  color: #fff;
 }
 
 /* Crisp focus ring in gold — accessible and on-brand */
@@ -182,16 +182,15 @@ html.a11y-text-largest {
 }
 
 html.a11y-contrast {
-  --color-page: #000000;
-  --color-sand: #000000;
-  --color-cream-card: #0A0A0A;
-  --color-heading: #FFF1CC;
-  --color-gold: #F0C878;
-  --color-gold-deep: #E0B868;
-  --color-coffee: #FFFFFF;
-  --color-coffee-muted: #E6E0D4;
-  --color-ink: #FFFFFF;
-  --color-hairline: #8B6F3D;
+  --color-page: #FFFFFF;
+  --color-sand: #FFFFFF;
+  --color-cedar: #FFFFFF;
+  --color-cream-card: #FFFFFF;
+  --color-gold-deep: #000000;
+  --color-coffee: #000000;
+  --color-coffee-muted: #000000;
+  --color-ink: #000000;
+  --color-hairline: #000000;
 }
 html.a11y-contrast img {
   filter: contrast(1.05);
@@ -229,29 +228,27 @@ html[lang="he"] .tracking-eyebrow { letter-spacing: 0.06em; }
 
 /* Keyhole arch — rectangle crowned by a half circle. */
 @utility arch {
-  border-radius: 999px 999px 0 0;
+  border-radius: 0;
 }
 
 /* Khatam (8-point star) tile — gold hairline, for dark sections only. */
 @utility pattern-khatam {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cg fill='none' stroke='%23C3A477' stroke-width='0.75'%3E%3Crect x='18' y='18' width='36' height='36'/%3E%3Crect x='18' y='18' width='36' height='36' transform='rotate(45 36 36)'/%3E%3Ccircle cx='36' cy='36' r='6'/%3E%3Cpath d='M0 0 L10 10 M72 0 L62 10 M0 72 L10 62 M72 72 L62 62'/%3E%3C/g%3E%3C/svg%3E");
-  background-size: 72px 72px;
+  background-image: none;
 }
 
 /* Gold rule with a centred diamond. */
 @utility rule-diamond {
-  position: relative;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--color-gold) 20%, var(--color-gold) 80%, transparent);
-  &::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    width: 7px;
-    height: 7px;
-    background: var(--color-page);
-    border: 1px solid var(--color-gold);
-    transform: translate(-50%, -50%) rotate(45deg);
-  }
+  display: none;
 }
+
+
+/* ==================================================================
+   Minimal monochrome look — white page, black type, no ornament.
+   ================================================================== */
+
+/* Large headings are set in a regular-weight grotesque, tightly tracked. */
+h1.font-black, h1.font-bold, h2.font-black, h2.font-bold {
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+html[lang="ar"] h1, html[lang="ar"] h2 { letter-spacing: 0; }

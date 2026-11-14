@@ -1,13 +1,11 @@
 import { setRequestLocale } from 'next-intl/server';
 import { Header } from '@/components/layout/Header';
 import { Hero } from '@/components/home/Hero';
-import { Ticker } from '@/components/home/Ticker';
 import { Story } from '@/components/home/Story';
 import { ValueProps } from '@/components/home/ValueProps';
-import { CategoryArches } from '@/components/home/CategoryArches';
 import { OrderBand } from '@/components/home/OrderBand';
 import { Showcase } from '@/components/home/Showcase';
-import { CatalogPreview } from '@/components/home/CatalogPreview';
+import { ShopContent } from '@/components/shop/ShopContent';
 import { Footer } from '@/components/layout/Footer';
 import type { Locale } from '@/i18n/locales';
 
@@ -17,16 +15,14 @@ export default async function HomePage({ params }: PageProps<'/[locale]'>) {
 
   return (
     <>
-      <Header overHero />
+      <Header overHero={false} />
       <main className="flex-1">
         <Hero />
-        <CategoryArches />
-        <CatalogPreview />
-        <Ticker />
-        <Showcase />
-        <Story locale={locale as Locale} />
-        <ValueProps />
+        <ShopContent locale={locale as Locale} embedded />
         <OrderBand />
+        <Story locale={locale as Locale} />
+        <Showcase />
+        <ValueProps />
       </main>
       <Footer locale={locale as Locale} />
     </>

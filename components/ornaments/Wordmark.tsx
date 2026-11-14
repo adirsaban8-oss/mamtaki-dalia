@@ -13,19 +13,19 @@ type Props = {
  *  – On phones the tagline hides and the mark shrinks so the long
  *    brand name fits cleanly on a 320px iPhone SE header.
  */
-export function Wordmark({ locale, variant = 'dark', size = 'md' }: Props) {
+export function Wordmark({ locale, size = 'md' }: Props) {
   const t = useTranslations('Brand');
 
-  const colorMark = variant === 'light' ? 'text-gold-light' : 'text-gold';
-  const colorName = variant === 'light' ? 'text-ivory' : 'text-heading';
-  const colorTagline = variant === 'light' ? 'text-gold-light/80' : 'text-coffee-muted';
+  const colorMark = 'text-black';
+  const colorName = 'text-black';
+  const colorTagline = 'text-neutral-500';
 
   const nameSize =
     size === 'lg'
       ? 'text-lg sm:text-2xl md:text-3xl'
       : size === 'sm'
         ? 'text-sm sm:text-base'
-        : 'text-[13px] sm:text-lg md:text-xl';
+        : 'text-[15px] sm:text-xl md:text-[22px]';
 
   const markSize = size === 'lg' ? 40 : size === 'sm' ? 22 : 26;
 
@@ -43,7 +43,7 @@ export function Wordmark({ locale, variant = 'dark', size = 'md' }: Props) {
       />
       <span className="flex flex-col leading-[1.05] min-w-0">
         <span
-          className={`${displayFont} ${nameSize} font-bold tracking-display whitespace-nowrap ${colorName}`}
+          className={`${displayFont} ${nameSize} font-bold tracking-[-0.02em] whitespace-nowrap ${colorName}`}
         >
           {t('name')}
         </span>

@@ -101,7 +101,7 @@ export function AccessibilityFAB() {
         onClick={() => setOpen((v) => !v)}
         aria-label={t('open')}
         aria-expanded={open}
-        className="fixed start-4 bottom-20 lg:bottom-4 z-[55] w-12 h-12 sm:w-14 sm:h-14 inline-flex items-center justify-center bg-cedar border border-gold/50 text-gold-light hover:bg-gold hover:text-black transition-colors duration-500 rounded-full shadow-deep border border-gold/40"
+        className="fixed start-4 bottom-20 lg:bottom-4 z-[55] w-12 h-12 sm:w-14 sm:h-14 inline-flex items-center justify-center bg-cedar border border-gold/50 text-gold-light hover:bg-gold hover:text-white transition-colors duration-500 rounded-full shadow-deep border border-gold/40"
       >
         <AccessibilityIcon />
       </button>

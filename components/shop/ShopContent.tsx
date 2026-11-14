@@ -18,7 +18,11 @@ import { ArabesquePattern } from '@/components/ornaments/ArabesquePattern';
 
 const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 
-type Props = { locale: Locale };
+type Props = {
+  locale: Locale;
+  /** Home page: the grid only — no page title, search or category bar. */
+  embedded?: boolean;
+};
 
 /**
  * Catalog page — full menu organized by category, no product photos.
@@ -29,7 +33,7 @@ type Props = { locale: Locale };
  *  – Sticky sub-nav on desktop with category anchors.
  *  – Empty state when filters exclude everything.
  */
-export function ShopContent({ locale }: Props) {
+export function ShopContent({ locale, embedded = false }: Props) {
   const t = useTranslations('Shop');
   const displayFont = locale === 'ar' ? 'font-display-ar' : 'font-display-he';
 
@@ -63,7 +67,7 @@ export function ShopContent({ locale }: Props) {
 
 
   return (
-    <section className="relative overflow-x-clip bg-page pb-12 md:pb-20">
+    <section className="relative overflow-x-clip bg-page pb-6 md:pb-10">
       {/* Decorative arabesque */}
       <div
         aria-hidden
@@ -73,6 +77,7 @@ export function ShopContent({ locale }: Props) {
       </div>
 
       {/* Page header */}
+      {!embedded && (
       <header className="relative mx-auto max-w-7xl px-5 md:px-10 pt-12 md:pt-16 pb-8 md:pb-12 flex flex-col items-center text-center">
         <div className="flex items-center gap-5 text-gold-deep">
           <span aria-hidden className="block h-px w-12 bg-gold" />
@@ -100,8 +105,10 @@ export function ShopContent({ locale }: Props) {
           />
         </label>
       </header>
+      )}
 
       {/* Category index — sticky, scrolls sideways on phones */}
+      {!embedded && (
       <nav
         aria-label={locale === 'ar' ? 'الفئات' : 'קטגוריות'}
         className="sticky top-16 sm:top-[72px] z-30 mb-10 md:mb-14 bg-page/95 backdrop-blur border-y border-hairline"
@@ -118,9 +125,10 @@ export function ShopContent({ locale }: Props) {
           ))}
         </div>
       </nav>
+      )}
 
       {/* Catalog body */}
-      <div className="relative mx-auto max-w-7xl px-4 md:px-10">
+      <div className={`relative mx-auto max-w-[1440px] px-4 md:px-[25px] ${embedded ? 'pt-10 md:pt-[60px]' : ''}`}>
         {loading && allProducts.length === 0 ? (
           <CatalogSkeleton />
         ) : allProducts.length === 0 ? (
@@ -241,25 +249,19 @@ function CategorySection({ category, items, locale, displayFont }: SectionProps)
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true, margin: '-80px' }}
         transition={{ duration: 0.9, ease: easeLuxe }}
-        className="flex flex-col items-center text-center mb-8 md:mb-12"
+        className="flex items-baseline justify-between gap-4 mb-5 md:mb-6 pb-3 border-b border-black"
       >
-        <div className="flex items-center gap-5 text-gold-deep">
-          <span aria-hidden className="block h-px w-12 bg-gold" />
-          <span className="text-[12px] md:text-[13px] font-medium">
-            {categoryEyebrow[category][locale]}
-          </span>
-          <span aria-hidden className="block h-px w-12 bg-gold" />
-        </div>
         <h2
           id={`heading-${category}`}
-          className={`mt-4 md:mt-5 ${displayFont} font-bold leading-[1.1] text-heading text-balance text-3xl md:text-4xl lg:text-5xl`}
+          className={`${displayFont} font-bold leading-[1.1] text-heading text-2xl md:text-[2rem]`}
         >
           {categoryLabels[category][locale]}
         </h2>
+        <span className="text-[13px] text-coffee-muted">{categoryEyebrow[category][locale]}</span>
       </motion.header>
 
       {/* Items — card grid: 2 cols phone, 3 tablet, 4 desktop */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2.5 gap-y-10 md:gap-y-12">
         {items.map((product, idx) => (
           <MenuCard key={product.id} product={product} index={idx} />
         ))}

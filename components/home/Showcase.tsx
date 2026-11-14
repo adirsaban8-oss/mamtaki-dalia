@@ -69,14 +69,14 @@ export function Showcase() {
           <span aria-hidden className="rule-diamond block w-28 mt-6" />
         </header>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 md:grid-rows-2 gap-3 md:gap-4 md:h-[720px]">
+        <div className="grid grid-cols-2 md:grid-cols-4 md:grid-rows-2 gap-2.5 md:h-[720px]">
           {/* Video — spans both rows */}
           <motion.figure
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.9, ease: easeLuxe }}
-            className="relative row-span-2 md:col-start-1 md:row-start-1 overflow-hidden rounded-[2px] border border-gold/40 bg-cedar h-[440px] md:h-auto"
+            className="relative row-span-2 md:col-start-1 md:row-start-1 overflow-hidden bg-cedar h-[440px] md:h-auto"
           >
             <video
               className="absolute inset-0 w-full h-full object-cover"
@@ -89,9 +89,8 @@ export function Showcase() {
               preload="metadata"
               aria-label={ar ? 'جولة في واجهة الحلويات' : 'סיור בוויטרינת הממתקים'}
             />
-            <span aria-hidden className="absolute inset-2 border border-gold/30 pointer-events-none" />
-            <figcaption className="absolute bottom-0 inset-x-0 p-4 pt-12 bg-gradient-to-t from-black/85 to-transparent">
-              <span className={`${displayFont} text-lg font-bold text-ivory`}>
+            <figcaption className="absolute bottom-0 inset-x-0 p-4 pt-12 bg-gradient-to-t from-black/60 to-transparent">
+              <span className={`${displayFont} text-lg font-medium text-white`}>
                 {ar ? 'الواجهة في دالية الكرمل' : 'הוויטרינה בדלית אל כרמל'}
               </span>
             </figcaption>
@@ -104,7 +103,7 @@ export function Showcase() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
               transition={{ duration: 0.9, ease: easeLuxe, delay: 0.08 * (i + 1) }}
-              className={`group relative overflow-hidden rounded-[2px] border border-gold/25 bg-cedar h-[210px] md:h-auto ${tile.className}`}
+              className={`group relative overflow-hidden bg-cedar h-[210px] md:h-auto ${tile.className}`}
             >
               <Image
                 src={tile.src}
@@ -113,9 +112,8 @@ export function Showcase() {
                 sizes="(min-width: 768px) 25vw, 50vw"
                 className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.05]"
               />
-              <span aria-hidden className="absolute inset-2 border border-gold/0 group-hover:border-gold/50 transition-colors duration-700 pointer-events-none" />
-              <figcaption className="absolute bottom-0 inset-x-0 p-3 md:p-4 pt-10 bg-gradient-to-t from-black/80 to-transparent">
-                <span className="text-[13px] md:text-[15px] font-medium text-gold-light">{tile.caption[locale]}</span>
+              <figcaption className="absolute bottom-0 inset-x-0 p-3 md:p-4 pt-10 bg-gradient-to-t from-black/55 to-transparent">
+                <span className="text-[13px] md:text-[15px] font-medium text-white">{tile.caption[locale]}</span>
               </figcaption>
             </motion.figure>
           ))}
