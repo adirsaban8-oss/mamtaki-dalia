@@ -6,8 +6,8 @@ import type { Product, ProductCategory, PricingUnit, Translated } from '@/lib/mo
  * owner publishes products in WooCommerce, those replace this list.
  *
  * Allergens were filled by product family and should be confirmed by
- * the owner. Images in /public/products are the business's own photos,
- * given one shared catalog grade.
+ * the owner. Images in /public/products are AI restyles of the shop's
+ * own product photos (same product, one shared black-studio look).
  */
 
 type Seed = {
