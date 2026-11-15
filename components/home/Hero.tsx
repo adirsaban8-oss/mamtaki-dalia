@@ -7,84 +7,67 @@ import { whatsappLink } from '@/lib/site';
 import type { Locale } from '@/i18n/locales';
 
 /**
- * Hero — minimal split panel: a light-grey field with the place name set
- * very large, the shop's address and hours, and one of the shop's own
- * photos carrying the one action that matters: open the catalog. The
- * product grid starts right below.
+ * Hero — the shop's own tray photo fills the whole opening screen. The
+ * name, the slogan and one button sit on top of it, over a soft shade
+ * that keeps the white type readable. Address and hours close the block
+ * in a single quiet line.
  */
 export function Hero() {
   const locale = useLocale() as Locale;
   const t = useTranslations('Hero');
   const f = useTranslations('Footer');
   const ar = locale === 'ar';
+  const displayFont = ar ? 'font-display-ar' : 'font-display-he';
 
   return (
-    <section className="pt-16 sm:pt-20 grid lg:grid-cols-12" aria-label="Hero">
-      {/* Light panel — who and where */}
-      <div className="lg:col-span-7 bg-[#F4F4F4] text-black px-6 sm:px-12 lg:px-[8.5%] py-12 md:py-16 lg:py-20 flex flex-col justify-center">
-        <h1 className="text-[3.4rem] sm:text-7xl lg:text-[6.5rem] leading-[0.95] !font-bold !tracking-[-0.04em]">
-          {ar ? 'دالية الكرمل' : 'דלית אל כרמל'}
-        </h1>
-        <p className="mt-8 md:mt-10 text-[15px] text-neutral-600">
-          {ar ? 'بالطلب المسبق · توصيل أو استلام من المحل' : 'בהזמנה מראש · משלוח או איסוף מהחנות'}
-        </p>
-        <p className="mt-1 text-3xl sm:text-4xl lg:text-[2.75rem] leading-[1.15] font-medium tracking-[-0.03em] text-balance">
-          {ar ? 'حلوياتنا، طازجة كل يوم' : 'הממתקים שלנו, טריים מדי יום'}
-        </p>
-        <address className="mt-4 not-italic text-[15px] leading-[1.6] text-neutral-600">
-          {ar ? 'حلويات دالية الكرمل — شارع دالية 10، دالية الكرمل' : 'ממתקי דלית אל כרמל — רחוב דליה 10, דלית אל כרמל'}
-          <br />
-          {f('hoursValue')}
-        </address>
-      </div>
+    <section
+      className="relative isolate overflow-hidden mt-16 sm:mt-20 min-h-[calc(100svh-8.5rem)] lg:min-h-[640px] flex items-end lg:items-center bg-neutral-800 text-white"
+      aria-label="Hero"
+    >
+      <Image
+        src="/images/hero.webp"
+        alt={ar ? 'صينية حلويات من المحل' : 'מגש ממתקים מהחנות'}
+        fill
+        priority
+        sizes="100vw"
+        className="-z-20 object-cover"
+      />
+      {/* Shade: from the bottom on phones, from the reading side on desktop */}
+      <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-black/85 via-black/45 to-black/5 lg:hidden" />
+      <div aria-hidden className="absolute inset-0 -z-10 hidden lg:block bg-gradient-to-l from-black/90 via-black/60 to-black/15" />
 
-      {/* Photo panel — the shop's own tray, with the one action on top */}
-      <div className="relative isolate overflow-hidden lg:col-span-5 bg-neutral-800 text-white px-6 sm:px-12 lg:px-20 py-12 md:py-16 lg:py-20 min-h-[380px] flex flex-col justify-end">
-        <Image
-          src="/images/hero.webp"
-          alt={ar ? 'صينية حلويات من المحل' : 'מגש ממתקים מהחנות'}
-          fill
-          priority
-          sizes="(min-width: 1024px) 42vw, 100vw"
-          className="-z-20 object-cover"
-        />
-        <div aria-hidden className="absolute inset-0 -z-10 bg-gradient-to-t from-black/90 via-black/60 to-black/15" />
-        <p className="flex items-center gap-2.5 text-[13px] font-medium">
-          <span aria-hidden className="block w-2.5 h-2.5 rounded-full bg-white" />
-          {t('eyebrow')}
-        </p>
-        <p className="mt-6 text-4xl sm:text-[2.75rem] leading-[1.05] font-medium tracking-[-0.03em] text-balance">
-          {ar ? 'طلبكم يبدأ من هنا' : 'ההזמנה שלכם מתחילה כאן'}
-        </p>
-        <div className="mt-7 flex flex-col sm:flex-row lg:flex-col xl:flex-row items-stretch sm:items-center lg:items-stretch xl:items-center gap-4">
-          <Link
-            href="/shop"
-            className="inline-flex items-center justify-center gap-3 h-12 px-8 rounded-full bg-white text-black text-[15px] font-bold hover:bg-neutral-200 transition-colors duration-300"
-          >
-            <GridIcon />
-            {ar ? 'الكتالوج والأسعار' : 'לקטלוג ולמחירים'}
-          </Link>
-          <a
-            href={whatsappLink()}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center h-12 px-2 text-[15px] font-medium underline underline-offset-[6px] hover:no-underline"
-          >
-            {t('ctaStory')}
-          </a>
+      <div className="w-full mx-auto max-w-[1440px] px-6 sm:px-12 lg:px-20 pt-40 pb-9 lg:py-24">
+        <div className="max-w-xl">
+          <p className="text-base text-white/85">{t('titleLine1')}</p>
+          <h1 className={`${displayFont} mt-1 text-[3.25rem] sm:text-7xl xl:text-[5.5rem] leading-[1.02] !font-bold !tracking-normal`}>
+            {t('titleLine2')}
+          </h1>
+          <p className={`${displayFont} mt-3 text-2xl sm:text-3xl text-white/90`}>{t('eyebrow')}</p>
+
+          <div className="mt-8 md:mt-10 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-7">
+            <Link
+              href="/shop"
+              className="inline-flex items-center justify-center h-[52px] px-9 rounded-full bg-white text-black text-base font-semibold hover:bg-neutral-200 transition-colors duration-300"
+            >
+              {ar ? 'الكتالوج والأسعار' : 'לקטלוג ולמחירים'}
+            </Link>
+            <a
+              href={whatsappLink()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center h-11 text-base font-medium underline underline-offset-[6px] decoration-1 hover:no-underline"
+            >
+              {t('ctaStory')}
+            </a>
+          </div>
+
+          <address className="mt-8 md:mt-12 pt-4 border-t border-white/30 not-italic text-sm leading-[1.7] text-white/85">
+            {ar ? 'شارع دالية 10، دالية الكرمل' : 'רחוב דליה 10, דלית אל כרמל'}
+            <span aria-hidden className="hidden sm:inline mx-2">·</span>
+            <span className="block sm:inline-block">{f('hoursValue')}</span>
+          </address>
         </div>
       </div>
     </section>
-  );
-}
-
-function GridIcon() {
-  return (
-    <svg width="15" height="15" viewBox="0 0 16 16" fill="currentColor" aria-hidden>
-      <rect x="1" y="1" width="6" height="6" />
-      <rect x="9" y="1" width="6" height="6" />
-      <rect x="1" y="9" width="6" height="6" />
-      <rect x="9" y="9" width="6" height="6" />
-    </svg>
   );
 }

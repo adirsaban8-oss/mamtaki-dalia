@@ -80,11 +80,11 @@
 /* Bridge Next/font CSS variables into Tailwind's font scale so we
    get `font-display-he`, `font-body-ar`, etc. */
 @theme inline {
-  --font-display-he: var(--font-heebo);
+  --font-display-he: var(--font-frank);
   --font-body-he: var(--font-heebo);
-  --font-display-ar: var(--font-tajawal);
+  --font-display-ar: var(--font-reem);
   --font-body-ar: var(--font-tajawal);
-  --font-display-en: var(--font-inter);
+  --font-display-en: var(--font-heebo);
   --font-body-en: var(--font-inter);
 }
 
@@ -246,9 +246,13 @@ html[lang="he"] .tracking-eyebrow { letter-spacing: 0.06em; }
    Minimal monochrome look — white page, black type, no ornament.
    ================================================================== */
 
-/* Large headings are set in a regular-weight grotesque, tightly tracked. */
+/* Headings are set in a classic Hebrew book serif at a calm weight. */
 h1.font-black, h1.font-bold, h2.font-black, h2.font-bold {
   font-weight: 500;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.005em;
 }
 html[lang="ar"] h1, html[lang="ar"] h2 { letter-spacing: 0; }
+
+/* Every main heading uses the display serif, whether or not it carries the class. */
+html[lang="he"] h1, html[lang="he"] h2 { font-family: var(--font-display-he), serif; }
+html[lang="ar"] h1, html[lang="ar"] h2 { font-family: var(--font-display-ar), serif; }

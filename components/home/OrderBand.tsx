@@ -22,7 +22,7 @@ export function OrderBand() {
         <p className="text-[15px] font-medium">
           {ar ? 'مناسبات خاصة حسب الطلب' : 'אירועים פרטיים בהזמנה אישית'}
         </p>
-        <h2 className="mt-2 text-6xl md:text-8xl leading-[1] !font-medium !tracking-[-0.04em]">
+        <h2 className="mt-2 text-6xl md:text-8xl leading-[1] !font-medium !tracking-normal">
           {ar ? 'مناسبات' : 'אירועים'}
         </h2>
         <div className="mt-8 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full max-w-xs sm:max-w-none sm:w-auto">

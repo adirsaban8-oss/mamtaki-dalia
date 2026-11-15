@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import {
   Frank_Ruhl_Libre,
-  IBM_Plex_Sans_Hebrew,
+  Assistant,
   Amiri,
   IBM_Plex_Sans_Arabic,
   Cormorant_Garamond,
@@ -24,9 +24,9 @@ const frank = Frank_Ruhl_Libre({
   display: 'swap',
 });
 
-// Body: IBM Plex Sans Hebrew + Arabic share one design, so mixed
+// Body: Assistant — a humanist Hebrew sans; Plex Arabic for Arabic, so mixed
 // Hebrew/Arabic text keeps the same colour and rhythm.
-const plexHebrew = IBM_Plex_Sans_Hebrew({
+const plexHebrew = Assistant({
   subsets: ['hebrew', 'latin'],
   weight: ['300', '400', '500', '600', '700'],
   variable: '--font-heebo',
