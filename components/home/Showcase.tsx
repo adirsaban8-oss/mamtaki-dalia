@@ -54,7 +54,7 @@ export function Showcase() {
   const displayFont = ar ? 'font-display-ar' : 'font-display-he';
 
   return (
-    <section className="relative bg-page py-16 md:py-24" aria-labelledby="showcase-heading">
+    <section className="relative bg-sand py-16 md:py-24" aria-labelledby="showcase-heading">
       <div className="mx-auto max-w-7xl px-5 md:px-10">
         <header className="flex flex-col items-center text-center mb-10 md:mb-14">
           <span className="text-[13px] font-medium text-gold-deep">
@@ -76,7 +76,7 @@ export function Showcase() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.9, ease: easeLuxe }}
-            className="relative row-span-2 md:col-start-1 md:row-start-1 overflow-hidden bg-cedar h-[440px] md:h-auto"
+            className="relative row-span-2 md:col-start-1 md:row-start-1 overflow-hidden bg-cedar h-[440px] md:h-auto rounded-[10px]"
           >
             <video
               className="absolute inset-0 w-full h-full object-cover"
@@ -103,7 +103,7 @@ export function Showcase() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
               transition={{ duration: 0.9, ease: easeLuxe, delay: 0.08 * (i + 1) }}
-              className={`group relative overflow-hidden bg-cedar h-[210px] md:h-auto ${tile.className}`}
+              className={`group relative overflow-hidden bg-cedar h-[210px] md:h-auto rounded-[10px] ${tile.className}`}
             >
               <Image
                 src={tile.src}

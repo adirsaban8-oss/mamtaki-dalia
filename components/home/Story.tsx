@@ -40,7 +40,7 @@ export async function Story({ locale }: Props) {
         <div className="lg:col-span-6 order-2 lg:order-1">
           <div className="relative aspect-[3/4] max-w-md mx-auto lg:mx-0 lg:ms-auto">
             {/* Image */}
-            <div className="relative w-full h-full overflow-hidden">
+            <div className="relative w-full h-full overflow-hidden rounded-[12px] shadow-[0_24px_60px_-30px_rgba(42,27,18,0.7)]">
               <Image
                 src={STORY_IMAGE}
                 alt=""

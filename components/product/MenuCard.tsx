@@ -50,14 +50,14 @@ export function MenuCard({ product, index = 0, variant = 'card' }: Props) {
     >
       <Link href={`/shop/${product.slug}`} className="block" aria-label={product.name[locale]}>
         {/* Photo — tall, edge to edge, no frame */}
-        <div className="relative aspect-[3/4] bg-sand overflow-hidden">
+        <div className="relative aspect-[3/4] bg-sand overflow-hidden rounded-[10px] shadow-[0_10px_30px_-18px_rgba(42,27,18,0.55)] group-hover:shadow-[0_18px_40px_-18px_rgba(42,27,18,0.7)] transition-shadow duration-500">
           {product.image ? (
             <Image
               src={product.image}
               alt={product.name[locale]}
               fill
               sizes="(min-width: 1024px) 25vw, 50vw"
-              className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.03]"
+              className="object-cover transition-transform duration-[900ms] ease-out group-hover:scale-[1.05]"
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center">
@@ -65,19 +65,20 @@ export function MenuCard({ product, index = 0, variant = 'card' }: Props) {
             </div>
           )}
           {primaryBadge(product, locale) && (
-            <span className="absolute top-3 start-3 px-2.5 h-6 inline-flex items-center bg-white text-black text-[11px] font-medium">
+            <span className="absolute top-3 start-3 px-2.5 h-6 inline-flex items-center bg-page text-heading text-[11px] font-medium">
               {primaryBadge(product, locale)}
             </span>
           )}
         </div>
-        <h3 className={`${displayFont} mt-4 sm:mt-5 font-bold text-heading text-[15px] sm:text-base leading-[1.25]`}>
+        <h3 className={`${displayFont} mt-4 sm:mt-5 font-bold text-heading text-[17px] sm:text-xl leading-[1.2]`}>
           {product.name[locale]}
         </h3>
+        <p className="mt-1 text-[13px] sm:text-sm leading-snug text-coffee-muted line-clamp-1">{product.tastingNote[locale]}</p>
       </Link>
-      <div className="mt-0.5 flex items-baseline justify-between gap-3">
-        <p className="text-[13px] sm:text-sm text-coffee-muted">
+      <div className="mt-3 flex items-center justify-between gap-2">
+        <p className="text-[15px] sm:text-base font-semibold text-heading">
           {priceLabel}
-          {priceSuffix && <> {priceSuffix}</>}
+          {priceSuffix && <span className="text-[13px] font-normal text-coffee-muted"> {priceSuffix}</span>}
         </p>
         <a
           href={whatsappLink(
@@ -86,7 +87,7 @@ export function MenuCard({ product, index = 0, variant = 'card' }: Props) {
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`${locale === 'ar' ? 'طلب عبر واتساب' : 'הזמנה בוואטסאפ'}: ${product.name[locale]}`}
-          className="shrink-0 -my-2 py-2 text-[13px] sm:text-sm font-medium text-heading underline underline-offset-4 hover:no-underline"
+          className="shrink-0 inline-flex items-center h-10 px-4 sm:px-5 rounded-full border border-gold text-gold text-[13px] sm:text-sm font-semibold hover:bg-gold hover:text-white transition-colors duration-300"
         >
           {locale === 'ar' ? 'للطلب' : 'להזמנה'}
         </a>

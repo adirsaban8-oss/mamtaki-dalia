@@ -15,9 +15,9 @@ export function OrderBand() {
   const ar = locale === 'ar';
 
   return (
-    <section className="relative isolate overflow-hidden bg-neutral-500 text-white">
+    <section className="relative isolate overflow-hidden bg-[#3A2A1F] text-white">
       <Image src="/images/order-band.webp" alt="" fill sizes="100vw" className="-z-20 object-cover" />
-      <div aria-hidden className="absolute inset-0 -z-10 bg-neutral-700/55" />
+      <div aria-hidden className="absolute inset-0 -z-10 bg-[#2A1B12]/60" />
       <div className="mx-auto max-w-3xl px-5 py-28 md:py-52 flex flex-col items-center text-center">
         <p className="text-[15px] font-medium">
           {ar ? 'مناسبات خاصة حسب الطلب' : 'אירועים פרטיים בהזמנה אישית'}

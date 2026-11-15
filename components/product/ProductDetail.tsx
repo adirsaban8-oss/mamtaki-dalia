@@ -291,7 +291,7 @@ export function ProductDetail({ product, locale }: Props) {
           href={whatsappLink(orderMessage)}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-[2] h-12 inline-flex items-center justify-center gap-2 rounded-[2px] bg-gold text-white text-[15px] font-bold"
+          className="flex-[2] h-12 inline-flex items-center justify-center gap-2 rounded-full bg-gold text-white text-[15px] font-bold"
         >
           <WhatsAppIcon />
           {locale === 'ar' ? 'للطلب عبر واتساب' : 'להזמנה בוואטסאפ'}
@@ -304,7 +304,7 @@ export function ProductDetail({ product, locale }: Props) {
         </a>
         <Link
           href="/shop"
-          className="flex-1 h-12 inline-flex items-center justify-center rounded-[2px] border border-gold/60 text-gold-light text-[15px] font-bold"
+          className="flex-1 h-12 inline-flex items-center justify-center rounded-full border border-gold/60 text-gold-light text-[15px] font-bold"
         >
           {locale === 'ar' ? 'الكتالوج' : 'לקטלוג'}
         </Link>
@@ -326,7 +326,7 @@ export function ProductDetail({ product, locale }: Props) {
             </h2>
           </header>
 
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-2.5 gap-y-10">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-3 md:gap-x-5 gap-y-10">
             {related.map((p, idx) => (
               <MenuCard key={p.id} product={p} index={idx} />
             ))}
@@ -346,7 +346,7 @@ function MonogramSeal({ product, label }: { product: Product; label: string }) {
     return (
       <div className="relative mx-auto w-full max-w-[320px] sm:max-w-[560px]">
         <div className="relative">
-          <div className="relative aspect-[3/4] overflow-hidden bg-sand">
+          <div className="relative aspect-[3/4] overflow-hidden bg-sand rounded-[12px] shadow-[0_24px_60px_-30px_rgba(42,27,18,0.7)]">
             <Image
               src={product.image}
               alt={product.name.he}

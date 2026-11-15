@@ -184,7 +184,7 @@ export function CheckoutForm({ locale }: Props) {
     .slice(0, 10);
 
   return (
-    <section className="relative pb-20 md:pb-[120px]">
+    <section className="relative overflow-x-clip pb-20 md:pb-[120px]">
       <div
         aria-hidden
         className="absolute -top-12 -end-24 w-[500px] h-[500px] text-gold pointer-events-none"

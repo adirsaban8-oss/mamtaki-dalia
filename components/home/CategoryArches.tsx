@@ -28,7 +28,7 @@ export function CategoryArches() {
   const displayFont = locale === 'ar' ? 'font-display-ar' : 'font-display-he';
 
   return (
-    <section className="relative bg-page py-14 md:py-20" aria-labelledby="categories-heading">
+    <section className="relative bg-sand py-14 md:py-20" aria-labelledby="categories-heading">
       <div className="mx-auto max-w-7xl px-5 md:px-10">
         <header className="flex flex-col items-center text-center mb-10 md:mb-14">
           <span className="text-[13px] font-medium text-gold-deep">
@@ -57,7 +57,7 @@ export function CategoryArches() {
                 <div className="relative mx-2 mt-2">
                   <span
                     aria-hidden
-                    className="absolute -inset-2 arch border border-gold/50 group-hover:border-gold transition-colors duration-500"
+                    className="absolute -inset-2 arch border border-gold-deep/50 group-hover:border-gold-deep transition-colors duration-500"
                   />
                   <div className="relative aspect-[3/4] arch overflow-hidden bg-sand">
                     <Image

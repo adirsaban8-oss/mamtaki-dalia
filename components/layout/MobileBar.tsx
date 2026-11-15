@@ -21,7 +21,7 @@ export function MobileBar() {
   const inCatalog = pathname === '/shop';
 
   const cell =
-    'flex-1 h-12 inline-flex items-center justify-center gap-2 rounded-[2px] text-[15px] font-bold transition-colors duration-300';
+    'flex-1 h-12 inline-flex items-center justify-center gap-2 rounded-full text-[15px] font-bold transition-colors duration-300';
 
   return (
     <>
@@ -29,15 +29,15 @@ export function MobileBar() {
       <div aria-hidden className="h-[4.5rem] lg:hidden" />
       <nav
         aria-label={ar ? 'طلب سريع' : 'הזמנה מהירה'}
-        className="lg:hidden fixed bottom-0 inset-x-0 z-50 flex gap-2 px-3 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] bg-cedar/95 backdrop-blur-md border-t border-gold/40"
+        className="lg:hidden fixed bottom-0 inset-x-0 z-50 flex gap-2 px-3 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] bg-page/95 backdrop-blur-md border-t border-hairline"
       >
         {inCatalog ? (
-          <a href="tel:+972525986266" className={`${cell} bg-gold text-white hover:bg-neutral-700`}>
+          <a href="tel:+972525986266" className={`${cell} bg-gold text-white hover:bg-[#333D1C]`}>
             <PhoneIcon />
             {ar ? 'اتصلوا للطلب' : 'התקשרו להזמנה'}
           </a>
         ) : (
-          <Link href="/shop" className={`${cell} bg-gold text-white hover:bg-neutral-700`}>
+          <Link href="/shop" className={`${cell} bg-gold text-white hover:bg-[#333D1C]`}>
             <GridIcon />
             {ar ? 'الكتالوج والأسعار' : 'לקטלוג ולמחירים'}
           </Link>

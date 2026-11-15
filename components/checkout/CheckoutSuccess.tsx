@@ -24,7 +24,7 @@ export function CheckoutSuccess({ locale }: Props) {
   }, []);
 
   return (
-    <section className="relative py-20 md:py-32 min-h-[60vh] flex items-center">
+    <section className="relative overflow-x-clip py-20 md:py-32 min-h-[60vh] flex items-center">
       <div
         aria-hidden
         className="absolute -top-12 -end-24 w-[500px] h-[500px] text-gold pointer-events-none"

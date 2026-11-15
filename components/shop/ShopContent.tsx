@@ -249,7 +249,7 @@ function CategorySection({ category, items, locale, displayFont }: SectionProps)
         whileInView={{ y: 0, opacity: 1 }}
         viewport={{ once: true, margin: '-80px' }}
         transition={{ duration: 0.9, ease: easeLuxe }}
-        className="flex items-baseline justify-between gap-4 mb-5 md:mb-6 pb-3 border-b border-black"
+        className="flex items-baseline justify-between gap-4 mb-5 md:mb-6 pb-3 border-b border-hairline"
       >
         <h2
           id={`heading-${category}`}
@@ -261,7 +261,7 @@ function CategorySection({ category, items, locale, displayFont }: SectionProps)
       </motion.header>
 
       {/* Items — card grid: 2 cols phone, 3 tablet, 4 desktop */}
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-2.5 gap-y-10 md:gap-y-12">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 md:gap-x-5 gap-y-10 md:gap-y-14">
         {items.map((product, idx) => (
           <MenuCard key={product.id} product={product} index={idx} />
         ))}

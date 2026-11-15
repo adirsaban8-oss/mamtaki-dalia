@@ -15,30 +15,30 @@
      Black and gold, matching the brand logo. Surfaces are near-black,
      text is warm ivory, accents are antique gold. */
 
-  --color-page: #FFFFFF;
-  --color-heading: #000000;
-  --color-ivory: #000000;
-  --color-sand: #F4F4F4;
-  --color-cream-card: #FFFFFF;
+  --color-page: #FBF6EC;
+  --color-heading: #2A1B12;
+  --color-ivory: #2A1B12;
+  --color-sand: #F3E8D6;
+  --color-cream-card: #FFFCF5;
 
-  --color-cedar: #F4F4F4;
-  --color-cedar-deep: #EDEDED;
-  --color-cedar-light: #E9E9E9;
-  --color-ink: #1A1A1A;
+  --color-cedar: #EFE2CB;
+  --color-cedar-deep: #E8D8BC;
+  --color-cedar-light: #E3D2B5;
+  --color-ink: #3A2A1F;
 
-  --color-gold: #000000;
-  --color-gold-light: #000000;
-  --color-gold-deep: #6E6E6E;
+  --color-gold: #48532A;
+  --color-gold-light: #48532A;
+  --color-gold-deep: #8C621F;
 
-  --color-burgundy: #000000;
-  --color-burgundy-deep: #333333;
+  --color-burgundy: #9A5B1F;
+  --color-burgundy-deep: #7A4517;
 
   --color-pistachio: #93A55B;      /* muted green accent */
   --color-copper: #B87654;         /* rose gold detail */
 
-  --color-coffee: #1A1A1A;
-  --color-coffee-muted: #6E6E6E;
-  --color-hairline: #E4E4E4;
+  --color-coffee: #3A2A1F;
+  --color-coffee-muted: #75624F;
+  --color-hairline: #E6D9C2;
 
   /* ── Shadows ─────────────────────────────────────────────────────
      Tuned exactly to the spec. Card hover lifts with burgundy ghost. */
@@ -121,7 +121,7 @@ body {
 
 /* Selection — burgundy on parchment */
 ::selection {
-  background-color: #000;
+  background-color: #48532A;
   color: #fff;
 }
 
@@ -186,7 +186,12 @@ html.a11y-contrast {
   --color-sand: #FFFFFF;
   --color-cedar: #FFFFFF;
   --color-cream-card: #FFFFFF;
+  --color-heading: #000000;
+  --color-ivory: #000000;
+  --color-gold: #000000;
+  --color-gold-light: #000000;
   --color-gold-deep: #000000;
+  --color-burgundy: #000000;
   --color-coffee: #000000;
   --color-coffee-muted: #000000;
   --color-ink: #000000;
@@ -228,7 +233,7 @@ html[lang="he"] .tracking-eyebrow { letter-spacing: 0.06em; }
 
 /* Keyhole arch — rectangle crowned by a half circle. */
 @utility arch {
-  border-radius: 0;
+  border-radius: 999px 999px 0 0;
 }
 
 /* Khatam (8-point star) tile — gold hairline, for dark sections only. */
@@ -243,7 +248,7 @@ html[lang="he"] .tracking-eyebrow { letter-spacing: 0.06em; }
 
 
 /* ==================================================================
-   Minimal monochrome look — white page, black type, no ornament.
+   Warm boutique look — ivory page, espresso type, olive and honey accents.
    ================================================================== */
 
 /* Headings are set in a classic Hebrew book serif at a calm weight. */
@@ -256,3 +261,6 @@ html[lang="ar"] h1, html[lang="ar"] h2 { letter-spacing: 0; }
 /* Every main heading uses the display serif, whether or not it carries the class. */
 html[lang="he"] h1, html[lang="he"] h2 { font-family: var(--font-display-he), serif; }
 html[lang="ar"] h1, html[lang="ar"] h2 { font-family: var(--font-display-ar), serif; }
+
+/* Decorative corners may sit past the edge; never let them widen the page. */
+body { overflow-x: clip; }
