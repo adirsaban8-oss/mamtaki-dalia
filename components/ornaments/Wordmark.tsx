@@ -13,12 +13,12 @@ type Props = {
  *  – On phones the tagline hides and the mark shrinks so the long
  *    brand name fits cleanly on a 320px iPhone SE header.
  */
-export function Wordmark({ locale, size = 'md' }: Props) {
+export function Wordmark({ locale, variant = 'dark', size = 'md' }: Props) {
   const t = useTranslations('Brand');
 
-  const colorMark = 'text-black';
-  const colorName = 'text-black';
-  const colorTagline = 'text-neutral-500';
+  const colorMark = variant === 'light' ? 'text-white' : 'text-black';
+  const colorName = variant === 'light' ? 'text-white' : 'text-black';
+  const colorTagline = variant === 'light' ? 'text-white/60' : 'text-neutral-500';
 
   const nameSize =
     size === 'lg'

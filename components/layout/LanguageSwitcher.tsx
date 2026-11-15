@@ -31,7 +31,7 @@ export function LanguageSwitcher({ variant = 'dark', className }: Props) {
     'font-display-en text-xs tracking-eyebrow uppercase inline-flex items-center gap-2 transition-colors duration-500';
   const tone =
     variant === 'light'
-      ? 'text-ivory/85 hover:text-gold-light'
+      ? 'text-white hover:text-white/70'
       : 'text-coffee-muted hover:text-burgundy';
 
   return (
@@ -42,11 +42,11 @@ export function LanguageSwitcher({ variant = 'dark', className }: Props) {
       aria-label={t('languageSwitch')}
       className={`${base} ${tone} ${className ?? ''}`}
     >
-      <span className={locale === 'ar' ? 'font-display-ar text-base text-gold' : 'font-display-ar text-base opacity-70'}>
+      <span className={locale === 'ar' ? 'font-display-ar text-lg font-bold' : 'font-display-ar text-lg opacity-50'}>
         ع
       </span>
       <span aria-hidden className="h-3 w-px bg-current opacity-40" />
-      <span className={locale === 'he' ? 'font-display-he text-base text-gold' : 'font-display-he text-base opacity-70'}>
+      <span className={locale === 'he' ? 'font-display-he text-lg font-bold' : 'font-display-he text-lg opacity-50'}>
         ע
       </span>
     </button>
