@@ -1,0 +1,7 @@
+date,model,section,purpose,max_estimate_usd,cost_usd,cumulative_usd,note
+2026-11-14,gpt-image-2.6-sunburst,pre-budget,"23 catalog restyles, black stone (before the $10 budget was set)",0.0000,1.1500,1.1500,untracked run; estimate 23 x ~$0.05
+2026-11-15,gpt-image-2.6-sunburst,pre-budget,"23 catalog restyles, white flat lay (before the $10 budget was set)",0.0000,1.2000,2.3500,untracked run; usage printed ~1372 out tokens; estimate 23 x ~$0.052
+2026-11-15,gpt-image-2.6-sunburst,pre-budget,"4 hero stills, copper tray (before the $10 budget was set)",0.0000,0.2200,2.5700,untracked run; estimate 4 x ~$0.055
+2026-11-16,gpt-image-2.6-sunburst,images,"25 catalog restyles, walnut table (23 + 2 redos)",0.0000,1.5466,4.1166,"from scratchpad ledger, includes +25% margin"
+2026-11-16,gpt-image-2.6-sunburst,images,3 signature macro close-ups,0.0000,0.2037,4.3203,"from scratchpad ledger, includes +25% margin"
+2026-11-16,gpt-image-2.6-sunburst,images,4 Pull stills from the shop kanafeh (f1 clean-up + 3 stretch),0.0000,0.2652,4.5855,"from scratchpad ledger, includes +25% margin"
