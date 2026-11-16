@@ -22,7 +22,9 @@ ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
 LOG = os.path.join(ROOT, 'docs', 'redesign', 'ai-costs.csv')
 
 PROJECT_CAP = 10.00
-SECTION_CAPS = {'video': 6.00, 'images': 2.50, 'reserve': 1.50, 'pre-budget': 99}
+# Owner's split of what is left (2026-11-16): video up to $4.00; the rest is reserve,
+# which is never spent without the owner's approval (calls to it always raise).
+SECTION_CAPS = {'video': 4.00, 'images': 2.0155, 'reserve': 0.0, 'pre-budget': 99}
 
 PRICE = {  # USD per 1M tokens
     'gpt-image-2.6-sunburst': {'out': 30.0, 'in_image': 8.0, 'in_text': 5.0},
@@ -109,7 +111,8 @@ def image_edit(*, purpose, section, src, out, prompt, size='1536x1024', quality=
 
 
 def video(**_):
-    raise BudgetError('video pricing not configured: read the official price per second first, then add it here')
+    # OpenAI's Sora 2 models and Videos API were shut down on 2026-09-24 (video-generation guide).
+    raise BudgetError('no image-to-video model is available on the configured OpenAI key')
 
 
 if __name__ == '__main__':
