@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Bellefair, David_Libre, Amiri } from 'next/font/google';
+import { Suez_One, David_Libre, Amiri } from 'next/font/google';
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -12,15 +12,15 @@ import { MotionProvider } from '@/components/providers/MotionProvider';
 import { SheenObserver } from '@/components/fx/SheenObserver';
 import { MobileBar } from '@/components/layout/MobileBar';
 
-// Display: Bellefair — a classic, high-contrast Hebrew serif.
-const frank = Bellefair({
+// Headings: Suez One, a bold classic Hebrew serif close to the logo lettering.
+const frank = Suez_One({
   subsets: ['hebrew', 'latin'],
   weight: ['400'],
   variable: '--font-frank',
   display: 'swap',
 });
 
-// Text: David Libre — the classic Hebrew book face.
+// Text: David Libre, the classic Hebrew book face.
 const plexHebrew = David_Libre({
   subsets: ['hebrew', 'latin'],
   weight: ['400', '500', '700'],
