@@ -253,9 +253,10 @@ html[lang="he"] .tracking-eyebrow { letter-spacing: 0.06em; }
    Liquid Gold — warm black, cream type, the logo gold #FFC300 as syrup.
    ================================================================== */
 
-/* Headings: Suez One is already heavy and has one weight; no faux bold. */
-h1.font-black, h1.font-bold, h2.font-black, h2.font-bold { font-weight: 400; letter-spacing: 0; }
-html[lang="he"] .font-display-he { font-weight: 400 !important; font-synthesis: none; }
+/* Headings: Frank Ruhl Libre at 800 (its heaviest). */
+h1.font-black, h1.font-bold, h2.font-black, h2.font-bold { font-weight: 800; letter-spacing: 0; }
+html[lang="he"] .font-display-he { font-synthesis: none; }
+html[lang="he"] .font-display-he.font-black { font-weight: 800; }
 html[lang="ar"] h1, html[lang="ar"] h2 { letter-spacing: 0; }
 
 /* Every main heading uses the display serif, whether or not it carries the class. */

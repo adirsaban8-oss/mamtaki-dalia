@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Suez_One, David_Libre, Amiri } from 'next/font/google';
+import { Frank_Ruhl_Libre, Heebo, Amiri } from 'next/font/google';
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -12,18 +12,18 @@ import { MotionProvider } from '@/components/providers/MotionProvider';
 import { SheenObserver } from '@/components/fx/SheenObserver';
 import { MobileBar } from '@/components/layout/MobileBar';
 
-// Headings: Suez One, a bold classic Hebrew serif close to the logo lettering.
-const frank = Suez_One({
+// Headings: Frank Ruhl Libre, the classic Hebrew book serif.
+const frank = Frank_Ruhl_Libre({
   subsets: ['hebrew', 'latin'],
-  weight: ['400'],
+  weight: ['500', '700', '800'],
   variable: '--font-frank',
   display: 'swap',
 });
 
-// Text: David Libre, the classic Hebrew book face.
-const plexHebrew = David_Libre({
+// Text: Heebo, clean and easy to read.
+const plexHebrew = Heebo({
   subsets: ['hebrew', 'latin'],
-  weight: ['400', '500', '700'],
+  weight: ['300', '400', '500', '600', '700'],
   variable: '--font-heebo',
   display: 'swap',
 });
