@@ -42,7 +42,8 @@ The only originals available for the catalog were low-resolution WhatsApp screen
 | `images/order-band.webp` | events banner | ✅ shop photo (tartlets in the branded box) |
 | `images/gallery/*` (5) | shop-window mosaic | ✅ shop photos |
 | `videos/showcase.mp4` + poster | shop-window video | ✅ shop video |
-| `images/hero-scene/f1–f4.webp` | Pull hero placeholder | ⚠️ AI frames (cheese pull) — replace with a real stretch video |
+| `images/pull/f1–f4.webp` | Pull hero | ⚠️ f1 = clean-up of the shop's kanafeh with ice cream (`brand-assets/knafeh/kanafeh-ice-cream.png`); f2–f4 = AI edits adding the fork and cheese stretch — replace with a real stretch video |
+| `images/hero-scene/f1–f4.webp` | unused (old placeholder) | ⚠️ |
 | `images/signature/*` (3) | chapters | ⚠️ AI macro edits of catalog images |
 | `brand-assets/logo.png` → `images/logo-*.webp`, app icons | header, footer, favicon | ✅ brand file from the owners |
 | `brand-assets/gold.png` | colour reference #FFC300 | ✅ |

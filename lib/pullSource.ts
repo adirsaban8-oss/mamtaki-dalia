@@ -14,9 +14,10 @@ export type PullSource =
   | { kind: 'frames'; frames: string[]; poster: string }
   | { kind: 'video'; mp4: string; webm?: string; poster: string };
 
-/** Placeholder: four AI stills (marked ⚠️ in docs/redesign/01-inventory.md). */
+/** Four stills from the shop's own kanafeh with ice cream (brand-assets/knafeh/kanafeh-ice-cream.png):
+ *  frame 1 is a clean-up of that photo, frames 2–4 add the fork and the cheese stretch (AI edits, ⚠️). */
 export const PULL_SOURCE: PullSource = {
   kind: 'frames',
-  frames: [1, 2, 3, 4].map((n) => `/images/hero-scene/f${n}.webp`),
-  poster: '/images/hero-scene/f1.webp',
+  frames: [1, 2, 3, 4].map((n) => `/images/pull/f${n}.webp`),
+  poster: '/images/pull/f1.webp',
 };

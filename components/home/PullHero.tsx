@@ -8,6 +8,7 @@ import { Link } from '@/i18n/navigation';
 import type { Locale } from '@/i18n/locales';
 import { PULL_SOURCE, type PullSource } from '@/lib/pullSource';
 import { useScrollProgress } from '@/lib/useScrollProgress';
+import { whatsappLink } from '@/lib/site';
 
 /**
  * "The Pull" — a pinned scene (≈250vh). Scrolling drives the media from
@@ -53,7 +54,7 @@ export function PullHero({ source = PULL_SOURCE }: { source?: PullSource }) {
   return (
     <section ref={ref} className="relative h-[250vh] bg-page text-cream" aria-label={ar ? 'الكنافة' : 'הכנאפה'}>
       <div className="sticky top-16 sm:top-20 h-[calc(100svh-4rem)] sm:h-[calc(100svh-5rem)] overflow-hidden isolate">
-        <div className="absolute -z-20 top-[4%] left-[-30%] w-[160%] aspect-[3/2] lg:inset-y-0 lg:left-0 lg:w-[72%] lg:aspect-auto">
+        <div className="absolute -z-20 top-[2%] left-[-18%] w-[136%] aspect-[5/4] lg:inset-y-0 lg:left-0 lg:w-[72%] lg:aspect-auto">
           {source.kind === 'frames' ? <Frames source={source} progress={media} /> : <Video source={source} progress={media} />}
         </div>
         {/* Shade: from the bottom on phones, from the reading side on desktop */}
@@ -101,9 +102,9 @@ export function PullHero({ source = PULL_SOURCE }: { source?: PullSource }) {
                 >
                   {ar ? 'للطلب' : 'להזמנה'}
                 </Link>
-                <Link href="/shop/red-kanafeh" className="inline-flex items-center justify-center h-11 text-base font-medium text-cream underline underline-offset-[6px] decoration-1 hover:no-underline">
-                  {ar ? 'الكنافة في الكتالوج' : 'הכנאפה בקטלוג'}
-                </Link>
+                <a href={whatsappLink(ar ? 'مرحباً، أود أن أطلب كنافة' : 'שלום, אשמח להזמין כנאפה')} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center h-11 text-base font-medium text-cream underline underline-offset-[6px] decoration-1 hover:no-underline">
+                  {ar ? 'للطلب عبر واتساب' : 'להזמנה בוואטסאפ'}
+                </a>
               </div>
             </motion.div>
           </div>
@@ -145,13 +146,13 @@ function Layer({ src, i, n, progress }: { src: string; i: number; n: number; pro
     <motion.div style={i === 0 ? undefined : { opacity }} className="absolute inset-0">
       <Image
         src={src}
-        alt={i === 0 ? 'כנאפה חמה עם פיסטוק' : ''}
+        alt={i === 0 ? 'כנאפה חמה עם גלידה ופיסטוק' : ''}
         fill
         priority={i === 0}
         fetchPriority={i === 0 ? 'high' : undefined}
         loading={i === 0 ? undefined : 'eager'}
-        sizes="(min-width: 1024px) 72vw, 160vw"
-        className="object-cover lg:-scale-x-100"
+        sizes="(min-width: 1024px) 72vw, 136vw"
+        className="object-cover"
       />
     </motion.div>
   );
@@ -192,7 +193,7 @@ function Canvas({ frames, progress }: { frames: string[]; progress: MotionValue<
 
   return (
     <>
-      <Image src={frames[0]} alt="כנאפה חמה עם פיסטוק" fill priority fetchPriority="high" sizes="(min-width: 1024px) 72vw, 160vw" className="object-cover" />
+      <Image src={frames[0]} alt="כנאפה חמה עם פיסטוק" fill priority fetchPriority="high" sizes="(min-width: 1024px) 72vw, 136vw" className="object-cover" />
       <canvas ref={canvas} aria-hidden className="absolute inset-0 w-full h-full object-cover" />
     </>
   );
@@ -211,7 +212,7 @@ function Video({ source, progress }: { source: Extract<PullSource, { kind: 'vide
   });
   return (
     <>
-      <Image src={source.poster} alt="כנאפה חמה עם פיסטוק" fill priority fetchPriority="high" sizes="(min-width: 1024px) 72vw, 160vw" className="object-cover" />
+      <Image src={source.poster} alt="כנאפה חמה עם פיסטוק" fill priority fetchPriority="high" sizes="(min-width: 1024px) 72vw, 136vw" className="object-cover" />
       <video ref={video} muted playsInline preload="auto" poster={source.poster} aria-hidden className="absolute inset-0 w-full h-full object-cover">
         {source.webm && <source src={source.webm} type="video/webm" />}
         <source src={source.mp4} type="video/mp4" />
