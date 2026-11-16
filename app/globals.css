@@ -26,9 +26,9 @@
   --color-cedar-light: #1E1710;
   --color-ink: #F6EEDC;
 
-  --color-gold: #FFC300;
-  --color-gold-light: #FFE27A;
-  --color-gold-deep: #C98A00;
+  --color-gold: #E9B949;
+  --color-gold-light: #F7DC93;
+  --color-gold-deep: #B07D1F;
 
   --color-burgundy: #E8941A;
   --color-burgundy-deep: #C98A00;
@@ -270,7 +270,7 @@ body { overflow-x: clip; }
    The gradient is three times wider than the element, so moving its
    position sweeps the bright band across: the "Gold Sheen". */
 @utility text-gold-metal {
-  background-image: linear-gradient(115deg, #C98A00 0%, #FFC300 30%, #FFC300 43%, #FFF1B8 50%, #FFC300 57%, #FFC300 70%, #C98A00 100%);
+  background-image: linear-gradient(115deg, #8C5E12 0%, #D9A23A 28%, #F3CB6B 42%, #FFF0C2 50%, #F3CB6B 58%, #D9A23A 72%, #8C5E12 100%);
   background-size: 300% 100%;
   background-position: 18% 0;
   -webkit-background-clip: text;
@@ -278,7 +278,7 @@ body { overflow-x: clip; }
   color: transparent;
 }
 @utility bg-gold-metal {
-  background-image: linear-gradient(115deg, #C98A00 0%, #FFC300 30%, #FFC300 43%, #FFF1B8 50%, #FFC300 57%, #FFC300 70%, #C98A00 100%);
+  background-image: linear-gradient(115deg, #8C5E12 0%, #D9A23A 28%, #F3CB6B 42%, #FFF0C2 50%, #F3CB6B 58%, #D9A23A 72%, #8C5E12 100%);
   background-size: 300% 100%;
   background-position: 18% 0;
 }

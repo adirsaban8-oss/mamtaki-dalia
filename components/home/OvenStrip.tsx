@@ -29,9 +29,9 @@ export function OvenStrip() {
   if (items.length === 0) return null;
 
   return (
-    <section aria-label={ar ? 'طازج اليوم' : 'טרי היום'} className="relative z-10 bg-gold text-[#0A0806] border-y border-gold-deep">
+    <section aria-label={ar ? 'طازج اليوم' : 'טרי היום'} className="relative z-10 bg-[#0A0806] text-gold-light border-y border-gold/25">
       <div className="flex items-stretch">
-        <p className="shrink-0 flex items-center gap-2 px-4 sm:px-6 py-3 bg-[#0A0806] text-cream text-sm font-semibold" aria-live="polite">
+        <p className="shrink-0 flex items-center gap-2 px-4 sm:px-6 py-3 bg-[#15100B] border-e border-gold/25 text-cream text-sm font-semibold" aria-live="polite">
           <span aria-hidden className={`block w-2.5 h-2.5 rounded-full ${open === null ? 'bg-cream/40' : open ? 'bg-[#8DB33A] motion-safe:animate-pulse' : 'bg-[#E8941A]'}`} />
           {open === null ? (ar ? 'ساعات العمل' : 'שעות פתיחה') : open ? (ar ? 'مفتوح الآن' : 'פתוח עכשיו') : ar ? 'مغلق الآن' : 'סגור כרגע'}
         </p>

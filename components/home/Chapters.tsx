@@ -18,7 +18,7 @@ type Chapter = {
   image: string;
   words: Translated[];
   /** Section look: background, text tone, image side. */
-  tone: 'amber' | 'cream' | 'butter';
+  tone: 'amber' | 'rose' | 'butter';
 };
 
 /** Three house desserts, each with its own colour world. */
@@ -31,9 +31,9 @@ const CHAPTERS: Chapter[] = [
   },
   {
     slug: 'layali-beirut-tray',
-    image: '/products/layali-beirut-tray.webp',
+    image: '/images/signature/layali-beirut.webp',
     words: [{ he: 'קר ומשיי', ar: 'باردة وناعمة' }, { he: 'פיסטוק', ar: 'فستق' }],
-    tone: 'cream',
+    tone: 'rose',
   },
   {
     slug: 'baklava-pistachio',
@@ -45,7 +45,7 @@ const CHAPTERS: Chapter[] = [
 
 const TONE = {
   amber: { bg: 'bg-[radial-gradient(120%_90%_at_70%_40%,#3A1A06_0%,#0A0806_70%)]', text: 'text-cream', muted: 'text-cream/75', word: 'text-[#E8941A]', title: 'text-gold-metal', line: 'border-cream/20' },
-  cream: { bg: 'bg-[#F6EEDC]', text: 'text-[#2A1B12]', muted: 'text-[#5C4A3A]', word: 'text-[#B5506A]', title: 'text-[#2A1B12]', line: 'border-[#2A1B12]/15' },
+  rose: { bg: 'bg-[radial-gradient(120%_90%_at_65%_40%,#2E1116_0%,#0A0806_72%)]', text: 'text-cream', muted: 'text-cream/75', word: 'text-[#E8A7B3]', title: 'text-gold-metal', line: 'border-cream/20' },
   butter: { bg: 'bg-[radial-gradient(120%_90%_at_30%_40%,#2E2408_0%,#0A0806_72%)]', text: 'text-cream', muted: 'text-cream/75', word: 'text-gold-light', title: 'text-gold-metal', line: 'border-cream/20' },
 } as const;
 
@@ -86,7 +86,7 @@ function ChapterView({ chapter, index, product, locale }: { chapter: Chapter; in
           className={`relative lg:col-span-7 h-[72svh] lg:h-[82svh] lg:rounded-[16px] overflow-hidden ${flip ? 'lg:order-2' : ''}`}
         >
           <Image src={chapter.image} alt={product.name[locale]} fill sizes="(min-width: 1024px) 58vw, 100vw" className="object-cover" />
-          {chapter.tone !== 'cream' && <Glisten strength={0.34} />}
+          {chapter.tone !== 'rose' && <Glisten strength={0.34} />}
           {chapter.slug === 'red-kanafeh' && <Steam className="absolute inset-x-[10%] top-0 h-[55%]" />}
           {/* Warm light window + vignette, so every photo sits in the same set */}
           <span aria-hidden className="absolute inset-0 bg-[radial-gradient(70%_60%_at_35%_30%,rgba(255,214,140,0.18),transparent_60%),radial-gradient(120%_100%_at_50%_50%,transparent_55%,rgba(10,8,6,0.55))]" />
@@ -114,7 +114,7 @@ function ChapterView({ chapter, index, product, locale }: { chapter: Chapter; in
               href={whatsappLink(ar ? `مرحباً، أود أن أطلب: ${product.name.ar}` : `שלום, אשמח להזמין: ${product.name.he}`)}
               target="_blank"
               rel="noopener noreferrer"
-              className={`inline-flex items-center justify-center h-12 px-8 rounded-full text-[15px] font-bold transition ${chapter.tone === 'cream' ? 'bg-[#2A1B12] text-[#F6EEDC] hover:bg-[#4A3526]' : 'bg-gold-metal text-[#0A0806] hover:brightness-110'}`}
+              className={`inline-flex items-center justify-center h-12 px-8 rounded-full text-[15px] font-bold transition bg-gold-metal text-[#0A0806] hover:brightness-110`}
             >
               {ar ? 'للطلب' : 'להזמנה'}
             </a>

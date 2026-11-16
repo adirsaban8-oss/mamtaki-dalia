@@ -24,7 +24,8 @@ LOG = os.path.join(ROOT, 'docs', 'redesign', 'ai-costs.csv')
 PROJECT_CAP = 10.00
 # Owner's split of what is left (2026-11-16): video up to $4.00; the rest is reserve,
 # which is never spent without the owner's approval (calls to it always raise).
-SECTION_CAPS = {'video': 4.00, 'images': 2.0155, 'reserve': 0.0, 'pre-budget': 99}
+# 2026-11-16 later: owner asked to use the API for the final design — images get $1.00 more.
+SECTION_CAPS = {'video': 4.00, 'images': 3.0155, 'reserve': 0.0, 'pre-budget': 99}
 
 PRICE = {  # USD per 1M tokens
     'gpt-image-2.6-sunburst': {'out': 30.0, 'in_image': 8.0, 'in_text': 5.0},

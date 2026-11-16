@@ -17,12 +17,14 @@ export type PullSource =
   | { kind: 'video'; mp4: string; webm?: string; poster: string };
 
 /**
- * Living Photo of the shop's kanafeh with ice cream. The image is frame 1:
- * a clean-up of brand-assets/knafeh/kanafeh-ice-cream.png (⚠️ AI-sharpened).
- * To use the untouched crop instead, point `image` at /images/pull/original.webp.
+ * The shop's kanafeh with ice cream (brand-assets/knafeh/kanafeh-ice-cream.png): frame 1 is a
+ * clean-up of that photo; frames 2–4 add the fork and the cheese stretch (AI edits, ⚠️) —
+ * each one edited from the previous, so the dish stays the same. A real video replaces them.
+ * For a still version use { kind: 'living', image: '/images/pull/f1.webp', focus: [58, 32] }
+ * (or image '/images/pull/original.webp' for the untouched crop).
  */
 export const PULL_SOURCE: PullSource = {
-  kind: 'living',
-  image: '/images/pull/f1.webp',
-  focus: [58, 32],
+  kind: 'frames',
+  frames: [1, 2, 3, 4].map((n) => `/images/pull/f${n}.webp`),
+  poster: '/images/pull/f1.webp',
 };

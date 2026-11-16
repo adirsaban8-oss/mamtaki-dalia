@@ -11,7 +11,6 @@ import { useScrollProgress } from '@/lib/useScrollProgress';
 import { whatsappLink } from '@/lib/site';
 import { Steam } from '@/components/fx/Steam';
 import { Glisten } from '@/components/fx/Glisten';
-import { SyrupDrips } from '@/components/fx/SyrupDrips';
 
 /**
  * The home hero — a pinned scene (≈240vh). Scrolling drives the media
@@ -34,14 +33,15 @@ export function PullHero({ source = PULL_SOURCE }: { source?: PullSource }) {
   const s2 = useTransform(p, [0.28, 0.52], [0.9, 1.15]);
   const s3 = useTransform(p, [0.5, 0.72], [0.9, 1.15]);
   const title = useTransform(p, [0, 0.06], [1, 0]);
-  const syrup = useTransform(p, [0.7, 0.9], [0, 1], { clamp: true });
-  const finale = useTransform(p, [0.86, 0.94], [0, 1]);
+  const veil = useTransform(p, [0.7, 0.86], [0, 0.78]);
+  const finale = useTransform(p, [0.76, 0.88], [0, 1]);
+  const steam = useTransform(p, [0, 0.3], [1, 0]);
   const cue = useTransform(p, [0, 0.05], [1, 0]);
 
-  // A short buzz on Android when the syrup lands.
+  // A short buzz on Android as the strands break.
   const buzzed = useRef(false);
   useMotionValueEvent(p, 'change', (v) => {
-    if (!buzzed.current && v > 0.88) {
+    if (!buzzed.current && v > 0.7) {
       buzzed.current = true;
       try { navigator.vibrate?.(10); } catch {}
     }
@@ -59,6 +59,11 @@ export function PullHero({ source = PULL_SOURCE }: { source?: PullSource }) {
         <div className="absolute -z-20 top-[2%] left-[-18%] w-[136%] aspect-[5/4] lg:inset-y-0 lg:left-0 lg:w-[72%] lg:aspect-auto overflow-hidden">
           {source.kind === 'living' && <Living source={source} progress={media} />}
           {source.kind === 'frames' && <Frames source={source} progress={media} />}
+          {source.kind !== 'living' && (
+            <motion.div style={{ opacity: steam }} className="absolute inset-0">
+              <Steam className="absolute left-[18%] w-[42%] top-[-4%] h-[50%]" />
+            </motion.div>
+          )}
           {source.kind === 'video' && <Video source={source} progress={media} />}
         </div>
         {/* Shade: from the bottom on phones, from the reading side on desktop */}
@@ -95,24 +100,23 @@ export function PullHero({ source = PULL_SOURCE }: { source?: PullSource }) {
           </div>
         </div>
 
-        {/* Syrup Reveal: gold runs down over the whole frame… */}
-        <SyrupDrips progress={syrup} className="z-10" />
+        <motion.div aria-hidden style={{ opacity: veil }} className="absolute inset-0 z-10 bg-[#0A0806]" />
 
-        {/* …and the order call appears on it */}
+        {/* The order call */}
         <motion.div style={{ opacity: finale }} className="absolute inset-0 z-20 pointer-events-none">
-          <div className="h-full mx-auto max-w-[1440px] px-6 sm:px-12 lg:px-20 flex flex-col justify-center">
-            <p className={`${displayFont} text-[#0A0806] text-5xl sm:text-6xl lg:text-8xl leading-[1.02] font-black text-balance max-w-3xl`}>
+          <div className="h-full mx-auto max-w-[1440px] px-6 sm:px-12 lg:px-20 pb-24 lg:pb-0 flex flex-col justify-end lg:justify-center">
+            <p className={`${displayFont} text-gold-metal text-5xl sm:text-6xl lg:text-8xl leading-[1.04] font-black text-balance max-w-3xl`}>
               {ar ? 'ساخنة من الفرن. بانتظاركم.' : 'חמה מהתנור. מחכה לך.'}
             </p>
             <div className="mt-8 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-7 pointer-events-auto">
-              <Link href="/shop" className="inline-flex items-center justify-center h-14 px-10 rounded-full bg-[#0A0806] text-gold text-lg font-bold hover:bg-[#1E1710] transition-colors">
+              <Link href="/shop" className="inline-flex items-center justify-center h-14 px-10 rounded-full bg-gold-metal text-[#0A0806] text-lg font-bold shadow-[0_12px_40px_-12px_rgba(233,185,73,0.6)]">
                 {ar ? 'للطلب' : 'להזמנה'}
               </Link>
               <a
                 href={whatsappLink(ar ? 'مرحباً، أود أن أطلب كنافة' : 'שלום, אשמח להזמין כנאפה')}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center h-11 text-base font-semibold text-[#0A0806] underline underline-offset-[6px] decoration-1 hover:no-underline"
+                className="inline-flex items-center justify-center h-11 text-base font-semibold text-cream underline underline-offset-[6px] decoration-1 hover:no-underline"
               >
                 {ar ? 'للطلب عبر واتساب' : 'להזמנה בוואטסאפ'}
               </a>
