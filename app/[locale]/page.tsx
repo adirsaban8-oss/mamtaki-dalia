@@ -1,6 +1,6 @@
 import { setRequestLocale } from 'next-intl/server';
 import { Header } from '@/components/layout/Header';
-import { HeroSpotlight } from '@/components/home/HeroSpotlight';
+import { HeroPull } from '@/components/home/HeroPull';
 import { OvenStrip } from '@/components/home/OvenStrip';
 import { Statement } from '@/components/home/Statement';
 import { Chapters } from '@/components/home/Chapters';
@@ -24,7 +24,7 @@ export default async function HomePage({ params }: PageProps<'/[locale]'>) {
     <>
       <Header overHero={false} />
       <main className="flex-1">
-        <HeroSpotlight />
+        <HeroPull />
         <OvenStrip />
         <Statement />
         <Chapters />
