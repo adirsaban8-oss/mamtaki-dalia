@@ -11,12 +11,12 @@ import { buttonClasses } from '@/components/ui/Button';
 const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 
 /**
- * Cart Drawer — slides in from the text-end of the viewport (right in
+ * Cart Drawer, slides in from the text-end of the viewport (right in
  * LTR, left in RTL). Visual only, no checkout flow.
- *  – 480px wide on desktop, full-bleed on mobile.
- *  – Overlay: cedar/60 with blur.
- *  – Sticky bottom subtotal + burgundy CTA.
- *  – Empty state: copper-tray SVG + nudge to start shopping.
+ *  - 480px wide on desktop, full-bleed on mobile.
+ *  - Overlay: cedar/60 with blur.
+ *  - Sticky bottom subtotal + burgundy CTA.
+ *  - Empty state: copper-tray SVG + nudge to start shopping.
  */
 export function CartDrawer() {
   const locale = useLocale() as Locale;
@@ -93,7 +93,7 @@ export function CartDrawer() {
               </button>
             </header>
 
-            {/* Items list — scrollable */}
+            {/* Items list, scrollable */}
             {items.length > 0 ? (
               <div className="flex-1 overflow-y-auto px-6 md:px-8 py-6">
                 <ul className="space-y-6">
@@ -106,7 +106,7 @@ export function CartDrawer() {
               <EmptyState locale={locale} onClose={close} />
             )}
 
-            {/* Sticky subtotal — only when items exist */}
+            {/* Sticky subtotal, only when items exist */}
             {items.length > 0 && (
               <footer className="border-t border-hairline/60 bg-cream-card px-6 md:px-8 py-6 space-y-5">
                 <div className="flex items-baseline justify-between">
@@ -178,7 +178,7 @@ function CartLineItem({ item, locale }: { item: CartItem; locale: Locale }) {
       transition={{ duration: 0.5, ease: easeLuxe }}
       className="flex gap-3 sm:gap-4"
     >
-      {/* Monogram thumb — text-only stand-in for product photo */}
+      {/* Monogram thumb, text-only stand-in for product photo */}
       <div
         className="relative shrink-0 w-20 h-20 overflow-hidden bg-cream-card border border-gold-deep/40 rounded-[2px] flex items-center justify-center"
         aria-hidden

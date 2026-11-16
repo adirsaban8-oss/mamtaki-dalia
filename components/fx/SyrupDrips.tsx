@@ -2,14 +2,14 @@
 
 import { motion, useTransform, type MotionValue } from 'framer-motion';
 
-/** Drip x-positions (0–100) and how far each one runs. */
+/** Drip x-positions (0-100) and how far each one runs. */
 const DRIPS: [number, number][] = [
   [4, 0.55], [11, 0.9], [19, 0.35], [27, 1], [36, 0.6], [44, 0.8], [52, 0.4],
   [60, 0.95], [68, 0.5], [76, 0.75], [84, 0.3], [92, 0.85], [98, 0.45],
 ];
 
 /**
- * Syrup Reveal — a gold syrup curtain that runs down from the top edge.
+ * Syrup Reveal, a gold syrup curtain that runs down from the top edge.
  * `progress` 0→1 drives it: the band and its drips lengthen until they
  * cover the frame. Used as the hand-off at the end of the Pull hero.
  */

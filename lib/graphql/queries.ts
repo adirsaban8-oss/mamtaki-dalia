@@ -3,13 +3,13 @@ import { gql } from '@apollo/client';
 /**
  * GraphQL operations against WPGraphQL + WPGraphQL for WooCommerce.
  *
- * Schema assumptions (configured during WP setup — see SETUP-WP.md):
- *  – WPGraphQL plugin installed and active
- *  – WPGraphQL for WooCommerce installed and active
- *  – Polylang + Polylang for WooCommerce active (for translations)
- *  – (Optional Phase 2) ACF + WPGraphQL for ACF for monogram/tastingNote
+ * Schema assumptions (configured during WP setup, see SETUP-WP.md):
+ *  - WPGraphQL plugin installed and active
+ *  - WPGraphQL for WooCommerce installed and active
+ *  - Polylang + Polylang for WooCommerce active (for translations)
+ *  - (Optional Phase 2) ACF + WPGraphQL for ACF for monogram/tastingNote
  *
- * V1 wires up to vanilla WooCommerce fields — monogram + tastingNote
+ * V1 wires up to vanilla WooCommerce fields, monogram + tastingNote
  * are derived in the mapper from product name + short description.
  */
 
@@ -72,7 +72,7 @@ export const PRODUCT_FIELDS = gql`
   }
 `;
 
-/** Full catalog — used by /shop and homepage Featured. */
+/** Full catalog, used by /shop and homepage Featured. */
 export const PRODUCTS_QUERY = gql`
   query GetProducts($first: Int = 100) {
     products(
@@ -87,7 +87,7 @@ export const PRODUCTS_QUERY = gql`
   ${PRODUCT_FIELDS}
 `;
 
-/** Single product by slug — used by /shop/[slug]. */
+/** Single product by slug, used by /shop/[slug]. */
 export const PRODUCT_BY_SLUG_QUERY = gql`
   query GetProductBySlug($slug: ID!) {
     product(id: $slug, idType: SLUG) {

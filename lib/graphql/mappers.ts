@@ -13,15 +13,15 @@ import { deriveMonogram } from '@/store/catalog';
  * The Next.js UI was designed around a richer schema (monogram,
  * tastingNote, pricing unit) than vanilla WooCommerce exposes. This
  * mapper bridges the two:
- *  – `monogram` is derived from the product name
- *  – `tastingNote` falls back to `shortDescription`
- *  – `pricingUnit` is derived from product tags ("per-kg", "per-piece",
+ *  - `monogram` is derived from the product name
+ *  - `tastingNote` falls back to `shortDescription`
+ *  - `pricingUnit` is derived from product tags ("per-kg", "per-piece",
  *    "per-box") or defaults to per_kg
- *  – `category` reads the first productCategory slug
- *  – `badges` are read from productTags (bestseller / new / kosher / …)
+ *  - `category` reads the first productCategory slug
+ *  - `badges` are read from productTags (bestseller / new / kosher / …)
  *
  * Phase 2 (ACF) will replace the derivations with real custom-field
- * reads — at that point this mapper is the single file to update.
+ * reads, at that point this mapper is the single file to update.
  */
 
 type WPImage = { sourceUrl?: string | null; altText?: string | null };

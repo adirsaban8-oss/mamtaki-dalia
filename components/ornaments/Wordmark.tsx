@@ -9,8 +9,8 @@ type Props = {
 };
 
 /**
- * Wordmark — brand mark + Hebrew/Arabic name + English tagline.
- *  – On phones the tagline hides and the mark shrinks so the long
+ * Wordmark, brand mark + Hebrew/Arabic name + English tagline.
+ *  - On phones the tagline hides and the mark shrinks so the long
  *    brand name fits cleanly on a 320px iPhone SE header.
  */
 export function Wordmark({ locale, variant = 'dark', size = 'md' }: Props) {
@@ -47,7 +47,7 @@ export function Wordmark({ locale, variant = 'dark', size = 'md' }: Props) {
         >
           {t('name')}
         </span>
-        {/* Tagline hides on phones — saves vertical space + prevents
+        {/* Tagline hides on phones, saves vertical space + prevents
             wrapping when the header collapses to 72px after scroll. */}
         <span
           className={`hidden sm:inline font-display-en text-[10px] md:text-[11px] tracking-eyebrow uppercase mt-0.5 whitespace-nowrap ${colorTagline}`}

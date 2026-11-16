@@ -3,7 +3,7 @@
 import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 
 /**
- * Apollo Client factory — points at the WordPress / WPGraphQL endpoint.
+ * Apollo Client factory, points at the WordPress / WPGraphQL endpoint.
  *
  *   NEXT_PUBLIC_WP_GRAPHQL_URL=http://mamtaki-dalia.local/graphql  (Local by Flywheel)
  *   NEXT_PUBLIC_WP_GRAPHQL_URL=https://admin.mamtaki-dalia.co.il/graphql  (prod)

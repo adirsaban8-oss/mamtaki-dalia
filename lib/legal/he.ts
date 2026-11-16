@@ -1,6 +1,6 @@
 import type { LegalDoc, LegalSlug } from './content';
 
-/** Hebrew legal texts — the binding version. */
+/** Hebrew legal texts, the binding version. */
 export const he: Record<LegalSlug, LegalDoc> = {
   terms: {
     title: 'תקנון ותנאי שימוש',

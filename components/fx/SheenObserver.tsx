@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { usePathname } from '@/i18n/navigation';
 
 /**
- * Gold Sheen — gives every metallic-gold heading and button one diagonal
+ * Gold Sheen, gives every metallic-gold heading and button one diagonal
  * glint when it first enters the screen (the hover glint is pure CSS).
  * Adds `is-sheen` to `.text-gold-metal` / `.bg-gold-metal` elements.
  */

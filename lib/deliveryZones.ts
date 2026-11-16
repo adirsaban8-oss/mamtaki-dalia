@@ -2,7 +2,7 @@ import type { Translated } from '@/lib/mockData';
 
 /**
  * Delivery areas, as defined by the owner: North, Gush Dan, Center and
- * the Sharon — no South. Delivery days per zone are not published yet
+ * the Sharon, no South. Delivery days per zone are not published yet
  * (`days` stays empty until the owner sends them).
  */
 export type ZoneId = 'north' | 'sharon' | 'dan' | 'center';
@@ -81,7 +81,7 @@ export function normalizePlace(s: string): string {
   return s
     .trim()
     .toLowerCase()
-    .replace(/[׳'"״`\-–—.,()]/g, '')
+    .replace(/[׳'"״`\---.,()]/g, '')
     .replace(/\s+/g, '')
     .replace(/^ال/, '');
 }

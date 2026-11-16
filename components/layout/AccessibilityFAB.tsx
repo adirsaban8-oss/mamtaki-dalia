@@ -8,14 +8,14 @@ import { Link } from '@/i18n/navigation';
 const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 
 /**
- * Accessibility FAB — Israeli legal-compliance starter widget.
+ * Accessibility FAB, Israeli legal-compliance starter widget.
  *
  * Floating button bottom-end, opens a small panel with toggles:
- *   – טקסט גדול / גדול יותר   (font-size scaling)
- *   – ניגודיות גבוהה          (high-contrast palette)
- *   – הדגש קישורים            (underline + bolder link colors)
- *   – עצור אנימציות           (force reduced motion)
- *   – איפוס                   (clear all toggles)
+ *   - טקסט גדול / גדול יותר   (font-size scaling)
+ *   - ניגודיות גבוהה          (high-contrast palette)
+ *   - הדגש קישורים            (underline + bolder link colors)
+ *   - עצור אנימציות           (force reduced motion)
+ *   - איפוס                   (clear all toggles)
  *
  * State persists in localStorage under `a11y-prefs-v1`. Each preference
  * adds a CSS class to <html> so the corresponding rules in globals.css
@@ -109,7 +109,7 @@ export function AccessibilityFAB() {
       <AnimatePresence>
         {open && (
           <>
-            {/* Backdrop — closes on click outside */}
+            {/* Backdrop, closes on click outside */}
             <button
               type="button"
               aria-label={t('close')}
@@ -144,7 +144,7 @@ export function AccessibilityFAB() {
                 </button>
               </header>
 
-              {/* Text size — 3-step toggle */}
+              {/* Text size, 3-step toggle */}
               <div className="mb-4">
                 <p className="text-[11px] text-coffee-muted mb-2">{t('textSize')}</p>
                 <div className="grid grid-cols-3 gap-1 border border-gold-deep/30 rounded-[2px] overflow-hidden">
@@ -241,7 +241,7 @@ function Toggle({
   );
 }
 
-/* ── Icon — standard accessibility person glyph ───────────────────── */
+/* ── Icon, standard accessibility person glyph ───────────────────── */
 
 function AccessibilityIcon() {
   return (

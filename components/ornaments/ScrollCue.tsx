@@ -8,7 +8,7 @@ type Props = {
 };
 
 /**
- * Minimal scroll cue — a small gold chevron with gentle bounce, set
+ * Minimal scroll cue, a small gold chevron with gentle bounce, set
  * at the very bottom of the hero. No vertical line, no label: those
  * were competing with the headline and CTAs for vertical real-estate.
  * `label` is kept on the prop for backwards compatibility but rendered

@@ -5,13 +5,13 @@ type Props = {
 };
 
 /**
- * SectionDivider — a centered gold ornament flanked by hairlines.
+ * SectionDivider, a centered gold ornament flanked by hairlines.
  * Used between major sections to create a typographic rhythm beat.
  *
  * Three motif variants:
- *   – star:    8-point geometric star (default)
- *   – crescent: crescent + dot (Druze/Arabesque)
- *   – rosette:  4-petal floral
+ *   - star:    8-point geometric star (default)
+ *   - crescent: crescent + dot (Druze/Arabesque)
+ *   - rosette:  4-petal floral
  *
  * Tone controls which gold shade the ornament uses.
  */

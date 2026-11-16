@@ -36,7 +36,7 @@ export default async function ProductPage({
   const l: Locale = locale === 'ar' ? 'ar' : 'he';
   const product = seedCatalog.find((p) => p.slug === decodeURIComponent(slug));
 
-  // Structured data — only facts that exist in the catalog (no ratings, no reviews).
+  // Structured data, only facts that exist in the catalog (no ratings, no reviews).
   const jsonLd = product && {
     '@context': 'https://schema.org',
     '@type': 'Product',

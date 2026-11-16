@@ -9,13 +9,13 @@ import { SectionDivider } from '@/components/ornaments/SectionDivider';
 const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 
 /**
- * Testimonials — 3 cards visible per the ultra-luxury spec.
- *  – Section: ivory (light) for warmth, 64px/120px vertical padding.
- *  – Cards: cream-card surface, 1px gold-deep border (full), sharp 2px,
+ * Testimonials, 3 cards visible per the ultra-luxury spec.
+ *  - Section: ivory (light) for warmth, 64px/120px vertical padding.
+ *  - Cards: cream-card surface, 1px gold-deep border (full), sharp 2px,
  *    32px padding, big decorative gold quote-mark in the corner.
- *  – Quote: 20px italic Display font, cedar text.
- *  – Stars: 5 custom gold SVG stars at the top.
- *  – Animation: viewport fade-up, 100ms stagger.
+ *  - Quote: 20px italic Display font, cedar text.
+ *  - Stars: 5 custom gold SVG stars at the top.
+ *  - Animation: viewport fade-up, 100ms stagger.
  */
 export function Testimonials() {
   const locale = useLocale() as Locale;
@@ -91,7 +91,7 @@ function TestimonialCard({ item, locale, displayFont, index }: CardProps) {
       whileHover={{ y: -6 }}
       className="relative h-full bg-cream-card border border-gold-deep/40 hover:border-gold transition-[border-color,box-shadow] duration-700 ease-[cubic-bezier(0.25,0.46,0.45,0.94)] shadow-card hover:shadow-hover p-8 md:p-10 flex flex-col rounded-[2px]"
     >
-      {/* Decorative oversize quote mark — top-end corner */}
+      {/* Decorative oversize quote mark, top-end corner */}
       <span
         aria-hidden
         className="absolute -top-2 end-6 font-display-en text-[120px] leading-none text-gold/15 select-none pointer-events-none"
@@ -109,7 +109,7 @@ function TestimonialCard({ item, locale, displayFont, index }: CardProps) {
         ))}
       </div>
 
-      {/* Quote — 20px italic, Display font, cedar */}
+      {/* Quote, 20px italic, Display font, cedar */}
       <blockquote className="relative mt-6">
         <p className={`${displayFont} italic text-[19px] md:text-xl leading-[1.55] text-heading text-pretty`}>
           {item.quote[locale]}

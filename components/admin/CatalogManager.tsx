@@ -27,7 +27,7 @@ const ALL_UNITS: PricingUnit[] = ['per_kg', 'per_piece', 'per_box'];
 type Props = { locale: Locale };
 
 /**
- * Catalog manager — the shop owner's editorial control over the public
+ * Catalog manager, the shop owner's editorial control over the public
  * shop. Group by category, in-line toggles for stock/visibility, plus
  * a full product form modal for create / edit.
  */
@@ -148,7 +148,7 @@ export function CatalogManager({ locale }: Props) {
         ))}
       </section>
 
-      {/* Modal — edit or create */}
+      {/* Modal, edit or create */}
       <AnimatePresence>
         {(editing || creatingFor) && (
           <ProductFormModal

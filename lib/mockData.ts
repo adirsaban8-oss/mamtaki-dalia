@@ -1,13 +1,13 @@
 /**
- * Mamtaki Dalia — shared types + static-only data (testimonials,
+ * Mamtaki Dalia, shared types + static-only data (testimonials,
  * category metadata).
  *
  * The PRODUCT catalog used to live here. It has moved to
  * `store/catalog.ts` (Zustand + localStorage) so the shop owner can
  * edit it via /admin/catalog. This file now exports only:
- *  – Type definitions (Product, ProductCategory, ProductBadge, etc.)
- *  – Category labels & eyebrows used by the catalog UI
- *  – Testimonials (still static)
+ *  - Type definitions (Product, ProductCategory, ProductBadge, etc.)
+ *  - Category labels & eyebrows used by the catalog UI
+ *  - Testimonials (still static)
  *
  * The site ships with an EMPTY catalog. The owner fills it in via the
  * admin panel.
@@ -107,8 +107,8 @@ export const testimonials: Testimonial[] = [
   {
     id: 't_marwan',
     quote: {
-      he: 'אבו חסן הוא אגדה אמיתית. מעמול כמו של אמא, רק יותר טוב — אל תספרו לה.',
-      ar: 'أبو حسن أسطورة حقيقية. معمول كأنه من صنع أمي، لكن أفضل — لا تخبروها.',
+      he: 'אבו חסן הוא אגדה אמיתית. מעמול כמו של אמא, רק יותר טוב, אל תספרו לה.',
+      ar: 'أبو حسن أسطورة حقيقية. معمول كأنه من صنع أمي، لكن أفضل، لا تخبروها.',
     },
     author: { he: 'מרואן עתאמנה', ar: 'مروان عتامنة' },
     role: { he: 'חיפה', ar: 'حيفا' },

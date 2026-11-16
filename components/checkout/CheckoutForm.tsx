@@ -52,11 +52,11 @@ type Props = { locale: Locale };
  * wp-admin → WooCommerce → Orders.
  *
  * Payment methods:
- *   – cod (Cash on Delivery) → order status "processing", owner takes
+ *   - cod (Cash on Delivery) → order status "processing", owner takes
  *     payment at delivery
- *   – bacs (Bank Transfer) → owner emails account details
- *   – meshulam → returns a redirect URL to Meshulam's hosted page
- *     (Phase 2 — needs Meshulam plugin installed in WP)
+ *   - bacs (Bank Transfer) → owner emails account details
+ *   - meshulam → returns a redirect URL to Meshulam's hosted page
+ *     (Phase 2, needs Meshulam plugin installed in WP)
  */
 export function CheckoutForm({ locale }: Props) {
   const t = useTranslations('Checkout');
@@ -111,7 +111,7 @@ export function CheckoutForm({ locale }: Props) {
     setSubmitting(true);
     try {
       if (isWordPressMode()) {
-        // Real WPGraphQL checkout — send to WordPress
+        // Real WPGraphQL checkout, send to WordPress
         const lineItems = items.map((item) => ({
           productId: Number(item.productId.replace(/^wp_/, '')),
           quantity: Math.max(1, Math.round(item.quantity)),
@@ -160,7 +160,7 @@ export function CheckoutForm({ locale }: Props) {
         sessionStorage.setItem('lastOrderNumber', String(orderNumber ?? ''));
         router.push('/checkout/success');
       } else {
-        // Local mode (no WP yet) — simulate a successful submission so
+        // Local mode (no WP yet), simulate a successful submission so
         // the user can still walk through the checkout flow visually.
         await new Promise((r) => setTimeout(r, 600));
         close();
@@ -213,7 +213,7 @@ export function CheckoutForm({ locale }: Props) {
         onSubmit={handleSubmit}
         className="relative mx-auto max-w-7xl px-5 md:px-10 grid lg:grid-cols-[1fr_360px] gap-10 lg:gap-14"
       >
-        {/* LEFT — form fields */}
+        {/* LEFT, form fields */}
         <div className="space-y-10">
           <Section title={t('customerInfo')} displayFont={displayFont}>
             <Row>
@@ -326,7 +326,7 @@ export function CheckoutForm({ locale }: Props) {
 
           <Section title={t('payment')} displayFont={displayFont}>
             <div className="space-y-3">
-              {/* Online payment methods — connect a processor account
+              {/* Online payment methods, connect a processor account
                   (Meshulam / PayPlus / Tranzila …) to activate all three. */}
               <PaymentOption
                 checked={form.paymentMethod === 'meshulam'}
@@ -353,7 +353,7 @@ export function CheckoutForm({ locale }: Props) {
           </Section>
         </div>
 
-        {/* RIGHT — order summary (sticky on desktop) */}
+        {/* RIGHT, order summary (sticky on desktop) */}
         <aside className="lg:sticky lg:top-28 self-start">
           <div className="bg-cream-card border border-gold-deep/40 rounded-[2px] p-6 md:p-8">
             <h2 className={`${displayFont} font-black text-xl md:text-2xl text-heading tracking-display mb-5`}>
@@ -592,7 +592,7 @@ function AppleIcon() {
 }
 
 function BitIcon() {
-  // Stylized "Bit" mark — circular b inside a rounded square
+  // Stylized "Bit" mark, circular b inside a rounded square
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden>
       <rect x="2" y="2" width="20" height="20" rx="5" fill="currentColor" />

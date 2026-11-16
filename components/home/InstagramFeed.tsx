@@ -9,7 +9,7 @@ import { SectionDivider } from '@/components/ornaments/SectionDivider';
 const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 
 /**
- * Instagram Feed — 2×3 grid of ornament tiles with a hover overlay.
+ * Instagram Feed, 2×3 grid of ornament tiles with a hover overlay.
  * Phase 1: no live Instagram fetch; each tile is a styled placeholder
  * (cedar gradient + arabesque + monogram letter) so the rhythm is
  * already in place when @mamtaki_dalia plugs in real media via the

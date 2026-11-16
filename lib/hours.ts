@@ -1,6 +1,6 @@
 /**
  * Opening hours (from the site footer, Footer.hoursValue):
- * Sun–Thu 08:00–22:00 · Fri–Sat 10:00–22:00, Israel time.
+ * Sun-Thu 08:00-22:00 · Fri-Sat 10:00-22:00, Israel time.
  */
 const HOURS: Record<number, [number, number]> = {
   0: [8, 22], 1: [8, 22], 2: [8, 22], 3: [8, 22], 4: [8, 22],

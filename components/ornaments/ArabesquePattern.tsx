@@ -6,7 +6,7 @@ type Props = {
 /**
  * Decorative SVG: Islamic/Druze geometric tessellation used as a subtle
  * background ornament. Tiles seamlessly via <pattern>. Opacity should
- * stay low (4–8%) so it reads as parchment texture, not as content.
+ * stay low (4-8%) so it reads as parchment texture, not as content.
  */
 const MINIMAL_LOOK = true;
 
@@ -32,7 +32,7 @@ export function ArabesquePattern({ className, opacity = 0.08 }: Props) {
           patternUnits="userSpaceOnUse"
         >
           <g fill="none" stroke="currentColor" strokeWidth="0.7">
-            {/* Eight-point star — classic Mediterranean/Druze motif */}
+            {/* Eight-point star, classic Mediterranean/Druze motif */}
             <path d="M 48 12 L 60 36 L 84 48 L 60 60 L 48 84 L 36 60 L 12 48 L 36 36 Z" />
             <path d="M 48 24 L 56 40 L 72 48 L 56 56 L 48 72 L 40 56 L 24 48 L 40 40 Z" />
             <circle cx="48" cy="48" r="3" />

@@ -7,7 +7,7 @@ import { useMotionValue, type MotionValue } from 'framer-motion';
  * Scroll progress of an element through the viewport, 0 → 1.
  * 0 when the element's top reaches `start` (fraction of the viewport
  * height, from the top), 1 when its bottom reaches `end`.
- * A plain scroll listener — reliable with the sticky/clip layouts here.
+ * A plain scroll listener, reliable with the sticky/clip layouts here.
  */
 export function useScrollProgress(
   ref: RefObject<HTMLElement | null>,

@@ -27,8 +27,8 @@ export default async function EventsPage({ params }: PageProps<'/[locale]/events
             </h1>
             <p className="mt-5 text-coffee-muted leading-relaxed text-pretty">
               {ar
-                ? 'أعراس، خطوبات، مناسبات عائلية وهدايا للشركات — املؤوا التفاصيل ونعود إليكم بعرض سعر.'
-                : 'חתונות, אירוסין, שמחות משפחתיות ומתנות לעסקים — מלאו את הפרטים ונחזור אליכם עם הצעת מחיר.'}
+                ? 'أعراس، خطوبات، مناسبات عائلية وهدايا للشركات، املؤوا التفاصيل ونعود إليكم بعرض سعر.'
+                : 'חתונות, אירוסין, שמחות משפחתיות ומתנות לעסקים, מלאו את הפרטים ונחזור אליכם עם הצעת מחיר.'}
             </p>
             <span aria-hidden className="rule-diamond block w-28 mt-7" />
           </header>

@@ -86,7 +86,7 @@
   --font-display-he: var(--font-frank);
   --font-body-he: var(--font-heebo);
   --font-display-ar: var(--font-reem);
-  --font-body-ar: var(--font-tajawal);
+  --font-body-ar: var(--font-reem);
   --font-display-en: var(--font-heebo);
   --font-body-en: var(--font-heebo);
 }
@@ -253,9 +253,9 @@ html[lang="he"] .tracking-eyebrow { letter-spacing: 0.06em; }
    Liquid Gold — warm black, cream type, the logo gold #FFC300 as syrup.
    ================================================================== */
 
-/* Headings: Frank Ruhl Libre at its heaviest, echoing the logo lettering. */
-h1.font-black, h1.font-bold { font-weight: 900; letter-spacing: -0.005em; }
-h2.font-black, h2.font-bold { font-weight: 700; letter-spacing: -0.005em; }
+/* Headings: Bellefair has one weight; never let the browser fake a bold. */
+h1.font-black, h1.font-bold, h2.font-black, h2.font-bold { font-weight: 400; letter-spacing: 0; }
+html[lang="he"] .font-display-he { font-weight: 400 !important; font-synthesis: none; }
 html[lang="ar"] h1, html[lang="ar"] h2 { letter-spacing: 0; }
 
 /* Every main heading uses the display serif, whether or not it carries the class. */

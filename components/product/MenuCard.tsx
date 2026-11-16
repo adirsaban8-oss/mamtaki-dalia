@@ -19,11 +19,11 @@ type Props = {
 };
 
 /**
- * Catalog card — Dubai-boutique style (after Bateel): white card on the
+ * Catalog card, Dubai-boutique style (after Bateel): white card on the
  * cream page, square full-bleed photo,
  * display-serif name, gold diamond rule, price in gold-deep (or "price
  * on request" while the owner hasn't set one). Hover: border turns gold
- * and the photo zooms 4% — no lift, no shadow.
+ * and the photo zooms 4%, no lift, no shadow.
  *
  * The `row` variant is kept for compact lists.
  */
@@ -49,7 +49,7 @@ export function MenuCard({ product, index = 0, variant = 'card' }: Props) {
       className="group relative"
     >
       <Link href={`/shop/${product.slug}`} className="block" aria-label={product.name[locale]}>
-        {/* Photo — tall, edge to edge, no frame */}
+        {/* Photo, tall, edge to edge, no frame */}
         <div className="relative aspect-[3/4] bg-sand overflow-hidden rounded-[10px] shadow-[0_10px_30px_-18px_rgba(42,27,18,0.55)] group-hover:shadow-[0_18px_40px_-18px_rgba(42,27,18,0.7)] transition-shadow duration-500">
           {product.image ? (
             <Image
@@ -96,7 +96,7 @@ export function MenuCard({ product, index = 0, variant = 'card' }: Props) {
   );
 }
 
-/* ── Catalog row variant — for menu-style category sections ──────── */
+/* ── Catalog row variant, for menu-style category sections ──────── */
 
 type RowProps = {
   product: Product;
@@ -121,7 +121,7 @@ function CatalogRow({ product, index, locale, displayFont, priceLabel, priceSuff
         className="block py-6 md:py-7 border-b border-gold-deep/15 hover:border-gold-deep/40 transition-colors duration-500 group/row"
       >
         <div className="grid grid-cols-[auto_1fr_auto] items-center gap-x-3 sm:gap-x-5 md:gap-x-8">
-          {/* Thumb — featured image if available; monogram otherwise.
+          {/* Thumb, featured image if available; monogram otherwise.
               Smaller on phones so the name column gets enough width. */}
           {product.image ? (
             <div className="relative w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 bg-page border border-gold-deep/30 rounded-[2px] overflow-hidden shrink-0">

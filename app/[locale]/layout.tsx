@@ -1,10 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import {
-  Frank_Ruhl_Libre,
-  Assistant,
-  Amiri,
-  IBM_Plex_Sans_Arabic,
-} from 'next/font/google';
+import { Bellefair, David_Libre, Amiri } from 'next/font/google';
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -17,18 +12,18 @@ import { MotionProvider } from '@/components/providers/MotionProvider';
 import { SheenObserver } from '@/components/fx/SheenObserver';
 import { MobileBar } from '@/components/layout/MobileBar';
 
-const frank = Frank_Ruhl_Libre({
+// Display: Bellefair — a classic, high-contrast Hebrew serif.
+const frank = Bellefair({
   subsets: ['hebrew', 'latin'],
-  weight: ['400', '500', '700', '900'],
+  weight: ['400'],
   variable: '--font-frank',
   display: 'swap',
 });
 
-// Body: Assistant — a humanist Hebrew sans; Plex Arabic for Arabic, so mixed
-// Hebrew/Arabic text keeps the same colour and rhythm.
-const plexHebrew = Assistant({
+// Text: David Libre — the classic Hebrew book face.
+const plexHebrew = David_Libre({
   subsets: ['hebrew', 'latin'],
-  weight: ['300', '400', '500', '600', '700'],
+  weight: ['400', '500', '700'],
   variable: '--font-heebo',
   display: 'swap',
 });
@@ -41,13 +36,6 @@ const amiri = Amiri({
   display: 'swap',
 });
 
-const plexArabic = IBM_Plex_Sans_Arabic({
-  subsets: ['arabic', 'latin'],
-  weight: ['300', '400', '500', '600', '700'],
-  variable: '--font-tajawal',
-  display: 'swap',
-});
-
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'),
   title: {
@@ -55,7 +43,7 @@ export const metadata: Metadata = {
     template: '%s · ממתקי דלית אל כרמל',
   },
   description:
-    'קטלוג ממתקי דלית אל כרמל: כנאפה, בקלאווה ופיסטוק חלבי, מגשי לילות ביירות, קינוחים ועוגות — מעשה ידי המשפחה בלב הכרמל.',
+    'קטלוג ממתקי דלית אל כרמל: כנאפה, בקלאווה ופיסטוק חלבי, מגשי לילות ביירות, קינוחים ועוגות, מעשה ידי המשפחה בלב הכרמל.',
   applicationName: 'Mamtaki Dalia',
   authors: [{ name: 'Abu Hassan & Family' }],
   openGraph: {
@@ -94,7 +82,6 @@ export default async function LocaleLayout({
         frank.variable,
         plexHebrew.variable,
         amiri.variable,
-        plexArabic.variable,
         'h-full antialiased',
       ].join(' ')}
     >

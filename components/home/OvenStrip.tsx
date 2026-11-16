@@ -8,7 +8,7 @@ import { useProducts } from '@/lib/data/useProducts';
 import { isOpenNow } from '@/lib/hours';
 
 /**
- * "Fresh out of the oven" — a thin strip under the hero: open/closed
+ * "Fresh out of the oven", a thin strip under the hero: open/closed
  * right now (from the opening hours), then a slow marquee of the real
  * catalog with prices. Each name links to its product.
  */

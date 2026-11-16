@@ -7,14 +7,14 @@ import type { Locale } from '@/i18n/locales';
 import { useScrollProgress } from '@/lib/useScrollProgress';
 
 const TEXT = {
-  he: 'כל מגש יוצא טרי מהמטבח שלנו בדלית אל כרמל — בקלאווה, כנאפה ומגשי אירוח, בהזמנה מראש ובמשלוח לצפון, לשרון, לגוש דן ולמרכז.',
-  ar: 'كل صينية تخرج طازجة من مطبخنا في دالية الكرمل — بقلاوة وكنافة وصواني ضيافة، بالطلب المسبق وبالتوصيل إلى الشمال والشارون وغوش دان والمركز.',
+  he: 'כל מגש יוצא טרי מהמטבח שלנו בדלית אל כרמל, בקלאווה, כנאפה ומגשי אירוח, בהזמנה מראש ובמשלוח לצפון, לשרון, לגוש דן ולמרכז.',
+  ar: 'كل صينية تخرج طازجة من مطبخنا في دالية الكرمل، بقلاوة وكنافة وصواني ضيافة، بالطلب المسبق وبالتوصيل إلى الشمال والشارون وغوش دان والمركز.',
 };
 
 /**
  * The bridge between the dark hero and the ivory page: one sentence about
  * the handwork, set very large. Its words light up one by one as the
- * visitor scrolls — the page "reads itself" in their rhythm.
+ * visitor scrolls, the page "reads itself" in their rhythm.
  */
 export function Statement() {
   const locale = useLocale() as Locale;

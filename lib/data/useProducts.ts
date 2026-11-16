@@ -13,7 +13,7 @@ import { seedCatalog } from '@/lib/data/catalogSeed';
  * Unified data hook. Reads from WordPress (Apollo / WPGraphQL) when
  * NEXT_PUBLIC_DATA_SOURCE=wordpress, otherwise from the local Zustand
  * catalog. Apollo queries skip on the server pass to avoid hydration
- * mismatch — they kick in once the component hydrates.
+ * mismatch, they kick in once the component hydrates.
  *
  * Until the owner publishes products in WordPress (or adds any to the
  * local admin), the starter catalog in `catalogSeed.ts` is shown.

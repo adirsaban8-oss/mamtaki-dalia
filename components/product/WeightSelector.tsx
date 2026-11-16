@@ -17,7 +17,7 @@ const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 const DEFAULT_QUICK = [0.5, 1, 1.5, 2] as const;
 
 /**
- * Weight selector — segmented quick-select + stepper, per the
+ * Weight selector, segmented quick-select + stepper, per the
  * ultra-luxury spec. Min 0.5kg, step 0.25kg, max 5kg by default.
  */
 export function WeightSelector({

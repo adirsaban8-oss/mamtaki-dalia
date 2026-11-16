@@ -45,7 +45,7 @@ const TILES: Tile[] = [
 ];
 
 /**
- * "From our showcase" — the shop's own video and photos in a gold-framed
+ * "From our showcase", the shop's own video and photos in a gold-framed
  * mosaic. Everything here is real, shot at the shop.
  */
 export function Showcase() {
@@ -70,7 +70,7 @@ export function Showcase() {
         </header>
 
         <div className="grid grid-cols-2 md:grid-cols-4 md:grid-rows-2 gap-2.5 md:h-[720px]">
-          {/* Video — spans both rows */}
+          {/* Video, spans both rows */}
           <motion.figure
             initial={{ opacity: 0, y: 16 }}
             whileInView={{ opacity: 1, y: 0 }}

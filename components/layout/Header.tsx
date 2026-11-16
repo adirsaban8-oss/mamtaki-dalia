@@ -17,8 +17,8 @@ type Props = {
 const WAZE = 'https://waze.com/ul?q=דליה%2010%20דלית%20אל%20כרמל';
 
 /**
- * Header — black bar in three parts: the menu on the reading side, the
- * logo in the centre, and two round buttons on the far side — WhatsApp
+ * Header, black bar in three parts: the menu on the reading side, the
+ * logo in the centre, and two round buttons on the far side, WhatsApp
  * and Waze.
  */
 export function Header(_props: Props) {
@@ -49,7 +49,7 @@ export function Header(_props: Props) {
   return (
     <header className="fixed inset-x-0 top-0 z-50 bg-[#0A0806]/95 backdrop-blur-md text-white border-b border-gold/20">
       <div className="mx-auto max-w-[1440px] px-3 sm:px-6 md:px-10 h-16 sm:h-20 grid grid-cols-[1fr_auto_1fr] items-center gap-2">
-        {/* Menu — reading side */}
+        {/* Menu, reading side */}
         <div className="flex items-center justify-self-start">
           <button
             type="button"
@@ -76,14 +76,14 @@ export function Header(_props: Props) {
           </button>
         </div>
 
-        {/* Logo — centre */}
+        {/* Logo, centre */}
         <div className="justify-self-center min-w-0">
-          <Link href="/" className="block" aria-label={ar ? 'حلويات دالية الكرمل — الصفحة الرئيسية' : 'ממתקי דלית אל כרמל — דף הבית'}>
+          <Link href="/" className="block" aria-label={ar ? 'حلويات دالية الكرمل، الصفحة الرئيسية' : 'ממתקי דלית אל כרמל, דף הבית'}>
             <Image src="/images/logo-192.webp" alt="" width={64} height={64} priority className="w-12 h-12 sm:w-16 sm:h-16 rounded-full" />
           </Link>
         </div>
 
-        {/* WhatsApp + Waze — far side */}
+        {/* WhatsApp + Waze, far side */}
         <div className="flex items-center justify-self-end gap-2 sm:gap-3">
           <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className={roundButton}>
             <WhatsAppIcon />

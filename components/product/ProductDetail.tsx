@@ -24,11 +24,11 @@ const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 type Props = { product: Product; locale: Locale };
 
 /**
- * Product Detail — text-led, no gallery. The product's identity is
+ * Product Detail, text-led, no gallery. The product's identity is
  * carried by:
- *  – the SKU monogram, displayed as a typographic seal at large scale
- *  – an arabesque rosette ornament centered behind the monogram
- *  – the tasting note and full description
+ *  - the SKU monogram, displayed as a typographic seal at large scale
+ *  - an arabesque rosette ornament centered behind the monogram
+ *  - the tasting note and full description
  *
  * The right-hand panel keeps the WeightSelector / price / add-to-cart.
  */
@@ -115,14 +115,14 @@ export function ProductDetail({ product, locale }: Props) {
         </ol>
       </nav>
 
-      {/* Hero — 2 column desktop */}
+      {/* Hero, 2 column desktop */}
       <div className="relative mx-auto max-w-7xl px-5 md:px-10 pt-5 md:pt-14 pb-14 md:pb-24 grid lg:grid-cols-12 gap-8 lg:gap-16">
-        {/* Left — Monogram seal in place of a photo */}
+        {/* Left, Monogram seal in place of a photo */}
         <div className="lg:col-span-6 order-1">
           <MonogramSeal product={product} label={categoryLabels[product.category]?.[locale] ?? ''} />
         </div>
 
-        {/* Right — details panel */}
+        {/* Right, details panel */}
         <div className="lg:col-span-6 order-2 flex flex-col">
           {/* Badges */}
           <div className="flex flex-wrap gap-2 mb-5">
@@ -141,7 +141,7 @@ export function ProductDetail({ product, locale }: Props) {
             {product.name[locale]}
           </h1>
 
-          {/* Tasting note — italic gold-deep, the poetic line */}
+          {/* Tasting note, italic gold-deep, the poetic line */}
           <p
             className="mt-4 text-[15px] md:text-base font-medium leading-[1.5] text-gold-deep text-pretty"
           >
@@ -170,11 +170,11 @@ export function ProductDetail({ product, locale }: Props) {
             </p>
           </div>
 
-          {/* Quantity — weight products are sold in 200 g steps */}
+          {/* Quantity, weight products are sold in 200 g steps */}
           {byKg && (
             <fieldset className="mt-8">
               <legend className="text-[13px] font-medium text-gold-deep mb-3">
-                {locale === 'ar' ? 'الكمية — بقفزات 200 غرام' : 'כמות — בקפיצות של 200 גרם'}
+                {locale === 'ar' ? 'الكمية، بقفزات 200 غرام' : 'כמות, בקפיצות של 200 גרם'}
               </legend>
               <div className="grid grid-cols-3 sm:flex sm:flex-wrap items-center gap-2 sm:gap-3">
                 <div className="col-span-3 sm:col-auto flex sm:inline-flex items-stretch h-12 border border-gold-deep/50 rounded-[2px]">
@@ -230,7 +230,7 @@ export function ProductDetail({ product, locale }: Props) {
             </fieldset>
           )}
 
-          {/* Order CTA — catalog site: orders go through WhatsApp */}
+          {/* Order CTA, catalog site: orders go through WhatsApp */}
           <a
             href={whatsappLink(orderMessage)}
             target="_blank"
@@ -278,7 +278,7 @@ export function ProductDetail({ product, locale }: Props) {
         </div>
       </div>
 
-      {/* Phone-only order bar — the order button never scrolls away */}
+      {/* Phone-only order bar, the order button never scrolls away */}
       <div className="lg:hidden fixed bottom-0 inset-x-0 z-50 flex gap-2 px-3 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] bg-cedar/95 backdrop-blur-md border-t border-gold/40">
         <a
           href={whatsappLink(orderMessage)}
@@ -330,7 +330,7 @@ export function ProductDetail({ product, locale }: Props) {
   );
 }
 
-/* ── Monogram seal — the photo-less product identity ─────────────── */
+/* ── Monogram seal, the photo-less product identity ─────────────── */
 
 function MonogramSeal({ product, label }: { product: Product; label: string }) {
   // Photo inside a keyhole arch on a sand stage, with a gold hairline

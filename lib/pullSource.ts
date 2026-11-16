@@ -1,5 +1,5 @@
 /**
- * The media behind the home "Pull" hero. Swap the source here — nothing
+ * The media behind the home "Pull" hero. Swap the source here, nothing
  * else needs to change.
  *
  *  - kind 'living': one real photo brought to life (slow macro drift,
@@ -18,7 +18,7 @@ export type PullSource =
 
 /**
  * The shop's kanafeh with ice cream (brand-assets/knafeh/kanafeh-ice-cream.png): frame 1 is a
- * clean-up of that photo; frames 2–4 add the fork and the cheese stretch (AI edits, ⚠️) —
+ * clean-up of that photo; frames 2-4 add the fork and the cheese stretch (AI edits, ⚠️),
  * each one edited from the previous, so the dish stays the same. A real video replaces them.
  * For a still version use { kind: 'living', image: '/images/pull/f1.webp', focus: [58, 32] }
  * (or image '/images/pull/original.webp' for the untouched crop).

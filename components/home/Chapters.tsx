@@ -50,7 +50,7 @@ const TONE = {
 } as const;
 
 /**
- * Chapters — three full-screen pages, one per house dessert. A big photo
+ * Chapters, three full-screen pages, one per house dessert. A big photo
  * on one side (alternating), the name, two texture words, the real
  * description and price, and the order buttons.
  */

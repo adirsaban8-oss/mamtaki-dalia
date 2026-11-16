@@ -21,18 +21,18 @@ const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 
 type Props = {
   locale: Locale;
-  /** Home page: the grid only — no page title, search or category bar. */
+  /** Home page: the grid only, no page title, search or category bar. */
   embedded?: boolean;
 };
 
 /**
- * Catalog page — full menu organized by category, no product photos.
+ * Catalog page, full menu organized by category, no product photos.
  * Each category renders as a section header + a list of MenuCard rows
  * (Pattern C: Editorial List from the design DNA).
  *
- *  – Optional badge filter chips at the top — affect ALL category lists.
- *  – Sticky sub-nav on desktop with category anchors.
- *  – Empty state when filters exclude everything.
+ *  - Optional badge filter chips at the top, affect ALL category lists.
+ *  - Sticky sub-nav on desktop with category anchors.
+ *  - Empty state when filters exclude everything.
  */
 export function ShopContent({ locale, embedded = false }: Props) {
   const t = useTranslations('Shop');
@@ -108,7 +108,7 @@ export function ShopContent({ locale, embedded = false }: Props) {
       </header>
       )}
 
-      {/* Category index — sticky, scrolls sideways on phones */}
+      {/* Category index, sticky, scrolls sideways on phones */}
       {!embedded && (
       <nav
         aria-label={locale === 'ar' ? 'الفئات' : 'קטגוריות'}
@@ -133,7 +133,7 @@ export function ShopContent({ locale, embedded = false }: Props) {
         {loading && allProducts.length === 0 ? (
           <CatalogSkeleton />
         ) : allProducts.length === 0 ? (
-          // Catalog empty — the owner hasn't added any products yet.
+          // Catalog empty, the owner hasn't added any products yet.
           <CatalogEmptyState locale={locale} displayFont={displayFont} />
         ) : totalCount === 0 ? (
           <div className="py-24 text-center">
@@ -261,7 +261,7 @@ function CategorySection({ category, items, locale, displayFont }: SectionProps)
         <span className="text-[13px] text-coffee-muted">{categoryEyebrow[category][locale]}</span>
       </motion.header>
 
-      {/* Items — card grid: 2 cols phone, 3 tablet, 4 desktop */}
+      {/* Items, card grid: 2 cols phone, 3 tablet, 4 desktop */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 md:gap-x-5 gap-y-10 md:gap-y-14">
         {items.map((product, idx) =>
           idx === 0 && items.length > 2 ? (

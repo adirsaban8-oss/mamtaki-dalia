@@ -13,12 +13,12 @@ type Props = { locale: Locale };
 
 /**
  * Orders dashboard.
- *  – Top summary: today count + revenue + total pending.
- *  – Filter tabs (pending / sent / all) + name/phone search.
- *  – Order cards sorted new→old; pending status banner pulses.
- *  – "מוכן" / "ready" button moves an order from pending → sent.
- *  – "סימולציית הזמנה" / "simulate new order" button for the demo.
- *  – Browser Notification + chime when a new order arrives while
+ *  - Top summary: today count + revenue + total pending.
+ *  - Filter tabs (pending / sent / all) + name/phone search.
+ *  - Order cards sorted new→old; pending status banner pulses.
+ *  - "מוכן" / "ready" button moves an order from pending → sent.
+ *  - "סימולציית הזמנה" / "simulate new order" button for the demo.
+ *  - Browser Notification + chime when a new order arrives while
  *    the admin is open (relies on the `unseen` counter in the store).
  */
 export function OrdersBoard({ locale }: Props) {
@@ -53,7 +53,7 @@ export function OrdersBoard({ locale }: Props) {
     if (unseen > 0) clearUnseen();
   }, [unseen, clearUnseen]);
 
-  // Watch the orders list — if it grows, fire notification + chime.
+  // Watch the orders list, if it grows, fire notification + chime.
   useEffect(() => {
     if (orders.length > prevOrderCount.current) {
       const newest = orders[0];
@@ -102,7 +102,7 @@ export function OrdersBoard({ locale }: Props) {
 
   return (
     <div className="space-y-8">
-      {/* Hidden audio element — chime for new orders */}
+      {/* Hidden audio element, chime for new orders */}
       <audio
         ref={audioRef}
         src="data:audio/wav;base64,UklGRlIAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YS4AAACAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIA="
@@ -291,7 +291,7 @@ function OrderCard({
       transition={{ duration: 0.6, ease: easeLuxe }}
       className={`relative bg-cream-card border-2 ${isSent ? 'border-pistachio/40' : 'border-burgundy/30'} rounded-[2px] overflow-hidden shadow-card`}
     >
-      {/* Status banner — green if sent, red if pending */}
+      {/* Status banner, green if sent, red if pending */}
       <div
         className={`px-6 md:px-8 py-3 flex items-center justify-between gap-4 ${isSent ? 'bg-pistachio/15 text-pistachio' : 'bg-burgundy/10 text-burgundy'}`}
       >

@@ -9,7 +9,7 @@ import { ArabesquePattern } from '@/components/ornaments/ArabesquePattern';
 const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 
 /**
- * Newsletter — burgundy section, single email input, "join the family"
+ * Newsletter, burgundy section, single email input, "join the family"
  * copy with a 10% first-order discount hook. No real backend in Phase 1
  * (visual + form validation only); the submit just shows a thank-you.
  */

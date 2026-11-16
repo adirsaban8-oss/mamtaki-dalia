@@ -5,7 +5,7 @@ import { ar } from './ar';
 /**
  * Legal texts of the site (terms, cancellations, privacy, accessibility).
  * Hebrew is the binding version; Arabic is a convenience translation.
- * Business facts come from the owners — update the texts when they change.
+ * Business facts come from the owners, update the texts when they change.
  */
 export const LEGAL_UPDATED = '14.11.2026';
 

@@ -11,7 +11,7 @@ import { ArabesquePattern } from '@/components/ornaments/ArabesquePattern';
 type Props = { locale: Locale };
 
 /**
- * Featured Products — 4 visible products tagged "bestseller" from the
+ * Featured Products, 4 visible products tagged "bestseller" from the
  * live catalog store. If the catalog is empty (owner hasn't added
  * anything yet), the section quietly hides itself.
  */

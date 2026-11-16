@@ -1,10 +1,10 @@
 import { useTranslations } from 'next-intl';
 
 /**
- * Trust ticker — slow scrolling marquee on cedar. 40s loop.
- *  – Height: 56px desktop / 48px mobile per spec.
- *  – Text: gold, 14px, tracking 0.15em, single line.
- *  – The list is duplicated so the animation seam is invisible.
+ * Trust ticker, slow scrolling marquee on cedar. 40s loop.
+ *  - Height: 56px desktop / 48px mobile per spec.
+ *  - Text: gold, 14px, tracking 0.15em, single line.
+ *  - The list is duplicated so the animation seam is invisible.
  */
 export function Ticker() {
   const t = useTranslations('Ticker');
@@ -43,7 +43,7 @@ export function Ticker() {
         }}
       />
 
-      {/* Marquee track — animate-ticker for LTR, animate-ticker-rtl for RTL */}
+      {/* Marquee track, animate-ticker for LTR, animate-ticker-rtl for RTL */}
       <div className="animate-ticker rtl:animate-ticker-rtl flex items-center gap-12 whitespace-nowrap will-change-transform motion-reduce:animate-none">
         {sequence.map((label, idx) => (
           <div key={`${label}-${idx}`} className="flex items-center gap-12 shrink-0">

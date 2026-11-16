@@ -1,6 +1,6 @@
 import type { LegalDoc, LegalSlug } from './content';
 
-/** Arabic legal texts — convenience translation of the Hebrew version. */
+/** Arabic legal texts, convenience translation of the Hebrew version. */
 export const ar: Record<LegalSlug, LegalDoc> = {
   terms: {
     title: 'الشروط والأحكام',

@@ -69,7 +69,7 @@ export function DeliveryZones() {
             </linearGradient>
           </defs>
 
-          {/* South — not served */}
+          {/* South, not served */}
           <path d={OUTLINE} clipPath="url(#band-south)" fill="url(#south-fade)" />
 
           {zones.map((z) => (
@@ -107,7 +107,7 @@ export function DeliveryZones() {
             </text>
           ))}
           <text x="150" y={LABEL_Y.south} textAnchor="middle" fill="#B9A98C" fontSize="15">
-            {ar ? 'الجنوب — لا توصيل' : 'דרום — אין משלוחים'}
+            {ar ? 'الجنوب، لا توصيل' : 'דרום, אין משלוחים'}
           </text>
 
           {/* Home base */}
@@ -149,8 +149,8 @@ export function DeliveryZones() {
             <p className="p-4 border border-gold/60 bg-gold/10 rounded-[2px] text-ivory">
               <strong className="text-gold">{ar ? 'نعم! ' : 'כן! '}</strong>
               {ar
-                ? `نوصل إلى ${match.place[1]} — منطقة ${match.zone.name.ar}.`
-                : `אנחנו מגיעים ל${match.place[0]} — אזור ${match.zone.name.he}.`}
+                ? `نوصل إلى ${match.place[1]}, منطقة ${match.zone.name.ar}.`
+                : `אנחנו מגיעים ל${match.place[0]}, אזור ${match.zone.name.he}.`}
               {match.zone.days && <> {match.zone.days[locale]}</>}{' '}
               <Link href="/shop" className="text-gold font-bold underline underline-offset-4 whitespace-nowrap">
                 {ar ? 'إلى الكتالوج' : 'לקטלוג המוצרים'}
@@ -166,7 +166,7 @@ export function DeliveryZones() {
           )}
           {query.trim().length >= 3 && match.kind === 'unknown' && (
             <p className="p-4 border border-hairline rounded-[2px] text-coffee-muted">
-              {ar ? 'لم نجد البلدة في القائمة — ' : 'לא מצאנו את היישוב ברשימה — '}
+              {ar ? 'لم نجد البلدة في القائمة، ' : 'לא מצאנו את היישוב ברשימה, '}
               <a
                 href={whatsappLink(ar ? `مرحباً، هل توصلون إلى ${query}?` : `שלום, האם יש משלוח ל${query}?`)}
                 target="_blank"

@@ -8,7 +8,7 @@ import { categoryLabels, orderedCategories } from '@/lib/mockData';
 type Props = { locale: Locale };
 
 /**
- * Footer — cedar dark, 4-column desktop, single-column mobile.
+ * Footer, cedar dark, 4-column desktop, single-column mobile.
  * Final breath of the page; large wordmark, navigation, categories,
  * info, contact card. Bottom bar holds social + credit.
  */
@@ -153,7 +153,7 @@ export function Footer({ locale }: Props) {
         {/* Bottom hairline */}
         <div aria-hidden className="h-px w-full bg-gold-light/15 mt-12 md:mt-14 mb-8" />
 
-        {/* Bottom bar: social + copyright + credit — horizontal at all
+        {/* Bottom bar: social + copyright + credit, horizontal at all
             widths, just tighter spacing on phones. Credit hides on the
             smallest screens so the row never overflows. */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-5 sm:gap-6">

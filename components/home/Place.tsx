@@ -9,7 +9,7 @@ const WAZE = 'https://waze.com/ul?q=דליה%2010%20דלית%20אל%20כרמל';
 const MAPS = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent('דליה 10, דלית אל כרמל');
 
 /**
- * The village and the Carmel — the shop's place, with verified facts only
+ * The village and the Carmel, the shop's place, with verified facts only
  * (address, fresh baking, parking, kosher factory, delivery areas, hours),
  * and every way to reach it: Waze, Maps, call, WhatsApp.
  */

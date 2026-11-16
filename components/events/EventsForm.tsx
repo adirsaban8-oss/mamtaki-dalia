@@ -22,7 +22,7 @@ const EMPTY: Fields = { name: '', phone: '', eventType: '', date: '', guests: ''
 /**
  * Quote request for events and large orders. There is no mail backend
  * yet, so submitting opens WhatsApp to the events line with the details
- * filled in — the customer just presses send.
+ * filled in, the customer just presses send.
  */
 export function EventsForm() {
   const locale = useLocale() as Locale;

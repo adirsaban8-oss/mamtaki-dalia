@@ -17,9 +17,9 @@ type Props = {
 
 /**
  * Spec-grade luxury section heading.
- *  – Eyebrow: 12px gold, tracking 0.20em, flanked by two 48px gold lines.
- *  – Title:   Display font, weight 900, tracking -0.02em, line-height 1.05.
- *  – Body:    18px, line-height 1.7, max-width ~2xl, balanced wrap.
+ *  - Eyebrow: 12px gold, tracking 0.20em, flanked by two 48px gold lines.
+ *  - Title:   Display font, weight 900, tracking -0.02em, line-height 1.05.
+ *  - Body:    18px, line-height 1.7, max-width ~2xl, balanced wrap.
  */
 export function SectionHeading({
   eyebrow,
@@ -61,7 +61,7 @@ export function SectionHeading({
         {isCenter && <span aria-hidden className="block h-px w-12 bg-gold" />}
       </div>
 
-      {/* Display headline — weight 900, dramatic scale */}
+      {/* Display headline, weight 900, dramatic scale */}
       <h2
         id={id}
         className={`mt-6 md:mt-8 ${displayFont} font-black tracking-display leading-[1.05] text-balance ${titleColor} text-4xl md:text-5xl lg:text-6xl`}

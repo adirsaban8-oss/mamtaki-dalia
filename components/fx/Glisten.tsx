@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 
 /**
- * Glisten — a soft specular highlight that slides across a syrupy photo
+ * Glisten, a soft specular highlight that slides across a syrupy photo
  * as the page scrolls, as if the light moved over the syrup. Place it
  * inside a positioned image box. Static under prefers-reduced-motion.
  */

@@ -13,7 +13,7 @@ import { Steam } from '@/components/fx/Steam';
 import { Glisten } from '@/components/fx/Glisten';
 
 /**
- * The home hero — a pinned scene (≈240vh). Scrolling drives the media
+ * The home hero, a pinned scene (≈240vh). Scrolling drives the media
  * (a living photo drifting out from a macro crop, or a real stretch
  * video); three words grow one after another; then gold syrup runs down
  * over the screen and the order call appears on it.

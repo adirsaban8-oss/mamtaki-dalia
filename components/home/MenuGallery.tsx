@@ -22,7 +22,7 @@ const ARCH_IMAGE: Partial<Record<ProductCategory, string>> = {
 
 /**
  * The shop window. Four arches choose a counter; below them the trays run
- * sideways like walking along the window in the morning — drag (or swipe)
+ * sideways like walking along the window in the morning, drag (or swipe)
  * and they snap into place. Tapping a tray opens a sheet to pick the
  * weight and order.
  */
@@ -55,7 +55,7 @@ export function MenuGallery() {
           </Link>
         </header>
 
-        {/* Arches — which counter */}
+        {/* Arches, which counter */}
         <div role="tablist" aria-label={ar ? 'الفئات' : 'קטגוריות'} className="mt-10 md:mt-12 grid grid-cols-4 gap-3 sm:gap-6 md:gap-10 max-w-3xl">
           {cats.map((c) => {
             const on = c === current;
@@ -77,7 +77,7 @@ export function MenuGallery() {
         </div>
       </div>
 
-      {/* The window — sideways, drag + snap */}
+      {/* The window, sideways, drag + snap */}
       <AnimatePresence mode="wait">
         <motion.ul
           key={current}
