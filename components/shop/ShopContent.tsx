@@ -14,6 +14,7 @@ import {
 import { useProducts } from '@/lib/data/useProducts';
 import type { Locale } from '@/i18n/locales';
 import { MenuCard } from '@/components/product/MenuCard';
+import { FeatureCard } from '@/components/product/FeatureCard';
 import { ArabesquePattern } from '@/components/ornaments/ArabesquePattern';
 
 const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
@@ -262,9 +263,13 @@ function CategorySection({ category, items, locale, displayFont }: SectionProps)
 
       {/* Items — card grid: 2 cols phone, 3 tablet, 4 desktop */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 md:gap-x-5 gap-y-10 md:gap-y-14">
-        {items.map((product, idx) => (
-          <MenuCard key={product.id} product={product} index={idx} />
-        ))}
+        {items.map((product, idx) =>
+          idx === 0 && items.length > 2 ? (
+            <FeatureCard key={product.id} product={product} className="col-span-2 lg:row-span-2" />
+          ) : (
+            <MenuCard key={product.id} product={product} index={idx} />
+          )
+        )}
       </div>
     </section>
   );

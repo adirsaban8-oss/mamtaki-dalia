@@ -15,6 +15,7 @@ import '../globals.css';
 import { locales, type Locale } from '@/i18n/locales';
 import { ApolloProvider } from '@/components/providers/ApolloProvider';
 import { AccessibilityFAB } from '@/components/layout/AccessibilityFAB';
+import { MotionProvider } from '@/components/providers/MotionProvider';
 import { MobileBar } from '@/components/layout/MobileBar';
 
 const frank = Frank_Ruhl_Libre({
@@ -116,9 +117,11 @@ export default async function LocaleLayout({
       <body className="min-h-full flex flex-col bg-page text-coffee">
         <NextIntlClientProvider locale={locale as Locale}>
           <ApolloProvider>
+            <MotionProvider>
             {children}
             <MobileBar />
             <AccessibilityFAB />
+            </MotionProvider>
           </ApolloProvider>
         </NextIntlClientProvider>
       </body>
