@@ -101,7 +101,7 @@ export function AccessibilityFAB() {
         onClick={() => setOpen((v) => !v)}
         aria-label={t('open')}
         aria-expanded={open}
-        className="fixed start-4 bottom-20 lg:bottom-4 z-[55] w-12 h-12 sm:w-14 sm:h-14 inline-flex items-center justify-center bg-cedar border border-gold/50 text-gold-light hover:bg-gold hover:text-white transition-colors duration-500 rounded-full shadow-deep border border-gold/40"
+        className="fixed end-4 bottom-20 lg:bottom-4 z-[55] w-12 h-12 sm:w-14 sm:h-14 inline-flex items-center justify-center bg-cedar border border-gold/50 text-gold-light hover:bg-gold hover:text-[#0A0806] transition-colors duration-500 rounded-full shadow-deep border border-gold/40"
       >
         <AccessibilityIcon />
       </button>
@@ -125,7 +125,7 @@ export function AccessibilityFAB() {
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: 12, scale: 0.96 }}
               transition={{ duration: 0.4, ease: easeLuxe }}
-              className="fixed start-4 bottom-36 lg:bottom-24 z-[60] w-72 bg-cream-card border border-gold-deep/40 rounded-[2px] shadow-deep p-5"
+              className="fixed end-4 bottom-36 lg:bottom-24 z-[60] w-72 bg-cream-card border border-gold-deep/40 rounded-[2px] shadow-deep p-5"
             >
               <header className="flex items-center justify-between mb-4">
                 <h2 className="font-display-en text-[11px] tracking-eyebrow uppercase text-heading">

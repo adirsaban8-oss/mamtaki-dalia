@@ -1,20 +1,20 @@
 import { setRequestLocale } from 'next-intl/server';
 import { Header } from '@/components/layout/Header';
-import { Hero } from '@/components/home/Hero';
+import { PullHero } from '@/components/home/PullHero';
+import { OvenStrip } from '@/components/home/OvenStrip';
 import { Statement } from '@/components/home/Statement';
-import { Signature } from '@/components/home/Signature';
+import { Chapters } from '@/components/home/Chapters';
 import { MenuGallery } from '@/components/home/MenuGallery';
 import { OrderBand } from '@/components/home/OrderBand';
-import { Story } from '@/components/home/Story';
 import { Showcase } from '@/components/home/Showcase';
+import { Place } from '@/components/home/Place';
 import { Footer } from '@/components/layout/Footer';
 import type { Locale } from '@/i18n/locales';
 
 /**
- * Home — a tasting in order: the kanafeh scene (dark), the handwork
- * sentence (espresso), three signature desserts (ivory), the menu by
- * arch (cream), events over a real photo, the family story, the shop
- * window. Each section has its own composition and background.
+ * Home — the story top to bottom: the Pull (kanafeh), fresh-today strip,
+ * one sentence about the kitchen, three house desserts as chapters, the
+ * menu by arch, events and trays, the shop window, the village + contact.
  */
 export default async function HomePage({ params }: PageProps<'/[locale]'>) {
   const { locale } = await params;
@@ -24,13 +24,14 @@ export default async function HomePage({ params }: PageProps<'/[locale]'>) {
     <>
       <Header overHero={false} />
       <main className="flex-1">
-        <Hero />
+        <PullHero />
+        <OvenStrip />
         <Statement />
-        <Signature />
+        <Chapters />
         <MenuGallery />
         <OrderBand />
-        <Story locale={locale as Locale} />
         <Showcase />
+        <Place />
       </main>
       <Footer locale={locale as Locale} />
     </>

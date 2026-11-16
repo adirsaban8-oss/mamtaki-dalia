@@ -7,8 +7,8 @@ import type { Locale } from '@/i18n/locales';
 import { useScrollProgress } from '@/lib/useScrollProgress';
 
 const TEXT = {
-  he: 'אצלנו לא ממהרים. אין מכונות — כל קדאיף נמשך ביד, כל בקלאווה נחתכת ביד, וכל מגש יוצא טרי מהמטבח שלנו בכרמל.',
-  ar: 'عندنا لا نستعجل. لا آلات — كل كنافة تُشدّ باليد، كل بقلاوة تُقطَّع باليد، وكل صينية تخرج طازجة من مطبخنا في الكرمل.',
+  he: 'כל מגש יוצא טרי מהמטבח שלנו בדלית אל כרמל — בקלאווה, כנאפה ומגשי אירוח, בהזמנה מראש ובמשלוח לצפון, לשרון, לגוש דן ולמרכז.',
+  ar: 'كل صينية تخرج طازجة من مطبخنا في دالية الكرمل — بقلاوة وكنافة وصواني ضيافة، بالطلب المسبق وبالتوصيل إلى الشمال والشارون وغوش دان والمركز.',
 };
 
 /**
@@ -25,10 +25,10 @@ export function Statement() {
   const words = TEXT[locale].split(' ');
 
   return (
-    <section ref={ref} className="relative bg-[#1C130D] text-[#F3E6CF] py-24 md:py-40" aria-label={ar ? 'عن عملنا' : 'על העבודה שלנו'}>
+    <section ref={ref} className="relative bg-[#15100B] text-cream py-24 md:py-40" aria-label={ar ? 'عن عملنا' : 'על העבודה שלנו'}>
       <div className="mx-auto max-w-5xl px-6 md:px-10">
-        <p className="flex items-center gap-4 text-[13px] md:text-sm font-medium text-[#C9A766]">
-          <span aria-hidden className="block h-px w-10 bg-[#C9A766]" />
+        <p className="flex items-center gap-4 text-[13px] md:text-sm font-medium text-gold">
+          <span aria-hidden className="block h-px w-10 bg-gold" />
           {ar ? 'دالية 10 · دالية الكرمل' : 'דליה 10 · דלית אל כרמל'}
         </p>
         <p className={`${displayFont} mt-8 text-[2rem] sm:text-5xl lg:text-[4rem] leading-[1.28] font-bold text-balance`}>

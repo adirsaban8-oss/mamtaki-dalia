@@ -87,7 +87,7 @@ export function MenuCard({ product, index = 0, variant = 'card' }: Props) {
           target="_blank"
           rel="noopener noreferrer"
           aria-label={`${locale === 'ar' ? 'طلب عبر واتساب' : 'הזמנה בוואטסאפ'}: ${product.name[locale]}`}
-          className="shrink-0 inline-flex items-center h-10 px-4 sm:px-5 rounded-full border border-gold text-gold text-[13px] sm:text-sm font-semibold hover:bg-gold hover:text-white transition-colors duration-300"
+          className="shrink-0 inline-flex items-center h-10 px-4 sm:px-5 rounded-full border border-gold text-gold text-[13px] sm:text-sm font-semibold hover:bg-gold hover:text-[#0A0806] transition-colors duration-300"
         >
           {locale === 'ar' ? 'للطلب' : 'להזמנה'}
         </a>

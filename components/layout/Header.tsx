@@ -5,7 +5,7 @@ import { useLocale, useTranslations } from 'next-intl';
 import { motion } from 'framer-motion';
 import { Link } from '@/i18n/navigation';
 import type { Locale } from '@/i18n/locales';
-import { Wordmark } from '@/components/ornaments/Wordmark';
+import Image from 'next/image';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { whatsappLink } from '@/lib/site';
 
@@ -47,7 +47,7 @@ export function Header(_props: Props) {
     'inline-flex items-center justify-center w-11 h-11 rounded-full border border-white/40 text-white hover:bg-white hover:text-black transition-colors duration-300';
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 bg-black text-white">
+    <header className="fixed inset-x-0 top-0 z-50 bg-[#0A0806]/95 backdrop-blur-md text-white border-b border-gold/20">
       <div className="mx-auto max-w-[1440px] px-3 sm:px-6 md:px-10 h-16 sm:h-20 grid grid-cols-[1fr_auto_1fr] items-center gap-2">
         {/* Menu — reading side */}
         <div className="flex items-center justify-self-start">
@@ -78,7 +78,9 @@ export function Header(_props: Props) {
 
         {/* Logo — centre */}
         <div className="justify-self-center min-w-0">
-          <Wordmark locale={locale} variant="light" />
+          <Link href="/" className="block" aria-label={ar ? 'حلويات دالية الكرمل — الصفحة الرئيسية' : 'ממתקי דלית אל כרמל — דף הבית'}>
+            <Image src="/images/logo-192.webp" alt="" width={64} height={64} priority className="w-12 h-12 sm:w-16 sm:h-16 rounded-full" />
+          </Link>
         </div>
 
         {/* WhatsApp + Waze — far side */}
@@ -101,7 +103,7 @@ export function Header(_props: Props) {
           closed: { height: 0, opacity: 0 },
         }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className="overflow-hidden bg-black border-t border-white/15 max-h-[calc(100dvh-4rem)]"
+        className="overflow-hidden bg-[#0A0806] border-t border-white/15 max-h-[calc(100dvh-4rem)]"
       >
         <nav className="mx-auto max-w-[1440px] px-5 sm:px-8 md:px-12 py-5 flex flex-col" aria-label="Primary">
           {navItems.map((item) => (

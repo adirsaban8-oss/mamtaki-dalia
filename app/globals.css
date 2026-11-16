@@ -15,30 +15,33 @@
      Black and gold, matching the brand logo. Surfaces are near-black,
      text is warm ivory, accents are antique gold. */
 
-  --color-page: #FBF6EC;
-  --color-heading: #2A1B12;
-  --color-ivory: #2A1B12;
-  --color-sand: #F3E8D6;
-  --color-cream-card: #FFFCF5;
+  --color-page: #0A0806;
+  --color-heading: #F6EEDC;
+  --color-ivory: #F6EEDC;
+  --color-sand: #15100B;
+  --color-cream-card: #15100B;
 
-  --color-cedar: #EFE2CB;
-  --color-cedar-deep: #E8D8BC;
-  --color-cedar-light: #E3D2B5;
-  --color-ink: #3A2A1F;
+  --color-cedar: #0A0806;
+  --color-cedar-deep: #000000;
+  --color-cedar-light: #1E1710;
+  --color-ink: #F6EEDC;
 
-  --color-gold: #48532A;
-  --color-gold-light: #48532A;
-  --color-gold-deep: #8C621F;
+  --color-gold: #FFC300;
+  --color-gold-light: #FFE27A;
+  --color-gold-deep: #C98A00;
 
-  --color-burgundy: #9A5B1F;
-  --color-burgundy-deep: #7A4517;
+  --color-burgundy: #E8941A;
+  --color-burgundy-deep: #C98A00;
 
-  --color-pistachio: #93A55B;      /* muted green accent */
+  --color-pistachio: #8DB33A;      /* muted green accent */
+  --color-syrup: #E8941A;         /* kadaif amber, syrup */
+  --color-cream: #F6EEDC;         /* cheese, cream, soft text */
+  --color-ink-2: #15100B;         /* raised surfaces */
   --color-copper: #B87654;         /* rose gold detail */
 
-  --color-coffee: #3A2A1F;
-  --color-coffee-muted: #75624F;
-  --color-hairline: #E6D9C2;
+  --color-coffee: #EFE5D1;
+  --color-coffee-muted: #B9A98C;
+  --color-hairline: #2B2218;
 
   /* ── Shadows ─────────────────────────────────────────────────────
      Tuned exactly to the spec. Card hover lifts with burgundy ghost. */
@@ -85,7 +88,7 @@
   --font-display-ar: var(--font-reem);
   --font-body-ar: var(--font-tajawal);
   --font-display-en: var(--font-heebo);
-  --font-body-en: var(--font-inter);
+  --font-body-en: var(--font-heebo);
 }
 
 /* ==================================================================
@@ -93,7 +96,7 @@
    ================================================================== */
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 }
 
 html {
@@ -121,8 +124,8 @@ body {
 
 /* Selection — burgundy on parchment */
 ::selection {
-  background-color: #48532A;
-  color: #fff;
+  background-color: #FFC300;
+  color: #0A0806;
 }
 
 /* Crisp focus ring in gold — accessible and on-brand */
@@ -182,20 +185,19 @@ html.a11y-text-largest {
 }
 
 html.a11y-contrast {
-  --color-page: #FFFFFF;
-  --color-sand: #FFFFFF;
-  --color-cedar: #FFFFFF;
-  --color-cream-card: #FFFFFF;
-  --color-heading: #000000;
-  --color-ivory: #000000;
-  --color-gold: #000000;
-  --color-gold-light: #000000;
-  --color-gold-deep: #000000;
-  --color-burgundy: #000000;
-  --color-coffee: #000000;
-  --color-coffee-muted: #000000;
-  --color-ink: #000000;
-  --color-hairline: #000000;
+  --color-page: #000000;
+  --color-sand: #000000;
+  --color-cedar: #000000;
+  --color-cream-card: #000000;
+  --color-heading: #FFFFFF;
+  --color-ivory: #FFFFFF;
+  --color-gold: #FFD23F;
+  --color-gold-light: #FFE27A;
+  --color-gold-deep: #FFD23F;
+  --color-coffee: #FFFFFF;
+  --color-coffee-muted: #FFFFFF;
+  --color-ink: #FFFFFF;
+  --color-hairline: #FFD23F;
 }
 html.a11y-contrast img {
   filter: contrast(1.05);
@@ -248,14 +250,12 @@ html[lang="he"] .tracking-eyebrow { letter-spacing: 0.06em; }
 
 
 /* ==================================================================
-   Warm boutique look — ivory page, espresso type, olive and honey accents.
+   Liquid Gold — warm black, cream type, the logo gold #FFC300 as syrup.
    ================================================================== */
 
-/* Headings are set in a classic Hebrew book serif at a calm weight. */
-h1.font-black, h1.font-bold, h2.font-black, h2.font-bold {
-  font-weight: 500;
-  letter-spacing: -0.005em;
-}
+/* Headings: Frank Ruhl Libre at its heaviest, echoing the logo lettering. */
+h1.font-black, h1.font-bold { font-weight: 900; letter-spacing: -0.005em; }
+h2.font-black, h2.font-bold { font-weight: 700; letter-spacing: -0.005em; }
 html[lang="ar"] h1, html[lang="ar"] h2 { letter-spacing: 0; }
 
 /* Every main heading uses the display serif, whether or not it carries the class. */
@@ -264,3 +264,15 @@ html[lang="ar"] h1, html[lang="ar"] h2 { font-family: var(--font-display-ar), se
 
 /* Decorative corners may sit past the edge; never let them widen the page. */
 body { overflow-x: clip; }
+
+/* Metallic gold, after the diagonal highlight in brand-assets/gold.png.
+   For display headings, CTAs and frames only — never running text. */
+@utility text-gold-metal {
+  background-image: linear-gradient(115deg, #C98A00 0%, #FFC300 35%, #FFE27A 50%, #FFC300 65%, #C98A00 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+@utility bg-gold-metal {
+  background-image: linear-gradient(115deg, #C98A00 0%, #FFC300 35%, #FFE27A 50%, #FFC300 65%, #C98A00 100%);
+}

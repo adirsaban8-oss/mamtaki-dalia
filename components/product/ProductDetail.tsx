@@ -190,7 +190,7 @@ export function ProductDetail({ product, locale }: Props) {
                     onClick={() => setGrams((g) => Math.max(MIN_GRAMS, g - STEP_GRAMS))}
                     disabled={grams <= MIN_GRAMS}
                     aria-label={locale === 'ar' ? 'أقل 200 غرام' : 'הפחתת 200 גרם'}
-                    className="w-16 sm:w-12 text-2xl leading-none text-heading hover:bg-gold hover:text-white disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-heading transition-colors duration-300"
+                    className="w-16 sm:w-12 text-2xl leading-none text-heading hover:bg-gold hover:text-[#0A0806] disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-heading transition-colors duration-300"
                   >
                     −
                   </button>
@@ -205,7 +205,7 @@ export function ProductDetail({ product, locale }: Props) {
                     onClick={() => setGrams((g) => Math.min(MAX_GRAMS, g + STEP_GRAMS))}
                     disabled={grams >= MAX_GRAMS}
                     aria-label={locale === 'ar' ? 'زيادة 200 غرام' : 'הוספת 200 גרם'}
-                    className="w-16 sm:w-12 text-2xl leading-none text-heading hover:bg-gold hover:text-white disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-heading transition-colors duration-300"
+                    className="w-16 sm:w-12 text-2xl leading-none text-heading hover:bg-gold hover:text-[#0A0806] disabled:opacity-30 disabled:hover:bg-transparent disabled:hover:text-heading transition-colors duration-300"
                   >
                     +
                   </button>
@@ -218,7 +218,7 @@ export function ProductDetail({ product, locale }: Props) {
                     aria-pressed={grams === g}
                     className={`h-12 px-4 border rounded-[2px] text-[15px] font-medium transition-colors duration-300 ${
                       grams === g
-                        ? 'bg-gold border-gold text-white'
+                        ? 'bg-gold border-gold text-[#0A0806]'
                         : 'border-gold-deep/50 text-heading hover:border-gold'
                     }`}
                   >
@@ -291,7 +291,7 @@ export function ProductDetail({ product, locale }: Props) {
           href={whatsappLink(orderMessage)}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-[2] h-12 inline-flex items-center justify-center gap-2 rounded-full bg-gold text-white text-[15px] font-bold"
+          className="flex-[2] h-12 inline-flex items-center justify-center gap-2 rounded-full bg-gold text-[#0A0806] text-[15px] font-bold"
         >
           <WhatsAppIcon />
           {locale === 'ar' ? 'للطلب عبر واتساب' : 'להזמנה בוואטסאפ'}

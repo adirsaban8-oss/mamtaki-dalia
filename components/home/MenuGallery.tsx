@@ -51,7 +51,7 @@ export function MenuGallery() {
         <header className="flex flex-wrap items-end justify-between gap-4">
           <div>
             <p className="text-sm font-medium text-gold-deep">{ar ? 'القائمة' : 'התפריט'}</p>
-            <h2 id="menu-heading" className={`${displayFont} mt-2 text-4xl md:text-[3.4rem] leading-[1.08] font-bold text-heading`}>
+            <h2 id="menu-heading" className={`${displayFont} mt-2 text-4xl md:text-[3.4rem] leading-[1.08] font-black text-gold-metal`}>
               {ar ? 'ماذا تحبون أن تتذوقوا اليوم؟' : 'מה בא לכם לטעום היום?'}
             </h2>
           </div>
@@ -110,14 +110,14 @@ export function MenuGallery() {
             ))}
             <Link
               href={more > 0 ? `/shop#cat-${current}` : '/shop'}
-              className={`group flex flex-col justify-end min-h-[160px] rounded-[10px] bg-gold text-white p-5 md:p-7 hover:bg-[#333D1C] transition-colors duration-300 ${wideTile ? 'col-span-2' : ''}`}
+              className={`group flex flex-col justify-end min-h-[160px] rounded-[10px] border border-gold/40 bg-[radial-gradient(120%_100%_at_80%_100%,rgba(255,195,0,0.16),transparent_60%)] text-gold p-5 md:p-7 hover:border-gold hover:bg-gold/10 transition-colors duration-300 ${wideTile ? 'col-span-2' : ''}`}
             >
               <span className={`${displayFont} text-2xl md:text-3xl font-bold leading-tight`}>
                 {more > 0
                   ? ar ? `${more} أخرى من ${categoryLabels[current].ar}` : `עוד ${more} ב${categoryLabels[current].he}`
                   : ar ? 'كل الكتالوج' : 'לכל הקטלוג'}
               </span>
-              <span className="mt-2 text-[15px] text-white/85 group-hover:text-white">
+              <span className="mt-2 text-[15px] text-cream/80 group-hover:text-cream">
                 {ar ? 'إلى القائمة ←' : 'לצפייה ←'}
               </span>
             </Link>

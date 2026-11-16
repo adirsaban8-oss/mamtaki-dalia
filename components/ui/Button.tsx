@@ -12,9 +12,9 @@ const sizeMap: Record<ButtonSize, string> = {
 
 const variantMap: Record<ButtonVariant, string> = {
   primary:
-    'bg-gold text-white border border-gold hover:bg-[#333D1C] hover:border-[#333D1C] focus-visible:bg-[#333D1C]',
+    'bg-gold text-[#0A0806] border border-gold hover:bg-gold-light hover:border-gold-light focus-visible:bg-gold-light',
   gold:
-    'bg-gold text-white border border-gold hover:bg-[#333D1C] hover:border-[#333D1C] focus-visible:bg-[#333D1C]',
+    'bg-gold text-[#0A0806] border border-gold hover:bg-gold-light hover:border-gold-light focus-visible:bg-gold-light',
   outline:
     'bg-transparent text-ivory border border-gold-light/70 hover:border-gold hover:bg-gold/10 focus-visible:border-gold',
   ghost:

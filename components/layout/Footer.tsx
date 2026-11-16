@@ -1,7 +1,7 @@
 import { useTranslations } from 'next-intl';
 import type { Locale } from '@/i18n/locales';
 import { Link } from '@/i18n/navigation';
-import { BrandMark } from '@/components/ornaments/BrandMark';
+import Image from 'next/image';
 import { ArabesquePattern } from '@/components/ornaments/ArabesquePattern';
 import { categoryLabels, orderedCategories } from '@/lib/mockData';
 
@@ -47,8 +47,8 @@ export function Footer({ locale }: Props) {
       <div className="relative mx-auto max-w-7xl px-5 md:px-10">
         {/* Brand mark */}
         <div className="flex flex-col items-center text-center mb-10 md:mb-14">
-          <BrandMark size={56} className="text-gold" />
-          <h2 className={`mt-6 ${displayFont} font-black text-3xl md:text-4xl lg:text-5xl text-ivory tracking-display text-balance`}>
+          <Image src="/images/logo-512.webp" alt={locale === 'ar' ? 'شعار حلويات دالية الكرمل' : 'הלוגו של ממתקי דלית אל כרמל'} width={140} height={140} className="w-28 h-28 md:w-36 md:h-36 rounded-full" />
+          <h2 className={`mt-6 ${displayFont} font-black text-3xl md:text-4xl lg:text-5xl text-gold-metal tracking-display text-balance`}>
             {t('brandLine')}
           </h2>
           <p className="mt-4 max-w-xl text-base md:text-[17px] leading-[1.7] text-ivory/65 text-pretty">

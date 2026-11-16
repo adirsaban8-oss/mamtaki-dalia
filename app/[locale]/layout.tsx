@@ -4,8 +4,6 @@ import {
   Assistant,
   Amiri,
   IBM_Plex_Sans_Arabic,
-  Cormorant_Garamond,
-  Inter,
 } from 'next/font/google';
 import { NextIntlClientProvider, hasLocale } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
@@ -49,19 +47,6 @@ const plexArabic = IBM_Plex_Sans_Arabic({
   display: 'swap',
 });
 
-const cormorant = Cormorant_Garamond({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-cormorant',
-  display: 'swap',
-});
-
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-});
-
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL ?? 'http://localhost:3000'),
   title: {
@@ -84,7 +69,7 @@ export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
   viewportFit: 'cover',
-  themeColor: '#000000',
+  themeColor: '#0A0806',
 };
 
 export function generateStaticParams() {
@@ -109,8 +94,6 @@ export default async function LocaleLayout({
         plexHebrew.variable,
         amiri.variable,
         plexArabic.variable,
-        cormorant.variable,
-        inter.variable,
         'h-full antialiased',
       ].join(' ')}
     >
