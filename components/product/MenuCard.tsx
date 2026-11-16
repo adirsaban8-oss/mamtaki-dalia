@@ -7,6 +7,7 @@ import { Link } from '@/i18n/navigation';
 import type { Locale } from '@/i18n/locales';
 import type { Product } from '@/lib/mockData';
 import { whatsappLink } from '@/lib/site';
+import { OrderButton } from '@/components/order/OrderButton';
 
 const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 
@@ -80,17 +81,11 @@ export function MenuCard({ product, index = 0, variant = 'card' }: Props) {
           {priceLabel}
           {priceSuffix && <span className="text-[13px] font-normal text-coffee-muted"> {priceSuffix}</span>}
         </p>
-        <a
-          href={whatsappLink(
-            locale === 'ar' ? `مرحباً، أود أن أطلب: ${product.name.ar}` : `שלום, אשמח להזמין: ${product.name.he}`
-          )}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={`${locale === 'ar' ? 'طلب عبر واتساب' : 'הזמנה בוואטסאפ'}: ${product.name[locale]}`}
+        <OrderButton product={product} named
           className="shrink-0 inline-flex items-center h-10 px-4 sm:px-5 rounded-full border border-gold text-gold text-[13px] sm:text-sm font-semibold hover:bg-gold hover:text-[#0A0806] transition-colors duration-300"
         >
           {locale === 'ar' ? 'للطلب' : 'להזמנה'}
-        </a>
+        </OrderButton>
       </div>
     </motion.article>
   );

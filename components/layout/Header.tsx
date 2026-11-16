@@ -8,6 +8,8 @@ import type { Locale } from '@/i18n/locales';
 import Image from 'next/image';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { whatsappLink } from '@/lib/site';
+import { ORDERING_MODE } from '@/lib/ordering';
+import { useCart } from '@/store/cart';
 
 type Props = {
   /** Kept for existing call sites; the bar is always solid black. */
@@ -85,6 +87,7 @@ export function Header(_props: Props) {
 
         {/* WhatsApp + Waze, far side */}
         <div className="flex items-center justify-self-end gap-2 sm:gap-3">
+          {ORDERING_MODE === 'site' && <CartButton className={roundButton} label={ar ? 'السلة' : 'סל הקניות'} />}
           <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className={roundButton}>
             <WhatsAppIcon />
           </a>
@@ -123,6 +126,22 @@ export function Header(_props: Props) {
         </nav>
       </motion.div>
     </header>
+  );
+}
+
+function CartButton({ className, label }: { className: string; label: string }) {
+  const open = useCart((s) => s.open);
+  const count = useCart((s) => s.items.length);
+  return (
+    <button type="button" onClick={open} aria-label={`${label} (${count})`} className={`relative ${className}`}>
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+        <path d="M6 7h12l-1 13H7L6 7z" />
+        <path d="M9 7a3 3 0 0 1 6 0" />
+      </svg>
+      {count > 0 && (
+        <span className="absolute -top-1 -end-1 min-w-5 h-5 px-1 rounded-full bg-gold text-[#0A0806] text-[11px] font-bold inline-flex items-center justify-center">{count}</span>
+      )}
+    </button>
   );
 }
 

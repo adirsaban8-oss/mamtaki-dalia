@@ -11,6 +11,8 @@ import { AccessibilityFAB } from '@/components/layout/AccessibilityFAB';
 import { MotionProvider } from '@/components/providers/MotionProvider';
 import { SheenObserver } from '@/components/fx/SheenObserver';
 import { MobileBar } from '@/components/layout/MobileBar';
+import { CartDrawer } from '@/components/cart/CartDrawer';
+import { ORDERING_MODE } from '@/lib/ordering';
 
 // Headings: Frank Ruhl Libre, the classic Hebrew book serif.
 const frank = Frank_Ruhl_Libre({
@@ -91,6 +93,7 @@ export default async function LocaleLayout({
             <MotionProvider>
             {children}
             <MobileBar />
+            {ORDERING_MODE === 'site' && <CartDrawer />}
             <AccessibilityFAB />
             <SheenObserver />
             </MotionProvider>

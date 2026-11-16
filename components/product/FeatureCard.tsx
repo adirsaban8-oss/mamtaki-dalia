@@ -6,6 +6,7 @@ import { Link } from '@/i18n/navigation';
 import type { Locale } from '@/i18n/locales';
 import type { Product } from '@/lib/mockData';
 import { whatsappLink } from '@/lib/site';
+import { OrderButton } from '@/components/order/OrderButton';
 
 /**
  * The lead product of a gallery: a large photo filling its cell, with the
@@ -46,15 +47,11 @@ export function FeatureCard({ product, className = '' }: { product: Product; cla
             {product.price > 0 ? `₪${product.price}` : ar ? 'السعر حسب الطلب' : 'מחיר לפי הזמנה'}
             {product.price > 0 && <span className="text-sm font-normal text-white/75"> / {suffix}</span>}
           </p>
-          <a
-            href={whatsappLink(ar ? `مرحباً، أود أن أطلب: ${product.name.ar}` : `שלום, אשמח להזמין: ${product.name.he}`)}
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label={`${ar ? 'طلب عبر واتساب' : 'הזמנה בוואטסאפ'}: ${product.name[locale]}`}
+          <OrderButton product={product} named
             className="pointer-events-auto shrink-0 inline-flex items-center h-11 px-6 rounded-full bg-white text-[#2A1B12] text-[15px] font-semibold hover:bg-[#F3E6CF] transition-colors duration-300"
           >
             {ar ? 'للطلب' : 'להזמנה'}
-          </a>
+          </OrderButton>
         </div>
       </div>
     </article>

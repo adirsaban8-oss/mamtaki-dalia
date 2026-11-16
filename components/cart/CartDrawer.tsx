@@ -5,14 +5,16 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { useLocale, useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import type { Locale } from '@/i18n/locales';
-import { useCart, getProductForItem, type CartItem } from '@/store/cart';
+import Image from 'next/image';
+import { useCart, getProductForItem, lineTotal as totalOf, type CartItem } from '@/store/cart';
+import { MAX_GRAMS, MIN_GRAMS, STEP_GRAMS, weightLabel } from '@/lib/weight';
 import { buttonClasses } from '@/components/ui/Button';
 
 const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 
 /**
  * Cart Drawer, slides in from the text-end of the viewport (right in
- * LTR, left in RTL). Visual only, no checkout flow.
+ * LTR, left in RTL). Shown in site ordering mode (lib/ordering.ts).
  *  - 480px wide on desktop, full-bleed on mobile.
  *  - Overlay: cedar/60 with blur.
  *  - Sticky bottom subtotal + burgundy CTA.
@@ -25,6 +27,9 @@ export function CartDrawer() {
   const subtotal = useCart((s) => s.subtotal());
 
   const displayFont = locale === 'ar' ? 'font-display-ar' : 'font-display-he';
+
+  // Restore the saved cart once, on the client.
+  useEffect(() => { useCart.persist.rehydrate(); }, []);
 
   // Lock body scroll while open
   useEffect(() => {
@@ -154,13 +159,13 @@ function CartLineItem({ item, locale }: { item: CartItem; locale: Locale }) {
   if (!product) return null;
 
   const isWeighted = product.unit === 'per_kg';
-  const lineTotal = product.price * item.quantity;
-  const step = isWeighted ? (product.weightStep ?? 0.25) : 1;
-  const min = isWeighted ? (product.minWeight ?? 0.5) : 1;
-  const max = isWeighted ? 5 : 20;
+  const lineTotal = totalOf(product, item.quantity);
+  const step = isWeighted ? STEP_GRAMS / 1000 : 1;
+  const min = isWeighted ? MIN_GRAMS / 1000 : 1;
+  const max = isWeighted ? MAX_GRAMS / 1000 : 20;
 
   const qtyLabel = isWeighted
-    ? `${item.quantity.toFixed(2)}${locale === 'ar' ? 'كغ' : 'ק״ג'}`
+    ? weightLabel(Math.round(item.quantity * 1000), locale)
     : `${item.quantity}`;
   const unitSuffix =
     product.unit === 'per_kg'
@@ -178,14 +183,13 @@ function CartLineItem({ item, locale }: { item: CartItem; locale: Locale }) {
       transition={{ duration: 0.5, ease: easeLuxe }}
       className="flex gap-3 sm:gap-4"
     >
-      {/* Monogram thumb, text-only stand-in for product photo */}
-      <div
-        className="relative shrink-0 w-20 h-20 overflow-hidden bg-cream-card border border-gold-deep/40 rounded-[2px] flex items-center justify-center"
-        aria-hidden
-      >
-        <span className="font-display-en text-[10px] tracking-[0.3em] text-gold leading-tight text-center px-1">
-          {product.monogram}
-        </span>
+      {/* Product photo */}
+      <div className="relative shrink-0 w-20 h-20 overflow-hidden bg-cream-card border border-gold-deep/40 rounded-[8px]" aria-hidden>
+        {product.image ? (
+          <Image src={product.image} alt="" fill sizes="80px" className="object-cover" />
+        ) : (
+          <span className="absolute inset-0 flex items-center justify-center text-[10px] tracking-[0.3em] text-gold">{product.monogram}</span>
+        )}
       </div>
 
       <div className="flex-1 min-w-0">

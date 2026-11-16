@@ -5,6 +5,8 @@ import { useLocale } from 'next-intl';
 import { Link, usePathname } from '@/i18n/navigation';
 import type { Locale } from '@/i18n/locales';
 import { whatsappLink } from '@/lib/site';
+import { ORDERING_MODE } from '@/lib/ordering';
+import { useCart } from '@/store/cart';
 
 /**
  * Phone bar pinned to the bottom: call · order (gold, centre) · WhatsApp.
@@ -18,6 +20,8 @@ export function MobileBar() {
   const ar = locale === 'ar';
   const onHome = pathname === '/';
   const [scrolled, setScrolled] = useState(false);
+  const openCart = useCart((s) => s.open);
+  const cartCount = useCart((s) => s.items.length);
 
   useEffect(() => {
     if (!onHome) return;
@@ -47,10 +51,20 @@ export function MobileBar() {
         <Link href="/shop" className="flex-[1.6] h-12 inline-flex items-center justify-center rounded-full bg-gold-metal text-[#0A0806] text-base font-bold">
           {ar ? 'للطلب' : 'להזמנה'}
         </Link>
-        <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className={side}>
-          <WhatsAppIcon />
-          WhatsApp
-        </a>
+        {ORDERING_MODE === 'site' ? (
+          <button type="button" onClick={openCart} className={side}>
+            <span className="relative">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden><path d="M6 7h12l-1 13H7L6 7z" /><path d="M9 7a3 3 0 0 1 6 0" /></svg>
+              {cartCount > 0 && <span className="absolute -top-2 -end-3 min-w-4 h-4 px-1 rounded-full bg-gold text-[#0A0806] text-[10px] font-bold inline-flex items-center justify-center">{cartCount}</span>}
+            </span>
+            {ar ? 'السلة' : 'סל'}
+          </button>
+        ) : (
+          <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className={side}>
+            <WhatsAppIcon />
+            WhatsApp
+          </a>
+        )}
       </nav>
     </>
   );

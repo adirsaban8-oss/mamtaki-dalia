@@ -9,6 +9,7 @@ import type { Product } from '@/lib/mockData';
 import { Link } from '@/i18n/navigation';
 import { whatsappLink } from '@/lib/site';
 import { DEFAULT_GRAMS, MAX_GRAMS, MIN_GRAMS, QUICK_GRAMS, STEP_GRAMS, orderMessage, totalFor, weightLabel } from '@/lib/weight';
+import { OrderButton } from '@/components/order/OrderButton';
 
 const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 const FILL_CELLS = 15; // one cell ≈ 200 g of a 3 kg tray
@@ -103,15 +104,14 @@ export function OrderSheet({ product, onClose }: { product: Product | null; onCl
             )}
 
             <div className="px-5 sm:px-7 pt-6 flex flex-col gap-3">
-              <a
-                href={whatsappLink(orderMessage(product, locale, byKg ? grams : undefined))}
-                target="_blank"
-                rel="noopener noreferrer"
+              <OrderButton
+                product={product}
+                grams={byKg ? grams : undefined}
                 className="inline-flex items-center justify-center gap-2 h-14 rounded-full bg-gold-metal text-[#0A0806] text-lg font-bold"
+                suffix={product.price > 0 && <bdi dir="ltr">· ₪{byKg ? totalFor(product, grams) : product.price}</bdi>}
               >
                 {ar ? 'للطلب عبر واتساب' : 'להזמנה בוואטסאפ'}
-                {product.price > 0 && <bdi dir="ltr">· ₪{byKg ? totalFor(product, grams) : product.price}</bdi>}
-              </a>
+              </OrderButton>
               <Link href={`/shop/${product.slug}`} onClick={onClose} className="inline-flex items-center justify-center h-11 text-[15px] font-medium text-cream underline underline-offset-[6px] decoration-1 hover:no-underline">
                 {ar ? 'كل التفاصيل' : 'לכל הפרטים'}
               </Link>

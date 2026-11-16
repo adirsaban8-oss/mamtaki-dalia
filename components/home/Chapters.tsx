@@ -10,6 +10,7 @@ import { useProducts } from '@/lib/data/useProducts';
 import { whatsappLink } from '@/lib/site';
 import { Steam } from '@/components/fx/Steam';
 import { Glisten } from '@/components/fx/Glisten';
+import { OrderButton } from '@/components/order/OrderButton';
 
 const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 
@@ -110,14 +111,11 @@ function ChapterView({ chapter, index, product, locale }: { chapter: Chapter; in
               ₪{product.price}
               <span className={`text-base font-normal ${t.muted}`}> / {unit}</span>
             </p>
-            <a
-              href={whatsappLink(ar ? `مرحباً، أود أن أطلب: ${product.name.ar}` : `שלום, אשמח להזמין: ${product.name.he}`)}
-              target="_blank"
-              rel="noopener noreferrer"
+            <OrderButton product={product}
               className={`inline-flex items-center justify-center h-12 px-8 rounded-full text-[15px] font-bold transition bg-gold-metal text-[#0A0806] hover:brightness-110`}
             >
               {ar ? 'للطلب' : 'להזמנה'}
-            </a>
+            </OrderButton>
             <Link href={`/shop/${product.slug}`} className="inline-flex items-center h-11 text-[15px] font-medium underline underline-offset-[6px] decoration-1 hover:no-underline">
               {ar ? 'التفاصيل والوزن' : 'לפרטים ולמשקל'}
             </Link>

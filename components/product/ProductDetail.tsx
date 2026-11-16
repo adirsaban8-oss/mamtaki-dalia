@@ -16,6 +16,7 @@ import { MenuCard } from './MenuCard';
 import { buttonClasses } from '@/components/ui/Button';
 import { categoryLabels } from '@/lib/mockData';
 import { ArabesquePattern } from '@/components/ornaments/ArabesquePattern';
+import { OrderButton } from '@/components/order/OrderButton';
 
 const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 
@@ -231,15 +232,12 @@ export function ProductDetail({ product, locale }: Props) {
           )}
 
           {/* Order CTA, catalog site: orders go through WhatsApp */}
-          <a
-            href={whatsappLink(orderMessage)}
-            target="_blank"
-            rel="noopener noreferrer"
+          <OrderButton product={product} grams={byKg ? grams : undefined}
             className={buttonClasses({ variant: 'primary', size: 'lg', className: 'w-full mt-8 h-14 text-[15px] normal-case tracking-normal' })}
           >
             <WhatsAppIcon />
             {locale === 'ar' ? 'للطلب عبر واتساب' : 'להזמנה בוואטסאפ'}
-          </a>
+          </OrderButton>
           <a
             href="tel:+972525986266"
             className="mt-1 py-3 text-center text-[15px] text-coffee-muted hover:text-heading transition-colors duration-500"
@@ -280,21 +278,20 @@ export function ProductDetail({ product, locale }: Props) {
 
       {/* Phone-only order bar, the order button never scrolls away */}
       <div className="lg:hidden fixed bottom-0 inset-x-0 z-50 flex gap-2 px-3 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] bg-cedar/95 backdrop-blur-md border-t border-gold/40">
-        <a
-          href={whatsappLink(orderMessage)}
-          target="_blank"
-          rel="noopener noreferrer"
+        <OrderButton
+          product={product}
+          grams={byKg ? grams : undefined}
           className="flex-[2] h-12 inline-flex items-center justify-center gap-2 rounded-full bg-gold text-[#0A0806] text-[15px] font-bold"
-        >
-          <WhatsAppIcon />
-          {locale === 'ar' ? 'للطلب عبر واتساب' : 'להזמנה בוואטסאפ'}
-          {hasPrice && (
+          suffix={hasPrice && (
             <>
               <span aria-hidden>·</span>
               <span dir="ltr">₪{byKg ? totalFor(product, grams) : product.price}</span>
             </>
           )}
-        </a>
+        >
+          <WhatsAppIcon />
+          {locale === 'ar' ? 'للطلب عبر واتساب' : 'להזמנה בוואטסאפ'}
+        </OrderButton>
         <Link
           href="/shop"
           className="flex-1 h-12 inline-flex items-center justify-center rounded-full border border-gold/60 text-gold-light text-[15px] font-bold"

@@ -11,10 +11,18 @@ import { CHECKOUT_MUTATION } from '@/lib/graphql/mutations';
 import { isWordPressMode } from '@/lib/graphql/client';
 import { buttonClasses } from '@/components/ui/Button';
 import { ArabesquePattern } from '@/components/ornaments/ArabesquePattern';
+import { SHIPPING, PICKUP_ADDRESS, shippingFor, type Fulfilment } from '@/lib/ordering';
+import { ONLINE_PAYMENT, startPayment } from '@/lib/payments';
+import { lineTotal } from '@/store/cart';
+import { useOrders } from '@/store/orders';
+import { weightLabel } from '@/lib/weight';
 
 const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 
 type PaymentMethod = 'cod' | 'bacs' | 'meshulam' | 'apple_pay' | 'bit';
+
+/** Online payment exists only through WooCommerce or a connected provider. */
+const payOnline = () => isWordPressMode() || ONLINE_PAYMENT;
 
 type FormState = {
   firstName: string;
@@ -67,7 +75,10 @@ export function CheckoutForm({ locale }: Props) {
   const subtotal = useCart((s) => s.subtotal());
   const close = useCart((s) => s.close);
 
-  const [form, setForm] = useState<FormState>(INITIAL);
+  const [form, setForm] = useState<FormState>(() => ({ ...INITIAL, paymentMethod: payOnline() ? 'meshulam' : 'cod' }));
+  const [fulfilment, setFulfilment] = useState<Fulfilment>('delivery');
+  const addOrder = useOrders((s) => s.addOrder);
+  const pickup = fulfilment === 'pickup';
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -84,7 +95,7 @@ export function CheckoutForm({ locale }: Props) {
   const update = <K extends keyof FormState>(key: K, value: FormState[K]) =>
     setForm((f) => ({ ...f, [key]: value }));
 
-  const shipping = useMemo(() => (subtotal >= 300 ? 0 : 35), [subtotal]);
+  const shipping = useMemo(() => shippingFor(subtotal, fulfilment), [subtotal, fulfilment]);
   const total = subtotal + shipping;
 
   // Detail rows for the summary sidebar
@@ -95,7 +106,8 @@ export function CheckoutForm({ locale }: Props) {
       name: product?.name[locale] ?? '',
       qty: item.quantity,
       unit: product?.unit ?? 'per_kg',
-      lineTotal: (product?.price ?? 0) * item.quantity,
+      lineTotal: product ? lineTotal(product, item.quantity) : 0,
+      qtyLabel: product?.unit === 'per_kg' ? weightLabel(Math.round(item.quantity * 1000), locale) : `×${item.quantity}`,
     };
   });
 
@@ -160,14 +172,33 @@ export function CheckoutForm({ locale }: Props) {
         sessionStorage.setItem('lastOrderNumber', String(orderNumber ?? ''));
         router.push('/checkout/success');
       } else {
-        // Local mode (no WP yet), simulate a successful submission so
-        // the user can still walk through the checkout flow visually.
-        await new Promise((r) => setTimeout(r, 600));
+        // Site ordering without WordPress: record the order for the admin
+        // board, then hand off to a payment provider when one is connected.
+        const ar = locale === 'ar';
+        const windowLabel = { morning: t('windowMorning'), noon: t('windowNoon'), evening: t('windowEvening') }[form.deliveryWindow];
+        const order = addOrder({
+          customerName: `${form.firstName} ${form.lastName}`.trim(),
+          customerPhone: form.phone,
+          items: lineRows.map((r) => ({ productName: r.name, quantity: r.qty, unitLabel: r.unit === 'per_kg' ? (ar ? 'كغ' : 'ק"ג') : ar ? 'وحدة' : 'יח׳', lineTotal: r.lineTotal })),
+          deliveryAddress: pickup ? `${ar ? 'استلام ذاتي' : 'איסוף עצמי'} · ${PICKUP_ADDRESS[locale]}` : [form.address, form.city].filter(Boolean).join(', '),
+          deliveryDate: form.deliveryDate,
+          deliveryWindow: windowLabel,
+          customerNotes: form.notes || undefined,
+          total,
+          paymentMethod: payOnline() ? 'card' : 'cash',
+        });
+        const payUrl = await startPayment({
+          orderNumber: String(order.orderNumber),
+          amount: total,
+          customerName: order.customerName,
+          customerPhone: order.customerPhone,
+          customerEmail: form.email || undefined,
+          description: lineRows.map((r) => r.name).join(', '),
+        });
+        if (payUrl) { window.location.href = payUrl; return; }
+        useCart.getState().clear();
         close();
-        sessionStorage.setItem(
-          'lastOrderNumber',
-          `LOC-${Math.floor(1000 + Math.random() * 9000)}`
-        );
+        sessionStorage.setItem('lastOrderNumber', String(order.orderNumber));
         router.push('/checkout/success');
       }
     } catch (err) {
@@ -259,35 +290,61 @@ export function CheckoutForm({ locale }: Props) {
             </Row>
           </Section>
 
-          <Section title={t('deliveryAddress')} displayFont={displayFont}>
-            <Field label={t('city')} required>
-              <input
-                type="text"
-                required
-                value={form.city}
-                onChange={(e) => update('city', e.target.value)}
-                className={inputClass}
-              />
-            </Field>
-            <Field label={t('address')} required>
-              <input
-                type="text"
-                required
-                placeholder={t('addressPlaceholder')}
-                value={form.address}
-                onChange={(e) => update('address', e.target.value)}
-                className={inputClass}
-              />
-            </Field>
-            <Field label={t('postcode')}>
-              <input
-                type="text"
-                value={form.postcode}
-                onChange={(e) => update('postcode', e.target.value)}
-                className={inputClass}
-              />
-            </Field>
+          <Section title={locale === 'ar' ? 'التوصيل أو الاستلام' : 'משלוח או איסוף'} displayFont={displayFont}>
+            <div className="grid sm:grid-cols-2 gap-3" role="radiogroup" aria-label={locale === 'ar' ? 'طريقة الاستلام' : 'אופן קבלת ההזמנה'}>
+              {(['delivery', 'pickup'] as const).map((opt) => (
+                <button
+                  key={opt}
+                  type="button"
+                  role="radio"
+                  aria-checked={fulfilment === opt}
+                  onClick={() => setFulfilment(opt)}
+                  className={`text-start p-4 rounded-[10px] border transition-colors ${fulfilment === opt ? 'border-gold bg-gold/10' : 'border-hairline hover:border-gold-deep'}`}
+                >
+                  <span className="block font-semibold text-heading">
+                    {opt === 'delivery' ? (locale === 'ar' ? 'توصيل إلى البيت' : 'משלוח עד הבית') : locale === 'ar' ? 'استلام من المحل' : 'איסוף עצמי מהחנות'}
+                  </span>
+                  <span className="block mt-1 text-sm text-coffee-muted">
+                    {opt === 'delivery'
+                      ? locale === 'ar' ? `₪${SHIPPING.fee}، مجاناً من ₪${SHIPPING.freeFrom}` : `₪${SHIPPING.fee}, חינם מ־₪${SHIPPING.freeFrom}`
+                      : `${locale === 'ar' ? 'مجاناً' : 'חינם'} · ${PICKUP_ADDRESS[locale]}`}
+                  </span>
+                </button>
+              ))}
+            </div>
           </Section>
+
+          {!pickup && (
+            <Section title={t('deliveryAddress')} displayFont={displayFont}>
+              <Field label={t('city')} required>
+                <input
+                  type="text"
+                  required={!pickup}
+                  value={form.city}
+                  onChange={(e) => update('city', e.target.value)}
+                  className={inputClass}
+                />
+              </Field>
+              <Field label={t('address')} required>
+                <input
+                  type="text"
+                  required={!pickup}
+                  placeholder={t('addressPlaceholder')}
+                  value={form.address}
+                  onChange={(e) => update('address', e.target.value)}
+                  className={inputClass}
+                />
+              </Field>
+              <Field label={t('postcode')}>
+                <input
+                  type="text"
+                  value={form.postcode}
+                  onChange={(e) => update('postcode', e.target.value)}
+                  className={inputClass}
+                />
+              </Field>
+            </Section>
+          )}
 
           <Section title={t('deliveryWindow')} displayFont={displayFont}>
             <Row>
@@ -325,31 +382,41 @@ export function CheckoutForm({ locale }: Props) {
           </Section>
 
           <Section title={t('payment')} displayFont={displayFont}>
-            <div className="space-y-3">
-              {/* Online payment methods, connect a processor account
-                  (Meshulam / PayPlus / Tranzila …) to activate all three. */}
+            {payOnline() ? (
+              <div className="space-y-3">
+                {/* Online payment methods, connect a processor account
+                    (Meshulam / PayPlus / Tranzila …) to activate all three. */}
+                <PaymentOption
+                  checked={form.paymentMethod === 'meshulam'}
+                  onChange={() => update('paymentMethod', 'meshulam')}
+                  title={t('payCard')}
+                  subtitle={t('payCardNote')}
+                  icon={<CardIcon />}
+                />
+                <PaymentOption
+                  checked={form.paymentMethod === 'apple_pay'}
+                  onChange={() => update('paymentMethod', 'apple_pay')}
+                  title={t('payApple')}
+                  subtitle={t('payAppleNote')}
+                  icon={<AppleIcon />}
+                />
+                <PaymentOption
+                  checked={form.paymentMethod === 'bit'}
+                  onChange={() => update('paymentMethod', 'bit')}
+                  title={t('payBit')}
+                  subtitle={t('payBitNote')}
+                  icon={<BitIcon />}
+                />
+              </div>
+            ) : (
               <PaymentOption
-                checked={form.paymentMethod === 'meshulam'}
-                onChange={() => update('paymentMethod', 'meshulam')}
-                title={t('payCard')}
-                subtitle={t('payCardNote')}
+                checked
+                onChange={() => update('paymentMethod', 'cod')}
+                title={locale === 'ar' ? 'الدفع عند الاستلام' : 'תשלום בקבלת ההזמנה'}
+                subtitle={locale === 'ar' ? 'نقداً أو ببطاقة، عند التوصيل أو الاستلام. الدفع عبر الموقع قريباً.' : 'במזומן או בכרטיס, במשלוח או באיסוף. תשלום באתר יתווסף בקרוב.'}
                 icon={<CardIcon />}
               />
-              <PaymentOption
-                checked={form.paymentMethod === 'apple_pay'}
-                onChange={() => update('paymentMethod', 'apple_pay')}
-                title={t('payApple')}
-                subtitle={t('payAppleNote')}
-                icon={<AppleIcon />}
-              />
-              <PaymentOption
-                checked={form.paymentMethod === 'bit'}
-                onChange={() => update('paymentMethod', 'bit')}
-                title={t('payBit')}
-                subtitle={t('payBitNote')}
-                icon={<BitIcon />}
-              />
-            </div>
+            )}
           </Section>
         </div>
 
@@ -374,7 +441,7 @@ export function CheckoutForm({ locale }: Props) {
                     <li key={row.id} className="py-3 flex items-baseline justify-between gap-3 text-sm">
                       <span className="text-heading leading-tight">
                         {row.name}
-                        <span className="ms-2 text-coffee-muted">×{row.qty}</span>
+                        <span className="ms-2 text-coffee-muted">{row.qtyLabel}</span>
                       </span>
                       <span className="font-display-en text-ink/85 tabular-nums shrink-0">
                         ₪{row.lineTotal.toFixed(0)}
@@ -396,7 +463,7 @@ export function CheckoutForm({ locale }: Props) {
                   </div>
                   {shipping > 0 && (
                     <p className="text-[11px] text-coffee-muted/80 italic">
-                      {t('freeShippingNote', { remaining: 300 - subtotal })}
+                      {t('freeShippingNote', { remaining: SHIPPING.freeFrom - subtotal })}
                     </p>
                   )}
                   <div className="flex justify-between pt-3 border-t border-hairline mt-3 items-baseline">
