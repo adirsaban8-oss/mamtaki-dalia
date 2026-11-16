@@ -14,6 +14,7 @@ import { locales, type Locale } from '@/i18n/locales';
 import { ApolloProvider } from '@/components/providers/ApolloProvider';
 import { AccessibilityFAB } from '@/components/layout/AccessibilityFAB';
 import { MotionProvider } from '@/components/providers/MotionProvider';
+import { SheenObserver } from '@/components/fx/SheenObserver';
 import { MobileBar } from '@/components/layout/MobileBar';
 
 const frank = Frank_Ruhl_Libre({
@@ -104,6 +105,7 @@ export default async function LocaleLayout({
             {children}
             <MobileBar />
             <AccessibilityFAB />
+            <SheenObserver />
             </MotionProvider>
           </ApolloProvider>
         </NextIntlClientProvider>

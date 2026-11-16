@@ -8,6 +8,8 @@ import type { Translated } from '@/lib/mockData';
 import { Link } from '@/i18n/navigation';
 import { useProducts } from '@/lib/data/useProducts';
 import { whatsappLink } from '@/lib/site';
+import { Steam } from '@/components/fx/Steam';
+import { Glisten } from '@/components/fx/Glisten';
 
 const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 
@@ -84,6 +86,8 @@ function ChapterView({ chapter, index, product, locale }: { chapter: Chapter; in
           className={`relative lg:col-span-7 h-[72svh] lg:h-[82svh] lg:rounded-[16px] overflow-hidden ${flip ? 'lg:order-2' : ''}`}
         >
           <Image src={chapter.image} alt={product.name[locale]} fill sizes="(min-width: 1024px) 58vw, 100vw" className="object-cover" />
+          {chapter.tone !== 'cream' && <Glisten strength={0.34} />}
+          {chapter.slug === 'red-kanafeh' && <Steam className="absolute inset-x-[10%] top-0 h-[55%]" />}
           {/* Warm light window + vignette, so every photo sits in the same set */}
           <span aria-hidden className="absolute inset-0 bg-[radial-gradient(70%_60%_at_35%_30%,rgba(255,214,140,0.18),transparent_60%),radial-gradient(120%_100%_at_50%_50%,transparent_55%,rgba(10,8,6,0.55))]" />
           <span aria-hidden className={`${displayFont} absolute top-4 start-5 text-sm font-semibold tracking-wide text-white/85`}>0{index + 1} / 03</span>

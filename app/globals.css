@@ -266,13 +266,23 @@ html[lang="ar"] h1, html[lang="ar"] h2 { font-family: var(--font-display-ar), se
 body { overflow-x: clip; }
 
 /* Metallic gold, after the diagonal highlight in brand-assets/gold.png.
-   For display headings, CTAs and frames only — never running text. */
+   For display headings, CTAs and frames only — never running text.
+   The gradient is three times wider than the element, so moving its
+   position sweeps the bright band across: the "Gold Sheen". */
 @utility text-gold-metal {
-  background-image: linear-gradient(115deg, #C98A00 0%, #FFC300 35%, #FFE27A 50%, #FFC300 65%, #C98A00 100%);
+  background-image: linear-gradient(115deg, #C98A00 0%, #FFC300 30%, #FFC300 43%, #FFF1B8 50%, #FFC300 57%, #FFC300 70%, #C98A00 100%);
+  background-size: 300% 100%;
+  background-position: 18% 0;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 @utility bg-gold-metal {
-  background-image: linear-gradient(115deg, #C98A00 0%, #FFC300 35%, #FFE27A 50%, #FFC300 65%, #C98A00 100%);
+  background-image: linear-gradient(115deg, #C98A00 0%, #FFC300 30%, #FFC300 43%, #FFF1B8 50%, #FFC300 57%, #FFC300 70%, #C98A00 100%);
+  background-size: 300% 100%;
+  background-position: 18% 0;
 }
+@keyframes gold-sheen { from { background-position: 100% 0; } to { background-position: 18% 0; } }
+@keyframes gold-sheen-hover { from { background-position: 100% 0; } to { background-position: 18% 0; } }
+.is-sheen { animation: gold-sheen 1.5s cubic-bezier(.7,0,.2,1) both; }
+a.bg-gold-metal:hover, button.bg-gold-metal:hover { animation: gold-sheen-hover 0.9s cubic-bezier(.7,0,.2,1) both; }

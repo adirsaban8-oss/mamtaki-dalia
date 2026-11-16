@@ -7,6 +7,9 @@ import { useTranslations } from 'next-intl';
 import type { Locale } from '@/i18n/locales';
 import type { Product } from '@/lib/mockData';
 import { whatsappLink } from '@/lib/site';
+import { MAX_GRAMS, MIN_GRAMS, QUICK_GRAMS, STEP_GRAMS, orderMessage as buildOrderMessage, totalFor, weightLabel as formatWeight } from '@/lib/weight';
+import { Steam } from '@/components/fx/Steam';
+import { Glisten } from '@/components/fx/Glisten';
 import { useProducts } from '@/lib/data/useProducts';
 import { Link } from '@/i18n/navigation';
 import { MenuCard } from './MenuCard';
@@ -16,10 +19,7 @@ import { ArabesquePattern } from '@/components/ornaments/ArabesquePattern';
 
 const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 
-const STEP_GRAMS = 200;
-const MIN_GRAMS = 200;
-const MAX_GRAMS = 10000;
-const QUICK_GRAMS = [1000, 2000, 3000];
+
 
 type Props = { product: Product; locale: Locale };
 
@@ -76,10 +76,7 @@ export function ProductDetail({ product, locale }: Props) {
 
   const hasPrice = product.price > 0;
   const byKg = product.unit === 'per_kg';
-  const weightLabel = (g: number) =>
-    g < 1000
-      ? locale === 'ar' ? `${g} غرام` : `${g} גרם`
-      : locale === 'ar' ? `${g / 1000} كغ` : `${g / 1000} ק״ג`;
+  const weightLabel = (g: number) => formatWeight(g, locale);
   const priceSuffix = product.unitLabel
     ? `/ ${product.unitLabel[locale]}`
     : product.unit === 'per_kg'
@@ -88,11 +85,7 @@ export function ProductDetail({ product, locale }: Props) {
         ? locale === 'ar' ? '/ قطعة' : '/ יחידה'
         : locale === 'ar' ? '/ صينية' : '/ מגש';
 
-  const packText = byKg ? ` — ${weightLabel(grams)}` : '';
-  const orderMessage =
-    locale === 'ar'
-      ? `مرحباً، أود أن أطلب: ${product.name.ar}${packText}`
-      : `שלום, אשמח להזמין: ${product.name.he}${packText}`;
+  const orderMessage = buildOrderMessage(product, locale, byKg ? grams : undefined);
 
   return (
     <article className="relative overflow-x-clip bg-page">
@@ -230,7 +223,7 @@ export function ProductDetail({ product, locale }: Props) {
                 <p className="mt-4 text-[15px] text-coffee-muted">
                   {locale === 'ar' ? 'المجموع: ' : 'סה״כ: '}
                   <span className={`${displayFont} text-xl font-bold text-gold`}>
-                    ₪{Math.round((product.price * grams) / 1000)}
+                    ₪{totalFor(product, grams)}
                   </span>
                 </p>
               )}
@@ -298,7 +291,7 @@ export function ProductDetail({ product, locale }: Props) {
           {hasPrice && (
             <>
               <span aria-hidden>·</span>
-              <span dir="ltr">₪{byKg ? Math.round((product.price * grams) / 1000) : product.price}</span>
+              <span dir="ltr">₪{byKg ? totalFor(product, grams) : product.price}</span>
             </>
           )}
         </a>
@@ -344,7 +337,7 @@ function MonogramSeal({ product, label }: { product: Product; label: string }) {
   // arch set just outside it. Falls back to the typographic seal.
   if (product.image) {
     return (
-      <div className="relative mx-auto w-full max-w-[320px] sm:max-w-[560px]">
+      <div className="relative mx-auto w-full max-w-[420px] sm:max-w-[560px]">
         <div className="relative">
           <div className="relative aspect-[3/4] overflow-hidden bg-sand rounded-[12px] shadow-[0_24px_60px_-30px_rgba(42,27,18,0.7)]">
             <Image
@@ -356,6 +349,9 @@ function MonogramSeal({ product, label }: { product: Product; label: string }) {
               className="object-cover"
               quality={85}
             />
+            {/* Syrup catches the light on pastries; steam only over hot kanafeh */}
+            {(product.category === 'kanafeh' || product.category === 'baklava') && <Glisten />}
+            {product.category === 'kanafeh' && <Steam className="absolute inset-x-[15%] top-0 h-1/2" />}
           </div>
         </div>
         {label && (
