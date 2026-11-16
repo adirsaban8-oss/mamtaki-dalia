@@ -1,0 +1,433 @@
+{
+  "base": "http://localhost:3005",
+  "takenAt": "2026-11-16T08:18:13.190Z",
+  "products": {
+    "baklava-pistachio": {
+      "name": "בקלאווה פיסטוק חלבי",
+      "cardPrice": 110,
+      "pagePrice": 110,
+      "steps": [
+        {
+          "weight": "1 ק״ג",
+          "total": "₪110",
+          "message": "שלום, אשמח להזמין: בקלאווה פיסטוק חלבי — 1 ק״ג"
+        },
+        {
+          "weight": "1.2 ק״ג",
+          "total": "₪132",
+          "message": "שלום, אשמח להזמין: בקלאווה פיסטוק חלבי — 1.2 ק״ג"
+        },
+        {
+          "weight": "2 ק״ג",
+          "total": "₪220",
+          "message": "שלום, אשמח להזמין: בקלאווה פיסטוק חלבי — 2 ק״ג"
+        }
+      ]
+    },
+    "bird-nest-baklava": {
+      "name": "קן הציפור",
+      "cardPrice": 110,
+      "pagePrice": 110,
+      "steps": [
+        {
+          "weight": "1 ק״ג",
+          "total": "₪110",
+          "message": "שלום, אשמח להזמין: קן הציפור — 1 ק״ג"
+        },
+        {
+          "weight": "1.2 ק״ג",
+          "total": "₪132",
+          "message": "שלום, אשמח להזמין: קן הציפור — 1.2 ק״ג"
+        },
+        {
+          "weight": "2 ק״ג",
+          "total": "₪220",
+          "message": "שלום, אשמח להזמין: קן הציפור — 2 ק״ג"
+        }
+      ]
+    },
+    "baklava-cashew": {
+      "name": "בקלאווה קשיו קלוי",
+      "cardPrice": 110,
+      "pagePrice": 110,
+      "steps": [
+        {
+          "weight": "1 ק״ג",
+          "total": "₪110",
+          "message": "שלום, אשמח להזמין: בקלאווה קשיו קלוי — 1 ק״ג"
+        },
+        {
+          "weight": "1.2 ק״ג",
+          "total": "₪132",
+          "message": "שלום, אשמח להזמין: בקלאווה קשיו קלוי — 1.2 ק״ג"
+        },
+        {
+          "weight": "2 ק״ג",
+          "total": "₪220",
+          "message": "שלום, אשמח להזמין: בקלאווה קשיו קלוי — 2 ק״ג"
+        }
+      ]
+    },
+    "baklava-walnut": {
+      "name": "בקלאווה אגוזים",
+      "cardPrice": 110,
+      "pagePrice": 110,
+      "steps": [
+        {
+          "weight": "1 ק״ג",
+          "total": "₪110",
+          "message": "שלום, אשמח להזמין: בקלאווה אגוזים — 1 ק״ג"
+        },
+        {
+          "weight": "1.2 ק״ג",
+          "total": "₪132",
+          "message": "שלום, אשמח להזמין: בקלאווה אגוזים — 1.2 ק״ג"
+        },
+        {
+          "weight": "2 ק״ג",
+          "total": "₪220",
+          "message": "שלום, אשמח להזמין: בקלאווה אגוזים — 2 ק״ג"
+        }
+      ]
+    },
+    "baklava-maadan": {
+      "name": "בקלאווה מעדן",
+      "cardPrice": 110,
+      "pagePrice": 110,
+      "steps": [
+        {
+          "weight": "1 ק״ג",
+          "total": "₪110",
+          "message": "שלום, אשמח להזמין: בקלאווה מעדן — 1 ק״ג"
+        },
+        {
+          "weight": "1.2 ק״ג",
+          "total": "₪132",
+          "message": "שלום, אשמח להזמין: בקלאווה מעדן — 1.2 ק״ג"
+        },
+        {
+          "weight": "2 ק״ג",
+          "total": "₪220",
+          "message": "שלום, אשמח להזמין: בקלאווה מעדן — 2 ק״ג"
+        }
+      ]
+    },
+    "baklava-lips": {
+      "name": "שפתיים",
+      "cardPrice": 110,
+      "pagePrice": 110,
+      "steps": [
+        {
+          "weight": "1 ק״ג",
+          "total": "₪110",
+          "message": "שלום, אשמח להזמין: שפתיים — 1 ק״ג"
+        },
+        {
+          "weight": "1.2 ק״ג",
+          "total": "₪132",
+          "message": "שלום, אשמח להזמין: שפתיים — 1.2 ק״ג"
+        },
+        {
+          "weight": "2 ק״ג",
+          "total": "₪220",
+          "message": "שלום, אשמח להזמין: שפתיים — 2 ק״ג"
+        }
+      ]
+    },
+    "burma": {
+      "name": "בורמה",
+      "cardPrice": 110,
+      "pagePrice": 110,
+      "steps": [
+        {
+          "weight": "1 ק״ג",
+          "total": "₪110",
+          "message": "שלום, אשמח להזמין: בורמה — 1 ק״ג"
+        },
+        {
+          "weight": "1.2 ק״ג",
+          "total": "₪132",
+          "message": "שלום, אשמח להזמין: בורמה — 1.2 ק״ג"
+        },
+        {
+          "weight": "2 ק״ג",
+          "total": "₪220",
+          "message": "שלום, אשמח להזמין: בורמה — 2 ק״ג"
+        }
+      ]
+    },
+    "kol-wa-shkor": {
+      "name": "קול ושכור",
+      "cardPrice": 110,
+      "pagePrice": 110,
+      "steps": [
+        {
+          "weight": "1 ק״ג",
+          "total": "₪110",
+          "message": "שלום, אשמח להזמין: קול ושכור — 1 ק״ג"
+        },
+        {
+          "weight": "1.2 ק״ג",
+          "total": "₪132",
+          "message": "שלום, אשמח להזמין: קול ושכור — 1.2 ק״ג"
+        },
+        {
+          "weight": "2 ק״ג",
+          "total": "₪220",
+          "message": "שלום, אשמח להזמין: קול ושכור — 2 ק״ג"
+        }
+      ]
+    },
+    "baklava-lotus": {
+      "name": "בקלאווה לוטוס",
+      "cardPrice": 110,
+      "pagePrice": 110,
+      "steps": [
+        {
+          "weight": "1 ק״ג",
+          "total": "₪110",
+          "message": "שלום, אשמח להזמין: בקלאווה לוטוס — 1 ק״ג"
+        },
+        {
+          "weight": "1.2 ק״ג",
+          "total": "₪132",
+          "message": "שלום, אשמח להזמין: בקלאווה לוטוס — 1.2 ק״ג"
+        },
+        {
+          "weight": "2 ק״ג",
+          "total": "₪220",
+          "message": "שלום, אשמח להזמין: בקלאווה לוטוס — 2 ק״ג"
+        }
+      ]
+    },
+    "trabzon": {
+      "name": "טרפזון",
+      "cardPrice": 80,
+      "pagePrice": 80,
+      "steps": [
+        {
+          "weight": "1 ק״ג",
+          "total": "₪80",
+          "message": "שלום, אשמח להזמין: טרפזון — 1 ק״ג"
+        },
+        {
+          "weight": "1.2 ק״ג",
+          "total": "₪96",
+          "message": "שלום, אשמח להזמין: טרפזון — 1.2 ק״ג"
+        },
+        {
+          "weight": "2 ק״ג",
+          "total": "₪160",
+          "message": "שלום, אשמח להזמין: טרפזון — 2 ק״ג"
+        }
+      ]
+    },
+    "awameh": {
+      "name": "עוואמה",
+      "cardPrice": 110,
+      "pagePrice": 110,
+      "steps": [
+        {
+          "weight": "1 ק״ג",
+          "total": "₪110",
+          "message": "שלום, אשמח להזמין: עוואמה — 1 ק״ג"
+        },
+        {
+          "weight": "1.2 ק״ג",
+          "total": "₪132",
+          "message": "שלום, אשמח להזמין: עוואמה — 1.2 ק״ג"
+        },
+        {
+          "weight": "2 ק״ג",
+          "total": "₪220",
+          "message": "שלום, אשמח להזמין: עוואמה — 2 ק״ג"
+        }
+      ]
+    },
+    "red-kanafeh": {
+      "name": "כנאפה אדום",
+      "cardPrice": 80,
+      "pagePrice": 80,
+      "steps": [
+        {
+          "weight": "1 ק״ג",
+          "total": "₪80",
+          "message": "שלום, אשמח להזמין: כנאפה אדום — 1 ק״ג"
+        },
+        {
+          "weight": "1.2 ק״ג",
+          "total": "₪96",
+          "message": "שלום, אשמח להזמין: כנאפה אדום — 1.2 ק״ג"
+        },
+        {
+          "weight": "2 ק״ג",
+          "total": "₪160",
+          "message": "שלום, אשמח להזמין: כנאפה אדום — 2 ק״ג"
+        }
+      ]
+    },
+    "baklava-kanafeh": {
+      "name": "בקלאווה כנאפה",
+      "cardPrice": 80,
+      "pagePrice": 80,
+      "steps": [
+        {
+          "weight": "1 ק״ג",
+          "total": "₪80",
+          "message": "שלום, אשמח להזמין: בקלאווה כנאפה — 1 ק״ג"
+        },
+        {
+          "weight": "1.2 ק״ג",
+          "total": "₪96",
+          "message": "שלום, אשמח להזמין: בקלאווה כנאפה — 1.2 ק״ג"
+        },
+        {
+          "weight": "2 ק״ג",
+          "total": "₪160",
+          "message": "שלום, אשמח להזמין: בקלאווה כנאפה — 2 ק״ג"
+        }
+      ]
+    },
+    "turkish-baklava-tray": {
+      "name": "מגש בקלאווה טורקית",
+      "cardPrice": 350,
+      "pagePrice": 350,
+      "steps": [
+        {
+          "weight": null,
+          "total": null,
+          "message": "שלום, אשמח להזמין: מגש בקלאווה טורקית"
+        }
+      ]
+    },
+    "layali-beirut-tray": {
+      "name": "מגש לילות ביירות",
+      "cardPrice": 130,
+      "pagePrice": 130,
+      "steps": [
+        {
+          "weight": null,
+          "total": null,
+          "message": "שלום, אשמח להזמין: מגש לילות ביירות"
+        }
+      ]
+    },
+    "trilece-tray": {
+      "name": "מגש טריליצ׳ה",
+      "cardPrice": 130,
+      "pagePrice": 130,
+      "steps": [
+        {
+          "weight": null,
+          "total": null,
+          "message": "שלום, אשמח להזמין: מגש טריליצ׳ה"
+        }
+      ]
+    },
+    "kremschnitt-tray": {
+      "name": "מגש קרמשניט",
+      "cardPrice": 130,
+      "pagePrice": 130,
+      "steps": [
+        {
+          "weight": null,
+          "total": null,
+          "message": "שלום, אשמח להזמין: מגש קרמשניט"
+        }
+      ]
+    },
+    "baklava-mix-4kg": {
+      "name": "מארז מיקס בקלאוות 4 ק״ג",
+      "cardPrice": 440,
+      "pagePrice": 440,
+      "steps": [
+        {
+          "weight": null,
+          "total": null,
+          "message": "שלום, אשמח להזמין: מארז מיקס בקלאוות 4 ק״ג"
+        }
+      ]
+    },
+    "dessert-dubai": {
+      "name": "קינוח דובאי",
+      "cardPrice": 45,
+      "pagePrice": 45,
+      "steps": [
+        {
+          "weight": null,
+          "total": null,
+          "message": "שלום, אשמח להזמין: קינוח דובאי"
+        }
+      ]
+    },
+    "dessert-mango": {
+      "name": "קינוח מנגו",
+      "cardPrice": 45,
+      "pagePrice": 45,
+      "steps": [
+        {
+          "weight": null,
+          "total": null,
+          "message": "שלום, אשמח להזמין: קינוח מנגו"
+        }
+      ]
+    },
+    "dessert-coffee": {
+      "name": "קינוח קפה",
+      "cardPrice": 45,
+      "pagePrice": 45,
+      "steps": [
+        {
+          "weight": null,
+          "total": null,
+          "message": "שלום, אשמח להזמין: קינוח קפה"
+        }
+      ]
+    },
+    "dessert-lotus": {
+      "name": "קינוח לוטוס",
+      "cardPrice": 45,
+      "pagePrice": 45,
+      "steps": [
+        {
+          "weight": null,
+          "total": null,
+          "message": "שלום, אשמח להזמין: קינוח לוטוס"
+        }
+      ]
+    },
+    "dessert-berries": {
+      "name": "קינוח פירות יער",
+      "cardPrice": 45,
+      "pagePrice": 45,
+      "steps": [
+        {
+          "weight": null,
+          "total": null,
+          "message": "שלום, אשמח להזמין: קינוח פירות יער"
+        }
+      ]
+    },
+    "profiteroles-box": {
+      "name": "קופסת פחזניות גדולות",
+      "cardPrice": 80,
+      "pagePrice": 80,
+      "steps": [
+        {
+          "weight": null,
+          "total": null,
+          "message": "שלום, אשמח להזמין: קופסת פחזניות גדולות"
+        }
+      ]
+    }
+  },
+  "checkout": {
+    "status": 200,
+    "h1": "פרטי משלוח ותשלום",
+    "summary": "סיכום הזמנה הסל ריק. חזרה לקטלוג אשרו הזמנה ההזמנה מאובטחת ב-SSL"
+  },
+  "admin": {
+    "status": 200,
+    "h1": "ניהול האתר"
+  }
+}
