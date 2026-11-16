@@ -10,9 +10,12 @@ import { whatsappLink } from '@/lib/site';
 import { useScrollProgress } from '@/lib/useScrollProgress';
 import { Steam } from '@/components/fx/Steam';
 
-const IMAGE = '/images/pull/f1.webp';
+/** The eating sequence: whole, one piece eaten, half eaten (AI edits of the shop photo, ⚠️). */
+const FRAMES = ['/images/pull/f1.webp', '/images/pull/eat1.webp', '/images/pull/eat2.webp'];
+/** ms each phase holds: whole (incl. the spotlight), bite, half, then 'one more?' before starting again. */
+const HOLD = [4200, 2300, 2300, 2600];
 /** Where the kanafeh sits in the photo (%), so the spotlight opens from it. */
-const FOCUS: Record<'mobile' | 'desktop', [number, number]> = { mobile: [42, 30], desktop: [28, 38] };
+const FOCUS: Record<'mobile' | 'desktop', [number, number]> = { mobile: [40, 30], desktop: [28, 38] };
 const ease = [0.7, 0, 0.2, 1] as const;
 
 /**
@@ -28,6 +31,9 @@ export function HeroSpotlight() {
   const displayFont = ar ? 'font-display-ar' : 'font-display-he';
   const ref = useRef<HTMLElement>(null);
   const [desk, setDesk] = useState<boolean | null>(null);
+  // 0 whole · 1 one piece eaten · 2 half eaten · 3 half eaten + 'one more?'
+  const [phase, setPhase] = useState(0);
+  const frame = Math.min(phase, FRAMES.length - 1);
 
   // Spotlight radius in vmax, 0 → 140 (covers the screen)
   const r = useMotionValue(0);
@@ -50,6 +56,13 @@ export function HeroSpotlight() {
     return () => a.stop();
   }, [r]);
 
+  // The dish is eaten, then it starts again — never under reduced motion.
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const t = setTimeout(() => setPhase((n) => (n + 1) % HOLD.length), HOLD[phase]);
+    return () => clearTimeout(t);
+  }, [phase]);
+
   const lines = ar ? ['حلويات', 'دالية الكرمل'] : ['ממתקי', 'דלית אל כרמל'];
   const rise = (i: number) => ({
     initial: { y: '105%' },
@@ -67,7 +80,19 @@ export function HeroSpotlight() {
       {/* The photo, revealed through the spotlight */}
       <motion.div style={{ clipPath: clip, WebkitClipPath: clip }} className="absolute inset-0 -z-20">
         <motion.div style={{ y: imgY, scale: imgScale }} className="absolute inset-0">
-          <Image src={IMAGE} alt={ar ? 'كنافة ساخنة مع البوظة والفستق' : 'כנאפה חמה עם גלידה ופיסטוק'} fill priority fetchPriority="high" sizes="100vw" className="object-cover object-[32%_50%] lg:object-[0%_50%]" />
+          {FRAMES.map((src, i) => (
+            <Image
+              key={src}
+              src={src}
+              alt={i === 0 ? (ar ? 'كنافة ساخنة مع البوظة والفستق' : 'כנאפה חמה עם גלידה ופיסטוק') : ''}
+              fill
+              priority={i === 0}
+              fetchPriority={i === 0 ? 'high' : undefined}
+              loading={i === 0 ? undefined : 'eager'}
+              sizes="100vw"
+              className={`object-cover object-[46%_50%] lg:object-[0%_50%] transition-opacity duration-[1400ms] ease-in-out ${i <= frame ? 'opacity-100' : 'opacity-0'}`}
+            />
+          ))}
           {/* A single sweep of warm light across the syrup */}
           <motion.span
             aria-hidden
@@ -106,8 +131,13 @@ export function HeroSpotlight() {
           <motion.p {...fade(1.35)} className={`${ar ? 'font-display-he' : 'font-display-ar'} mt-2 text-2xl sm:text-3xl text-gold-light`} lang={ar ? 'he' : 'ar'}>
             {ar ? 'ממתקי דלית אל כרמל' : 'حلويات دالية الكرمل'}
           </motion.p>
-          <motion.p {...fade(1.5)} className="mt-5 text-lg sm:text-xl text-cream/85">
-            {ar ? 'كنافة ساخنة مع البوظة، طازجة كل يوم.' : 'כנאפה חמה עם גלידה, טרייה מדי יום.'}
+          <motion.p {...fade(1.5)} className="relative mt-5 h-8 text-lg sm:text-xl" aria-live="off">
+            <span className={`absolute inset-x-0 top-0 text-cream/85 transition-opacity duration-700 ${phase === 3 ? 'opacity-0' : 'opacity-100'}`}>
+              {ar ? 'كنافة ساخنة مع البوظة، طازجة كل يوم.' : 'כנאפה חמה עם גלידה, טרייה מדי יום.'}
+            </span>
+            <span aria-hidden className={`absolute inset-x-0 top-0 font-display-he text-2xl sm:text-3xl text-gold-light transition-opacity duration-700 ${phase === 3 ? 'opacity-100' : 'opacity-0'}`}>
+              {ar ? 'واحدة أخرى؟' : 'עוד אחת?'}
+            </span>
           </motion.p>
           <motion.div {...fade(1.7)} className="mt-8 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-7">
             <Link href="/shop" className="inline-flex items-center justify-center h-14 px-10 rounded-full bg-gold-metal text-[#0A0806] text-lg font-bold shadow-[0_12px_40px_-12px_rgba(233,185,73,0.6)]">
