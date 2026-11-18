@@ -31,7 +31,7 @@ export function LanguageSwitcher({ variant = 'dark', className }: Props) {
     'font-display-en text-xs tracking-eyebrow uppercase inline-flex items-center gap-2 transition-colors duration-500';
   const tone =
     variant === 'light'
-      ? 'text-white hover:text-white/70'
+      ? 'text-gold hover:text-gold-light'
       : 'text-coffee-muted hover:text-burgundy';
 
   return (

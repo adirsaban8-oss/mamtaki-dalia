@@ -16,6 +16,8 @@ import { ONLINE_PAYMENT, startPayment } from '@/lib/payments';
 import { lineTotal } from '@/store/cart';
 import { useOrders } from '@/store/orders';
 import { weightLabel } from '@/lib/weight';
+import { AddressSearch, type PickedAddress } from './AddressSearch';
+import { addressLine, addressLineEn, looksComplete, type DeliveryAddress } from '@/lib/address';
 
 const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 
@@ -30,7 +32,11 @@ type FormState = {
   phone: string;
   email: string;
   city: string;
-  address: string;
+  street: string;
+  houseNumber: string;
+  apartment: string;
+  floor: string;
+  entrance: string;
   postcode: string;
   deliveryDate: string;
   deliveryWindow: 'morning' | 'noon' | 'evening';
@@ -44,7 +50,11 @@ const INITIAL: FormState = {
   phone: '',
   email: '',
   city: '',
-  address: '',
+  street: '',
+  houseNumber: '',
+  apartment: '',
+  floor: '',
+  entrance: '',
   postcode: '',
   deliveryDate: '',
   deliveryWindow: 'noon',
@@ -81,8 +91,17 @@ export function CheckoutForm({ locale }: Props) {
   const pickup = fulfilment === 'pickup';
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  // Set when the address came from Google: its place ID and the English version.
+  const [picked, setPicked] = useState<PickedAddress | null>(null);
+  const [confirmIncomplete, setConfirmIncomplete] = useState(false);
 
   const [runCheckout] = useMutation(CHECKOUT_MUTATION);
+
+  // The cart is restored from storage after mount; do it here too, so a
+  // visitor who opens /checkout directly still sees their items.
+  useEffect(() => {
+    useCart.persist.rehydrate();
+  }, []);
 
   // Default delivery date = +2 days from today
   useEffect(() => {
@@ -94,6 +113,43 @@ export function CheckoutForm({ locale }: Props) {
 
   const update = <K extends keyof FormState>(key: K, value: FormState[K]) =>
     setForm((f) => ({ ...f, [key]: value }));
+
+  const lang = locale === 'ar' ? 'ar' : 'he';
+  const onPick = (a: PickedAddress) => {
+    setPicked(a);
+    setConfirmIncomplete(false);
+    setForm((f) => ({
+      ...f,
+      street: a.local.street || a.en.street || f.street,
+      houseNumber: a.local.houseNumber || a.en.houseNumber || '',
+      city: a.local.city || a.en.city || f.city,
+      postcode: a.local.postalCode || a.en.postalCode || '',
+    }));
+  };
+  // Typing over a picked street or city makes it a manual address again;
+  // adding a missing house number or postcode keeps Google's match.
+  const editAddress = (key: 'street' | 'houseNumber' | 'city' | 'postcode', value: string) => {
+    if (picked) {
+      if (key === 'street' || key === 'city') setPicked(null);
+      else setPicked({ ...picked, en: { ...picked.en, [key === 'houseNumber' ? 'houseNumber' : 'postalCode']: value.trim() } });
+    }
+    update(key, value);
+  };
+
+  const delivery: DeliveryAddress | null = pickup
+    ? null
+    : {
+        local: { street: form.street.trim(), houseNumber: form.houseNumber.trim(), city: form.city.trim(), postalCode: form.postcode.trim(), country: lang === 'ar' ? 'إسرائيل' : 'ישראל', full: '' },
+        en: picked?.en,
+        placeId: picked?.placeId,
+        apartment: form.apartment.trim() || undefined,
+        floor: form.floor.trim() || undefined,
+        entrance: form.entrance.trim() || undefined,
+        via: picked ? 'google' : 'manual',
+        confirmedIncomplete: confirmIncomplete || undefined,
+      };
+  if (delivery) delivery.local.full = addressLine(delivery, lang);
+  const incomplete = !!delivery && !looksComplete(delivery.local);
 
   const shipping = useMemo(() => shippingFor(subtotal, fulfilment), [subtotal, fulfilment]);
   const total = subtotal + shipping;
@@ -119,6 +175,10 @@ export function CheckoutForm({ locale }: Props) {
       setErrorMsg(t('errEmptyCart'));
       return;
     }
+    if (incomplete && !confirmIncomplete) {
+      setErrorMsg(locale === 'ar' ? 'العنوان يبدو ناقصًا (الشارع، رقم البيت، المدينة). أكملوه أو أكّدوا أنه صحيح.' : 'הכתובת נראית חסרה (רחוב, מספר בית, עיר). השלימו אותה או אשרו שהיא נכונה.');
+      return;
+    }
 
     setSubmitting(true);
     try {
@@ -132,7 +192,8 @@ export function CheckoutForm({ locale }: Props) {
         const billing = {
           firstName: form.firstName,
           lastName: form.lastName,
-          address1: form.address,
+          address1: [form.street, form.houseNumber].filter(Boolean).join(' '),
+          address2: delivery ? [delivery.apartment && `דירה ${delivery.apartment}`, delivery.floor && `קומה ${delivery.floor}`, delivery.entrance && `כניסה ${delivery.entrance}`].filter(Boolean).join(', ') : '',
           city: form.city,
           postcode: form.postcode,
           country: 'IL',
@@ -148,8 +209,27 @@ export function CheckoutForm({ locale }: Props) {
               shipToDifferentAddress: false,
               billing,
               shipping: billing,
-              customerNote: buildCustomerNote(form, locale),
+              customerNote: buildCustomerNote(form, locale, delivery),
               lineItems,
+              // Kept on the WooCommerce order for couriers / Zapier: English address and Google place ID.
+              metaData: delivery
+                ? [
+                    { key: '_address_via', value: delivery.via },
+                    ...(delivery.placeId ? [{ key: '_google_place_id', value: delivery.placeId }] : []),
+                    ...(delivery.en
+                      ? [
+                          { key: '_address_en_street', value: delivery.en.street },
+                          { key: '_address_en_house_number', value: delivery.en.houseNumber },
+                          { key: '_address_en_city', value: delivery.en.city },
+                          { key: '_address_en_postal_code', value: delivery.en.postalCode },
+                          { key: '_address_en_country', value: delivery.en.country },
+                          { key: '_address_en_full', value: addressLineEn(delivery) },
+                        ]
+                      : []),
+                    { key: '_address_local_full', value: delivery.local.full },
+                    ...(delivery.confirmedIncomplete ? [{ key: '_address_confirmed_incomplete', value: 'yes' }] : []),
+                  ]
+                : [],
             },
           },
         });
@@ -180,7 +260,8 @@ export function CheckoutForm({ locale }: Props) {
           customerName: `${form.firstName} ${form.lastName}`.trim(),
           customerPhone: form.phone,
           items: lineRows.map((r) => ({ productName: r.name, quantity: r.qty, unitLabel: r.unit === 'per_kg' ? (ar ? 'كغ' : 'ק"ג') : ar ? 'وحدة' : 'יח׳', lineTotal: r.lineTotal })),
-          deliveryAddress: pickup ? `${ar ? 'استلام ذاتي' : 'איסוף עצמי'} · ${PICKUP_ADDRESS[locale]}` : [form.address, form.city].filter(Boolean).join(', '),
+          deliveryAddress: pickup || !delivery ? `${ar ? 'استلام ذاتي' : 'איסוף עצמי'} · ${PICKUP_ADDRESS[locale]}` : delivery.local.full,
+          address: delivery ?? undefined,
           deliveryDate: form.deliveryDate,
           deliveryWindow: windowLabel,
           customerNotes: form.notes || undefined,
@@ -316,33 +397,40 @@ export function CheckoutForm({ locale }: Props) {
 
           {!pickup && (
             <Section title={t('deliveryAddress')} displayFont={displayFont}>
-              <Field label={t('city')} required>
-                <input
-                  type="text"
-                  required={!pickup}
-                  value={form.city}
-                  onChange={(e) => update('city', e.target.value)}
-                  className={inputClass}
-                />
-              </Field>
-              <Field label={t('address')} required>
-                <input
-                  type="text"
-                  required={!pickup}
-                  placeholder={t('addressPlaceholder')}
-                  value={form.address}
-                  onChange={(e) => update('address', e.target.value)}
-                  className={inputClass}
-                />
-              </Field>
-              <Field label={t('postcode')}>
-                <input
-                  type="text"
-                  value={form.postcode}
-                  onChange={(e) => update('postcode', e.target.value)}
-                  className={inputClass}
-                />
-              </Field>
+              <AddressSearch lang={lang} inputClass={inputClass} onPick={onPick} />
+              <Row>
+                <Field label={locale === 'ar' ? 'الشارع' : 'רחוב'} required>
+                  <input type="text" required={!pickup} autoComplete="address-line1" value={form.street} onChange={(e) => editAddress('street', e.target.value)} className={inputClass} />
+                </Field>
+                <Field label={locale === 'ar' ? 'رقم البيت' : 'מספר בית'} required>
+                  <input type="text" inputMode="numeric" required={!pickup && !confirmIncomplete} value={form.houseNumber} onChange={(e) => editAddress('houseNumber', e.target.value)} className={inputClass} />
+                </Field>
+              </Row>
+              <Row>
+                <Field label={t('city')} required>
+                  <input type="text" required={!pickup} autoComplete="address-level2" value={form.city} onChange={(e) => editAddress('city', e.target.value)} className={inputClass} />
+                </Field>
+                <Field label={t('postcode')}>
+                  <input type="text" inputMode="numeric" autoComplete="postal-code" value={form.postcode} onChange={(e) => editAddress('postcode', e.target.value)} className={inputClass} />
+                </Field>
+              </Row>
+              <div className="grid grid-cols-3 gap-4">
+                <Field label={locale === 'ar' ? 'شقة' : 'דירה'}>
+                  <input type="text" value={form.apartment} onChange={(e) => update('apartment', e.target.value)} className={inputClass} />
+                </Field>
+                <Field label={locale === 'ar' ? 'طابق' : 'קומה'}>
+                  <input type="text" value={form.floor} onChange={(e) => update('floor', e.target.value)} className={inputClass} />
+                </Field>
+                <Field label={locale === 'ar' ? 'مدخل' : 'כניסה'}>
+                  <input type="text" value={form.entrance} onChange={(e) => update('entrance', e.target.value)} className={inputClass} />
+                </Field>
+              </div>
+              {incomplete && (form.street || form.city || form.houseNumber) && (
+                <label className="flex items-start gap-3 text-[14px] text-heading">
+                  <input type="checkbox" checked={confirmIncomplete} onChange={(e) => setConfirmIncomplete(e.target.checked)} className="mt-1 accent-[#E9B949]" />
+                  <span>{locale === 'ar' ? 'العنوان بلا رقم بيت أو مدينة كامل، وأؤكد أنه صحيح.' : 'הכתובת בלי מספר בית או עיר מלאה, ואני מאשר/ת שהיא נכונה.'}</span>
+                </label>
+              )}
             </Section>
           )}
 
@@ -507,7 +595,7 @@ export function CheckoutForm({ locale }: Props) {
 
 /* ── helpers ──────────────────────────────────────────────────────── */
 
-function buildCustomerNote(form: FormState, locale: Locale): string {
+function buildCustomerNote(form: FormState, locale: Locale, delivery: DeliveryAddress | null): string {
   const window =
     form.deliveryWindow === 'morning'
       ? locale === 'ar' ? 'صباحاً (08:00-11:00)' : 'בוקר (08:00-11:00)'
@@ -516,6 +604,8 @@ function buildCustomerNote(form: FormState, locale: Locale): string {
         : locale === 'ar' ? 'مساءً (16:00-19:00)' : 'ערב (16:00-19:00)';
   const label = locale === 'ar' ? 'موعد التوصيل' : 'מועד משלוח';
   let note = `${label}: ${form.deliveryDate} · ${window}`;
+  if (delivery?.en) note += `\nAddress (EN): ${addressLineEn(delivery)}`;
+  if (delivery?.confirmedIncomplete) note += locale === 'ar' ? '\nالزبون أكّد عنوانًا ناقصًا.' : '\nהלקוח אישר כתובת חסרה.';
   if (form.notes.trim()) note += `\n${form.notes.trim()}`;
   return note;
 }

@@ -2,6 +2,7 @@
 
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
+import type { DeliveryAddress } from '@/lib/address';
 
 export type OrderStatus = 'pending' | 'sent';
 
@@ -19,6 +20,8 @@ export type Order = {
   customerPhone: string;     // Israeli format, e.g. "052-1234567"
   items: OrderItem[];
   deliveryAddress: string;   // free text
+  /** Structured address (local + English from Google, place ID, apartment...) when delivered. */
+  address?: DeliveryAddress;
   deliveryDate: string;      // ISO yyyy-mm-dd
   deliveryWindow: string;    // 'בוקר' | 'צהריים' | 'ערב'
   customerNotes?: string;

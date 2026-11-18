@@ -27,8 +27,7 @@ export function Statement() {
   return (
     <section ref={ref} className="relative bg-[#15100B] text-cream py-24 md:py-40" aria-label={ar ? 'عن عملنا' : 'על העבודה שלנו'}>
       <div className="mx-auto max-w-5xl px-6 md:px-10">
-        <p className="flex items-center gap-4 text-[13px] md:text-sm font-medium text-gold">
-          <span aria-hidden className="block h-px w-10 bg-gold" />
+        <p className="text-[13px] md:text-sm font-medium tracking-wide text-gold">
           {ar ? 'دالية 10 · دالية الكرمل' : 'דליה 10 · דלית אל כרמל'}
         </p>
         <p className={`${displayFont} mt-8 text-[2rem] sm:text-5xl lg:text-[4rem] leading-[1.28] font-bold text-balance`}>

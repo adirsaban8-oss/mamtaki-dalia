@@ -35,7 +35,7 @@ export function MobileBar() {
   if (pathname.startsWith('/shop/')) return <div aria-hidden className="h-[4.5rem] lg:hidden" />;
   const shown = !onHome || scrolled;
 
-  const side = 'flex-1 h-12 inline-flex flex-col items-center justify-center gap-0.5 rounded-full text-[12px] font-semibold text-cream';
+  const side = 'flex-1 h-12 inline-flex flex-col items-center justify-center gap-0.5 rounded-full text-[12px] font-semibold text-gold hover:text-gold-light active:text-gold-deep transition-colors';
 
   return (
     <>

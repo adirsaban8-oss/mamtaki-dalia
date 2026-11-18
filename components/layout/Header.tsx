@@ -46,17 +46,17 @@ export function Header(_props: Props) {
   ];
 
   const roundButton =
-    'inline-flex items-center justify-center w-11 h-11 rounded-full border border-white/40 text-white hover:bg-white hover:text-black transition-colors duration-300';
+    'inline-flex items-center justify-center w-11 h-11 rounded-full border border-gold/55 text-gold hover:bg-gold hover:text-[#0A0806] hover:border-gold active:bg-gold-deep active:text-[#0A0806] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-light transition-colors duration-300';
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 bg-[#0A0806]/95 backdrop-blur-md text-white border-b border-gold/20">
+    <header className="fixed inset-x-0 top-0 z-50 bg-[#0A0806]/95 backdrop-blur-md text-gold border-b border-gold/20">
       <div className="mx-auto max-w-[1440px] px-3 sm:px-6 md:px-10 h-16 sm:h-20 grid grid-cols-[1fr_auto_1fr] items-center gap-2">
         {/* Menu, reading side */}
         <div className="flex items-center justify-self-start">
           <button
             type="button"
             onClick={() => setMenuOpen((v) => !v)}
-            className="inline-flex items-center gap-3 h-11 px-2 text-white"
+            className="inline-flex items-center gap-3 h-11 px-2 text-gold hover:text-gold-light active:text-gold-deep transition-colors duration-300"
             aria-label={menuOpen ? t('menuClose') : t('menuOpen')}
             aria-expanded={menuOpen}
           >
@@ -106,7 +106,7 @@ export function Header(_props: Props) {
           closed: { height: 0, opacity: 0 },
         }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className="overflow-hidden bg-[#0A0806] border-t border-white/15 max-h-[calc(100dvh-4rem)]"
+        className="overflow-hidden bg-[#0A0806] border-t border-gold/20 max-h-[calc(100dvh-4rem)]"
       >
         <nav className="mx-auto max-w-[1440px] px-5 sm:px-8 md:px-12 py-5 flex flex-col" aria-label="Primary">
           {navItems.map((item) => (
@@ -114,13 +114,13 @@ export function Header(_props: Props) {
               key={item.href}
               href={item.href}
               onClick={() => setMenuOpen(false)}
-              className="py-3.5 text-xl font-medium text-white hover:text-white/70 transition-colors border-b border-white/15"
+              className="py-3.5 text-xl font-medium text-gold hover:text-gold-light active:text-gold-deep transition-colors border-b border-gold/15"
             >
               {item.label}
             </Link>
           ))}
           <div className="pt-4 flex items-center justify-between">
-            <span className="text-sm text-white/60">{ar ? 'اللغة' : 'שפה'}</span>
+            <span className="text-sm text-gold/70">{ar ? 'اللغة' : 'שפה'}</span>
             <LanguageSwitcher variant="light" className="h-11 px-2" />
           </div>
         </nav>
