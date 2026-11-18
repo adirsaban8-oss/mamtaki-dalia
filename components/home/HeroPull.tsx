@@ -9,8 +9,8 @@ import type { Locale } from '@/i18n/locales';
 import { whatsappLink } from '@/lib/site';
 import { Steam } from '@/components/fx/Steam';
 
-/** The pull, frame by frame (AI edits of the shop's kanafeh photo, ⚠️ — a real video replaces them). */
-const FRAMES = ['f1', 'p1', 'f2', 'p2', 'f3', 'p3', 'p4', 'f4', 'p5', 'p6'].map((n) => `/images/pull/${n}.webp`);
+/** The pull, frame by frame, at eye level (AI edits of the shop's kanafeh photo; a real video replaces them). */
+const FRAMES = Array.from({ length: 9 }, (_, i) => `/images/pull/eye/e${i}.webp`);
 const ease = [0.7, 0, 0.2, 1] as const;
 
 /**
@@ -40,7 +40,7 @@ export function HeroPull() {
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const t = setTimeout(() => {
-      anim.current = animate(p, [0, 0.42, 0], { duration: 3.2, times: [0, 0.5, 1], ease: 'easeInOut' });
+      anim.current = animate(p, [0, 0.5, 0], { duration: 3.4, times: [0, 0.5, 1], ease: 'easeInOut' });
     }, 1800);
     return () => { clearTimeout(t); anim.current?.stop(); };
   }, [p]);
@@ -60,8 +60,10 @@ export function HeroPull() {
     if (!drag.current) return;
     drag.current = null;
     // Fully pulled: hold the snapped strands a moment; otherwise settle back.
-    if (p.get() > 0.92) go(0, { delay: 1.6, duration: 1.6 });
-    else go(0, { duration: 1.1 });
+    // Let go: it springs back like elastic cheese, with a small bounce.
+    const back = { type: 'spring', stiffness: 70, damping: 11 } as const;
+    if (p.get() > 0.92) go(0, { ...back, delay: 1.6 });
+    else go(0, back);
   };
   const onKey = (e: React.KeyboardEvent) => {
     const step = e.key === 'ArrowUp' || e.key === 'ArrowRight' ? 0.1 : e.key === 'ArrowDown' || e.key === 'ArrowLeft' ? -0.1 : 0;
@@ -75,6 +77,8 @@ export function HeroPull() {
   const stretch = useTransform(p, [0.2, 0.35, 0.75, 0.85], [0, 1, 1, 0]);
   const finale = useTransform(p, [0.82, 0.95], [0, 1]);
   const handleY = useTransform(p, [0, 1], ['0%', '-260%']);
+  // The camera leans in a little as the cheese rises.
+  const lean = useTransform(p, [0, 1], [1, 1.05]);
 
   return (
     <section className="relative isolate overflow-hidden mt-16 sm:mt-20 h-[calc(100svh-4rem)] sm:h-[calc(100svh-5rem)] min-h-[560px] bg-[#0A0806] text-cream" aria-label={ar ? 'الكنافة' : 'הכנאפה'}>
@@ -90,17 +94,19 @@ export function HeroPull() {
         onPointerCancel={onUp}
         className="absolute -z-20 inset-x-0 top-0 h-[64%] lg:h-full lg:right-auto lg:w-[72%] cursor-grab active:cursor-grabbing select-none"
       >
-        {FRAMES.map((src, i) => (
-          <Frame key={src} src={src} i={i} n={FRAMES.length} p={p} alt={ar ? 'كنافة ساخنة مع البوظة والفستق' : 'כנאפה חמה עם גלידה ופיסטוק'} />
-        ))}
-        <Steam className="absolute left-[16%] w-[44%] top-[-6%] h-[48%] lg:left-[18%] lg:w-[40%]" />
+        <motion.div style={{ scale: lean }} className="absolute inset-0 origin-[50%_70%]">
+          {FRAMES.map((src, i) => (
+            <Frame key={src} src={src} i={i} n={FRAMES.length} p={p} alt={ar ? 'كنافة ساخنة مع البوظة والفستق' : 'כנאפה חמה עם גלידה ופיסטוק'} />
+          ))}
+        </motion.div>
+        <Steam className="absolute left-[14%] w-[40%] top-[12%] h-[46%] lg:left-[18%] lg:w-[34%]" />
       </motion.div>
 
       {/* Shade on the reading side */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 bg-[linear-gradient(to_top,#0A0806_0%,#0A0806_36%,rgba(10,8,6,0.6)_44%,transparent_58%)] lg:bg-[linear-gradient(to_left,#0A0806_0%,rgba(10,8,6,0.9)_30%,rgba(10,8,6,0.3)_52%,transparent_66%)]" />
 
       {/* The handle — the main control on phones */}
-      <div className="absolute z-10 left-[50%] lg:left-[38%] top-[31%] lg:top-[62%] -translate-x-1/2 flex flex-col items-center gap-2">
+      <div className="absolute z-10 left-[80%] lg:left-[55%] top-[31%] lg:top-[62%] -translate-x-1/2 flex flex-col items-center gap-2">
         <motion.button
           type="button"
           role="slider"
@@ -169,11 +175,13 @@ function Caption({ o, gold = false, children }: { o: MotionValue<number>; gold?:
 function Frame({ src, i, n, p, alt }: { src: string; i: number; n: number; p: MotionValue<number>; alt: string }) {
   const opacity = useTransform(p, (v) => {
     const pos = v * (n - 1);
-    return i <= Math.floor(pos) ? 1 : i === Math.floor(pos) + 1 ? pos - Math.floor(pos) : 0;
+    // A short, central cross-fade so two forks are never seen at once for long.
+    const f = Math.min(1, Math.max(0, (pos - Math.floor(pos) - 0.3) / 0.4));
+    return i <= Math.floor(pos) ? 1 : i === Math.floor(pos) + 1 ? f : 0;
   });
   return (
     <motion.div style={i === 0 ? undefined : { opacity }} className="absolute inset-0">
-      <Image src={src} alt={i === 0 ? alt : ''} fill draggable={false} priority={i === 0} fetchPriority={i === 0 ? 'high' : undefined} loading={i === 0 ? undefined : 'eager'} sizes="(min-width: 1024px) 72vw, 100vw" className="object-cover object-[46%_50%] lg:object-center" />
+      <Image src={src} alt={i === 0 ? alt : ''} fill draggable={false} priority={i === 0} fetchPriority={i === 0 ? 'high' : undefined} loading={i === 0 ? undefined : 'eager'} sizes="(min-width: 1024px) 72vw, 100vw" className="object-cover object-[42%_50%] lg:object-center" />
     </motion.div>
   );
 }
