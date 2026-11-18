@@ -26,7 +26,8 @@ PROJECT_CAP = 10.00
 # which is never spent without the owner's approval (calls to it always raise).
 # 2026-11-16 later: owner asked to use the API for the final design — images get $1.00 more.
 # 2026-11-18: owner approved moving $1 from video (no video model available) to images for the eye-level pull.
-SECTION_CAPS = {'video': 3.00, 'images': 4.0155, 'reserve': 0.0, 'pre-budget': 99}
+# 2026-11-18 later: owner approved one more $1 from video to images for the 10-frame redo.
+SECTION_CAPS = {'video': 2.00, 'images': 5.0155, 'reserve': 0.0, 'pre-budget': 99}
 
 PRICE = {  # USD per 1M tokens
     'gpt-image-2.6-sunburst': {'out': 30.0, 'in_image': 8.0, 'in_text': 5.0},

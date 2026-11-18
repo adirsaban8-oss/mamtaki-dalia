@@ -10,7 +10,7 @@ import { whatsappLink } from '@/lib/site';
 import { Steam } from '@/components/fx/Steam';
 
 /** The pull, frame by frame, at eye level (AI edits of the shop's kanafeh photo; a real video replaces them). */
-const FRAMES = Array.from({ length: 9 }, (_, i) => `/images/pull/cut/c${i}.webp`);
+const FRAMES = Array.from({ length: 10 }, (_, i) => `/images/pull/seq/s${i}.webp`);
 const ease = [0.7, 0, 0.2, 1] as const;
 
 /**
