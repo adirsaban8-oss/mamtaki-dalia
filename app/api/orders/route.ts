@@ -34,7 +34,8 @@ export async function POST(req: Request) {
   try {
     await sendOrderSms(text, ref);
     return Response.json({ ref, text, sent: true });
-  } catch {
-    return Response.json({ ref, text, sent: false, reason: 'failed' });
+  } catch (e) {
+    // The status code only (e.g. "sms 401"), to tell a wrong key from a provider outage.
+    return Response.json({ ref, text, sent: false, reason: 'failed', detail: e instanceof Error ? e.message.slice(0, 40) : '' });
   }
 }
