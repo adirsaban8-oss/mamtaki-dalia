@@ -7,8 +7,8 @@ import type { Locale } from '@/i18n/locales';
 import { MANUAL_REVIEWS } from '@/lib/reviews';
 
 const ease = [0.22, 1, 0.36, 1] as const;
-/** Shorter reviews ("מעולה!") are left out. */
-const MIN_LENGTH = 150;
+/** A review needs at least a few words to be shown. */
+const MIN_LENGTH = 3;
 
 type Card = {
   key: string;
@@ -72,8 +72,8 @@ export function Reviews() {
       source: r.source,
       sourceUri: r.url,
     }));
-    // The owner shows good, detailed reviews only: 4 or 5 stars and at least
-    // MIN_LENGTH characters, best rating first, then the longer one. The true
+    // The owner shows good reviews only: 4 or 5 stars with some text, best
+    // rating first, then the longer one. The true
     // average, the total count and the link to every review on Google stay next to them.
     return [...fromGoogle, ...manual]
       .filter((c) => c.rating >= 4 && c.text.trim().length >= MIN_LENGTH)
