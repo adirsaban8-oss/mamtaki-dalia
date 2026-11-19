@@ -32,7 +32,7 @@ export async function POST(req: Request) {
   if (!smsEnabled()) return Response.json({ ref, text, sent: false, reason: 'off' });
   if (!allow('or:' + clientIp(req), 3) || !underHourlyCap()) return Response.json({ ref, text, sent: false, reason: 'busy' });
   try {
-    await sendOrderSms(text);
+    await sendOrderSms(text, ref);
     return Response.json({ ref, text, sent: true });
   } catch {
     return Response.json({ ref, text, sent: false, reason: 'failed' });
