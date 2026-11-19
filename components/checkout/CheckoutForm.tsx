@@ -23,8 +23,12 @@ const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 
 type PaymentMethod = 'cod' | 'bacs' | 'meshulam' | 'apple_pay' | 'bit';
 
-/** Online payment exists only through WooCommerce or a connected provider. */
-const payOnline = () => isWordPressMode() || ONLINE_PAYMENT;
+/**
+ * The WooCommerce checkout can only take products that came from WooCommerce
+ * (ids like wp_16). The site sells from its own catalog (seed_...), so those
+ * orders go through the site's own path even when a WordPress endpoint is set.
+ */
+const wooCart = (items: { productId: string }[]) => isWordPressMode() && items.length > 0 && items.every((i) => /^wp_d+$/.test(i.productId));
 
 type FormState = {
   firstName: string;
@@ -85,7 +89,9 @@ export function CheckoutForm({ locale }: Props) {
   const subtotal = useCart((s) => s.subtotal());
   const close = useCart((s) => s.close);
 
-  const [form, setForm] = useState<FormState>(() => ({ ...INITIAL, paymentMethod: payOnline() ? 'meshulam' : 'cod' }));
+  const [form, setForm] = useState<FormState>(() => ({ ...INITIAL, paymentMethod: ONLINE_PAYMENT ? 'meshulam' : 'cod' }));
+  /** Online payment exists only through WooCommerce or a connected provider. */
+  const payOnline = () => wooCart(items) || ONLINE_PAYMENT;
   const [fulfilment, setFulfilment] = useState<Fulfilment>('delivery');
   const addOrder = useOrders((s) => s.addOrder);
   const pickup = fulfilment === 'pickup';
@@ -182,7 +188,7 @@ export function CheckoutForm({ locale }: Props) {
 
     setSubmitting(true);
     try {
-      if (isWordPressMode()) {
+      if (wooCart(items)) {
         // Real WPGraphQL checkout, send to WordPress
         const lineItems = items.map((item) => ({
           productId: Number(item.productId.replace(/^wp_/, '')),
