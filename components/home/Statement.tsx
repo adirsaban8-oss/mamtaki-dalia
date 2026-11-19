@@ -49,7 +49,7 @@ function Word({ p, from, to, children }: { p: MotionValue<number>; from: number;
   const opacity = useTransform(p, [from, to], [0.16, 1]);
   return (
     <>
-      <motion.span style={{ opacity }}>{children}</motion.span>{' '}
+      <motion.span style={{ opacity }} className="text-gold-metal">{children}</motion.span>{' '}
     </>
   );
 }
