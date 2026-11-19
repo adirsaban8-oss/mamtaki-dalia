@@ -24,7 +24,7 @@ type Google = { enabled: boolean; rating?: number | null; count?: number | null;
 /**
  * "What our customers think": Google's live rating, count and reviews
  * (with Google's attribution), plus any owner-approved reviews from
- * lib/reviews.ts. Highest rating first, newest first within a rating.
+ * lib/reviews.ts. Five-star reviews only, newest first.
  * Swipe on phones, arrows on desktop. Shows nothing when there is
  * nothing real to show.
  */
@@ -70,7 +70,9 @@ export function Reviews() {
       source: r.source,
       sourceUri: r.url,
     }));
-    return [...fromGoogle, ...manual].filter((c) => c.text.trim()).sort((a, b) => b.rating - a.rating || b.time - a.time);
+    // The owner shows five-star reviews only, newest first. The true average, the
+    // total count and the link to every review on Google stay next to them.
+    return [...fromGoogle, ...manual].filter((c) => c.rating === 5 && c.text.trim()).sort((a, b) => b.time - a.time);
   }, [g, fmt]);
 
   const loading = near && g === null;
@@ -109,7 +111,7 @@ export function Reviews() {
             </a>
           )}
           {g?.enabled && cards.some((c) => c.source === 'Google') && (
-            <span>{ar ? 'التقييمات من Google. تعرض Google حتى 5 تقييمات مختارة.' : 'הביקורות מ‑Google. גוגל מציגה עד 5 ביקורות נבחרות.'}</span>
+            <span>{ar ? 'تُعرض هنا تقييمات 5 نجوم من Google.' : 'מוצגות כאן ביקורות 5 כוכבים מ‑Google.'}</span>
           )}
         </div>
       </div>
@@ -143,7 +145,7 @@ function Carousel({ cards, ar, displayFont }: { cards: Card[]; ar: boolean; disp
       <div
         ref={track}
         onScroll={onScroll}
-        className="flex gap-5 overflow-x-auto snap-x snap-mandatory scroll-smooth overscroll-x-contain pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        className={`flex gap-5 ${cards.length < 3 ? 'md:justify-center' : ''} overflow-x-auto snap-x snap-mandatory scroll-smooth overscroll-x-contain pb-2 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden`}
         role="region"
         aria-roledescription="carousel"
         aria-label={ar ? 'تقييمات الزبائن' : 'ביקורות לקוחות'}
