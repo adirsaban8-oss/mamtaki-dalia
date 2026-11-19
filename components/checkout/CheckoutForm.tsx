@@ -277,9 +277,35 @@ export function CheckoutForm({ locale }: Props) {
           description: lineRows.map((r) => r.name).join(', '),
         });
         if (payUrl) { window.location.href = payUrl; return; }
+        // Tell the shop. The server sends an SMS; if that is off or fails, the
+        // success page asks the customer to send the same text by WhatsApp.
+        const payload = {
+          name: order.customerName,
+          phone: order.customerPhone,
+          items: lineRows.map((r) => ({ name: r.name, qty: r.qtyLabel, total: r.lineTotal })),
+          fulfilment,
+          address: pickup || !delivery ? '' : delivery.local.full,
+          addressEn: delivery?.en ? addressLineEn(delivery) : undefined,
+          date: form.deliveryDate,
+          window: windowLabel,
+          notes: form.notes || undefined,
+          shipping,
+          total,
+          payment: ar ? 'الدفع عند الاستلام' : 'תשלום בקבלת ההזמנה',
+        };
+        let told: { ref?: string; text?: string; sent?: boolean } = {};
+        try {
+          const r = await fetch('/api/orders', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+          if (r.ok) told = await r.json();
+        } catch {
+          /* handled below: not sent */
+        }
+        const fallbackText = [`הזמנה מהאתר: ${payload.name}, ${payload.phone}`, ...payload.items.map((i) => `• ${i.name}, ${i.qty}, ₪${i.total}`), pickup ? 'איסוף עצמי' : `משלוח: ${payload.address}`, `מועד: ${payload.date} ${payload.window}`, `סה״כ ₪${total}`].join('\n');
         useCart.getState().clear();
         close();
-        sessionStorage.setItem('lastOrderNumber', String(order.orderNumber));
+        sessionStorage.setItem('lastOrderNumber', told.ref ? told.ref.replace('#', '') : String(order.orderNumber));
+        sessionStorage.setItem('lastOrderSent', told.sent ? '1' : '0');
+        sessionStorage.setItem('lastOrderText', told.text ?? fallbackText);
         router.push('/checkout/success');
       }
     } catch (err) {

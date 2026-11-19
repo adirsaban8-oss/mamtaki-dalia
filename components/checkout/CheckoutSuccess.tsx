@@ -7,6 +7,7 @@ import { Link } from '@/i18n/navigation';
 import type { Locale } from '@/i18n/locales';
 import { ArabesquePattern } from '@/components/ornaments/ArabesquePattern';
 import { buttonClasses } from '@/components/ui/Button';
+import { whatsappLink } from '@/lib/site';
 
 const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 
@@ -17,11 +18,15 @@ export function CheckoutSuccess({ locale }: Props) {
   const displayFont = locale === 'ar' ? 'font-display-ar' : 'font-display-he';
 
   const [orderNumber, setOrderNumber] = useState<string>('');
+  // Set when the shop was NOT notified automatically: the order text to send by WhatsApp.
+  const [unsent, setUnsent] = useState<string | null>(null);
 
   useEffect(() => {
     const stored = sessionStorage.getItem('lastOrderNumber');
     if (stored) setOrderNumber(stored);
+    if (sessionStorage.getItem('lastOrderSent') === '0') setUnsent(sessionStorage.getItem('lastOrderText') ?? '');
   }, []);
+  const ar = locale === 'ar';
 
   return (
     <section className="relative overflow-x-clip py-20 md:py-32 min-h-[60vh] flex items-center">
@@ -67,7 +72,7 @@ export function CheckoutSuccess({ locale }: Props) {
         <h1
           className={`mt-6 ${displayFont} font-black text-[2.5rem] md:text-5xl lg:text-6xl text-heading tracking-display leading-[1.05] text-balance`}
         >
-          {t('title')}
+          {unsent !== null ? (ar ? 'بقيت خطوة واحدة' : 'נשאר צעד אחד') : t('title')}
         </h1>
 
         {orderNumber && (
@@ -81,9 +86,25 @@ export function CheckoutSuccess({ locale }: Props) {
           </div>
         )}
 
-        <p className="mt-8 max-w-md text-base md:text-lg leading-relaxed text-ink/80 text-pretty">
-          {t('body')}
-        </p>
+        {unsent !== null ? (
+          <div className="mt-8 flex flex-col items-center">
+            <p className="max-w-md text-base md:text-lg leading-relaxed text-ink/80 text-pretty">
+              {ar ? 'لإتمام الطلب، أرسلوه إلى المحل عبر واتساب. الطلب جاهز في الرسالة.' : 'כדי להשלים את ההזמנה, שלחו אותה לחנות בוואטסאפ. ההזמנה כבר כתובה בהודעה.'}
+            </p>
+            <a
+              href={whatsappLink(unsent)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-6 inline-flex items-center justify-center h-14 px-10 rounded-full bg-gold-metal text-[#0A0806] text-lg font-bold"
+            >
+              {ar ? 'إرسال الطلب إلى المحل' : 'שליחת ההזמנה לחנות'}
+            </a>
+          </div>
+        ) : (
+          <p className="mt-8 max-w-md text-base md:text-lg leading-relaxed text-ink/80 text-pretty">
+            {t('body')}
+          </p>
+        )}
 
         <div className="mt-10 flex flex-col sm:flex-row items-center gap-3">
           <Link
