@@ -7,6 +7,8 @@ import type { Locale } from '@/i18n/locales';
 import { MANUAL_REVIEWS } from '@/lib/reviews';
 
 const ease = [0.22, 1, 0.36, 1] as const;
+/** Shorter reviews ("מעולה!") are left out. */
+const MIN_LENGTH = 150;
 
 type Card = {
   key: string;
@@ -24,7 +26,7 @@ type Google = { enabled: boolean; rating?: number | null; count?: number | null;
 /**
  * "What our customers think": Google's live rating, count and reviews
  * (with Google's attribution), plus any owner-approved reviews from
- * lib/reviews.ts. Five-star reviews only, newest first.
+ * lib/reviews.ts. Only 4-5 star reviews with real text, best first.
  * Swipe on phones, arrows on desktop. Shows nothing when there is
  * nothing real to show.
  */
@@ -70,9 +72,12 @@ export function Reviews() {
       source: r.source,
       sourceUri: r.url,
     }));
-    // The owner shows five-star reviews only, newest first. The true average, the
-    // total count and the link to every review on Google stay next to them.
-    return [...fromGoogle, ...manual].filter((c) => c.rating === 5 && c.text.trim()).sort((a, b) => b.time - a.time);
+    // The owner shows good, detailed reviews only: 4 or 5 stars and at least
+    // MIN_LENGTH characters, best rating first, then the longer one. The true
+    // average, the total count and the link to every review on Google stay next to them.
+    return [...fromGoogle, ...manual]
+      .filter((c) => c.rating >= 4 && c.text.trim().length >= MIN_LENGTH)
+      .sort((a, b) => b.rating - a.rating || b.text.length - a.text.length);
   }, [g, fmt]);
 
   const loading = near && g === null;
@@ -111,7 +116,7 @@ export function Reviews() {
             </a>
           )}
           {g?.enabled && cards.some((c) => c.source === 'Google') && (
-            <span>{ar ? 'تُعرض هنا تقييمات 5 نجوم من Google.' : 'מוצגות כאן ביקורות 5 כוכבים מ‑Google.'}</span>
+            <span>{ar ? 'تُعرض هنا تقييمات مختارة من 4 و5 نجوم من Google.' : 'מוצגות כאן ביקורות נבחרות של 4 ו‑5 כוכבים מ‑Google.'}</span>
           )}
         </div>
       </div>
