@@ -29,7 +29,10 @@ export async function allProducts(): Promise<ManagedProduct[]> {
     return all;
   } catch (e) {
     console.error('catalog: database unavailable, showing the starter catalog', e instanceof Error ? e.message : e);
-    return seedCatalog.map((p, i) => ({ ...p, visible: true, sort: i }));
+    // Remember the fallback briefly, so a database that is down is not retried on every page view.
+    const all = seedCatalog.map((p, i) => ({ ...p, visible: true, sort: i }));
+    mem.__mdCatalog = { at: Date.now(), all };
+    return all;
   }
 }
 

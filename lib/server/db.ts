@@ -75,7 +75,8 @@ async function connect(): Promise<Runner> {
     const { Pool } = await import('pg');
     const url = process.env.DATABASE_URL;
     // Railway's private network needs no TLS; its public proxy does.
-    const pool = new Pool({ connectionString: url, max: 5, ssl: /railway\.internal|localhost|127\.0\.0\.1/.test(url) ? undefined : { rejectUnauthorized: false } });
+    // Short limits: an unreachable database must not hold a page for long.
+    const pool = new Pool({ connectionString: url, max: 5, connectionTimeoutMillis: 4000, query_timeout: 8000, ssl: /railway\.internal|localhost|127\.0\.0\.1/.test(url) ? undefined : { rejectUnauthorized: false } });
     run = { query: (sql, params) => pool.query(sql, params as unknown[]) as Promise<{ rows: Row[] }> };
   } else {
     const name = '@electric-sql/pglite';
