@@ -13,6 +13,11 @@ import { SheenObserver } from '@/components/fx/SheenObserver';
 import { MobileBar } from '@/components/layout/MobileBar';
 import { CartDrawer } from '@/components/cart/CartDrawer';
 import { ORDERING_MODE } from '@/lib/ordering';
+import { CatalogProvider } from '@/components/providers/CatalogProvider';
+import { publicCatalog } from '@/lib/server/catalog';
+
+// Prices and stock come from the database on every request.
+export const dynamic = 'force-dynamic';
 
 // Headings: Frank Ruhl Libre, the classic Hebrew book serif.
 const frank = Frank_Ruhl_Libre({
@@ -75,6 +80,7 @@ export default async function LocaleLayout({
   if (!hasLocale(locales, locale)) notFound();
 
   setRequestLocale(locale);
+  const products = await publicCatalog();
 
   return (
     <html
@@ -91,11 +97,13 @@ export default async function LocaleLayout({
         <NextIntlClientProvider locale={locale as Locale}>
           <ApolloProvider>
             <MotionProvider>
+            <CatalogProvider products={products}>
             {children}
             <MobileBar />
             {ORDERING_MODE === 'site' && <CartDrawer />}
             <AccessibilityFAB />
             <SheenObserver />
+            </CatalogProvider>
             </MotionProvider>
           </ApolloProvider>
         </NextIntlClientProvider>

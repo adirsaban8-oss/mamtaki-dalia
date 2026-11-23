@@ -4,7 +4,7 @@ import { Header } from '@/components/layout/Header';
 import { ProductPageClient } from '@/components/product/ProductPageClient';
 import { Footer } from '@/components/layout/Footer';
 import type { Locale } from '@/i18n/locales';
-import { seedCatalog } from '@/lib/data/catalogSeed';
+import { findProduct } from '@/lib/server/catalog';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,7 +14,7 @@ const BASE = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://mamtaki-dalia-producti
 export async function generateMetadata({ params }: PageProps<'/[locale]/shop/[slug]'>): Promise<Metadata> {
   const { locale, slug } = await params;
   const l: Locale = locale === 'ar' ? 'ar' : 'he';
-  const product = seedCatalog.find((p) => p.slug === decodeURIComponent(slug));
+  const product = await findProduct(slug);
   if (!product) return {};
   return {
     title: product.name[l],
@@ -34,7 +34,7 @@ export default async function ProductPage({
   const { locale, slug } = await params;
   setRequestLocale(locale);
   const l: Locale = locale === 'ar' ? 'ar' : 'he';
-  const product = seedCatalog.find((p) => p.slug === decodeURIComponent(slug));
+  const product = await findProduct(slug);
 
   // Structured data, only facts that exist in the catalog (no ratings, no reviews).
   const jsonLd = product && {
@@ -42,14 +42,14 @@ export default async function ProductPage({
     '@type': 'Product',
     name: product.name[l],
     description: product.description[l],
-    image: product.image ? `${BASE}${product.image}` : undefined,
+    image: product.image ? (product.image.startsWith('http') ? product.image : `${BASE}${product.image}`) : undefined,
     brand: { '@type': 'Brand', name: l === 'ar' ? 'حلويات دالية الكرمل' : 'ממתקי דלית אל כרמל' },
     ...(product.price > 0 && {
       offers: {
         '@type': 'Offer',
         price: product.price,
         priceCurrency: 'ILS',
-        availability: 'https://schema.org/InStock',
+        availability: product.inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
         url: `${BASE}/${l}/shop/${product.slug}`,
       },
     }),

@@ -41,3 +41,7 @@ yarn-error.log*
 next-env.d.ts
 
 __pycache__/
+
+# local database and test SMS log
+.localdb/
+.sms-test.log

@@ -5,7 +5,7 @@ import {
   type ProductBadge,
   type PricingUnit,
 } from '@/lib/mockData';
-import { deriveMonogram } from '@/store/catalog';
+const deriveMonogram = (name: string) => name.trim().slice(0, 1) || 'M';
 
 /**
  * Map a WPGraphQL product node to our internal `Product` type.

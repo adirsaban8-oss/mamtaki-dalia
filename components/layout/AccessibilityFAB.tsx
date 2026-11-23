@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useTranslations } from 'next-intl';
-import { Link } from '@/i18n/navigation';
+import { Link, usePathname } from '@/i18n/navigation';
 
 const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
 
@@ -60,6 +60,8 @@ function applyPrefs(p: Prefs) {
 }
 
 export function AccessibilityFAB() {
+  // The management screen has its own large, high-contrast layout; the floating button would cover its buttons.
+  const onAdmin = usePathname().startsWith('/admin');
   const t = useTranslations('Accessibility');
   const [prefs, setPrefs] = useState<Prefs>(DEFAULT_PREFS);
   const [open, setOpen] = useState(false);
@@ -91,7 +93,7 @@ export function AccessibilityFAB() {
   };
 
   // Hide the FAB until hydrated so SSR markup matches
-  if (!hydrated) return null;
+  if (!hydrated || onAdmin) return null;
 
   return (
     <>

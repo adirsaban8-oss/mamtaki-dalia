@@ -1,13 +1,14 @@
 import type { Locale } from '@/i18n/locales';
 import { he } from './he';
 import { ar } from './ar';
+import { withSiteOrdering } from './siteOrdering';
 
 /**
  * Legal texts of the site (terms, cancellations, privacy, accessibility).
  * Hebrew is the binding version; Arabic is a convenience translation.
  * Business facts come from the owners, update the texts when they change.
  */
-export const LEGAL_UPDATED = '14.11.2026';
+export const LEGAL_UPDATED = '23.11.2026';
 
 export type LegalSlug = 'terms' | 'returns' | 'privacy' | 'accessibility';
 
@@ -16,4 +17,4 @@ export const legalSlugs: LegalSlug[] = ['terms', 'returns', 'privacy', 'accessib
 export type LegalSection = { id?: string; h: string; p: string[] };
 export type LegalDoc = { title: string; intro: string; sections: LegalSection[] };
 
-export const legalDocs: Record<Locale, Record<LegalSlug, LegalDoc>> = { he, ar };
+export const legalDocs: Record<Locale, Record<LegalSlug, LegalDoc>> = { he: withSiteOrdering(he, 'he'), ar: withSiteOrdering(ar, 'ar') };

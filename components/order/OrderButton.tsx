@@ -34,6 +34,15 @@ export function OrderButton({ product, grams, className, children, siteChildren,
   const add = useCart((s) => s.add);
   const byKg = product.unit === 'per_kg';
 
+  // Marked "sold out" in /admin: shown, but cannot be ordered.
+  if (!product.inStock) {
+    return (
+      <button type="button" disabled aria-label={named ? `${ar ? 'نفد من المخزون' : 'אזל מהמלאי'}: ${product.name[locale]}` : undefined} className={`${className ?? ''} opacity-60 cursor-not-allowed`}>
+        {ar ? 'نفد من المخزون' : 'אזל מהמלאי'}
+      </button>
+    );
+  }
+
   if (ORDERING_MODE === 'whatsapp') {
     return (
       <a

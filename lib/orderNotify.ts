@@ -1,68 +1,9 @@
 /**
- * Tells the shop about a new site order by SMS. Import only from route
- * handlers. Two senders are supported; ActiveTrail is used when its key is
- * set, otherwise Twilio. Runtime variables on Railway:
- *
- *   ORDER_SMS_TO            the shop phone that receives orders, e.g. 0525986266
- *
- *   ActiveTrail (webapi.mymarketing.co.il, operational SMS):
- *   ACTIVETRAIL_API_KEY     Settings > API Apps in ActiveTrail
- *   ACTIVETRAIL_SMS_FROM    the approved sender name of the account
- *   ACTIVETRAIL_SMS_PROFILE_ID   optional, the SMS sending profile id
- *
- *   Twilio:
- *   TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN, TWILIO_FROM
- *
- * Until a sender is fully set nothing is sent and the checkout falls back to
- * handing the order to the shop's WhatsApp, so an order is never lost silently.
+ * The guest order path, used only while the site has no database: the
+ * browser sends the finished order and it is passed on to the shop as text
+ * (SMS, or WhatsApp from the success page). With a database the order goes
+ * through lib/server/orders.ts instead, where the server prices it.
  */
-const env = (k: string) => process.env[k]?.trim() || '';
-
-const activeTrail = () => !!(env('ACTIVETRAIL_API_KEY') && env('ACTIVETRAIL_SMS_FROM') && env('ORDER_SMS_TO'));
-const twilio = () => !!(env('TWILIO_ACCOUNT_SID') && env('TWILIO_AUTH_TOKEN') && env('TWILIO_FROM') && env('ORDER_SMS_TO'));
-export const smsEnabled = () => activeTrail() || twilio();
-
-export async function sendOrderSms(body: string, ref: string): Promise<void> {
-  const res = activeTrail() ? await viaActiveTrail(body, ref) : await viaTwilio(body);
-  if (!res.ok) throw new Error(`sms ${res.status}`);
-}
-
-/** POST api/smscampaign/OperationalMessage: details, scheduling, mobiles. */
-function viaActiveTrail(body: string, ref: string): Promise<Response> {
-  const profile = Number(env('ACTIVETRAIL_SMS_PROFILE_ID'));
-  return fetch('https://webapi.mymarketing.co.il/api/smscampaign/OperationalMessage', {
-    method: 'POST',
-    cache: 'no-store',
-    signal: AbortSignal.timeout(10000),
-    headers: { Authorization: env('ACTIVETRAIL_API_KEY'), 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      details: {
-        name: `Site order ${ref}`,
-        from_name: env('ACTIVETRAIL_SMS_FROM'),
-        content: body,
-        can_unsubscribe: false,
-        ...(profile > 0 ? { sms_sending_profile_id: profile } : {}),
-      },
-      scheduling: { send_now: true },
-      mobiles: [{ phone_number: env('ORDER_SMS_TO') }],
-    }),
-  });
-}
-
-function viaTwilio(body: string): Promise<Response> {
-  const sid = env('TWILIO_ACCOUNT_SID');
-  return fetch(`https://api.twilio.com/2010-04-01/Accounts/${encodeURIComponent(sid)}/Messages.json`, {
-    method: 'POST',
-    cache: 'no-store',
-    signal: AbortSignal.timeout(10000),
-    headers: {
-      Authorization: 'Basic ' + Buffer.from(`${sid}:${env('TWILIO_AUTH_TOKEN')}`).toString('base64'),
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    body: new URLSearchParams({ To: env('ORDER_SMS_TO'), From: env('TWILIO_FROM'), Body: body }),
-  });
-}
-
 export type OrderPayload = {
   name: string;
   phone: string;

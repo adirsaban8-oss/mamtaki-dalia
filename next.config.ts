@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
   // Standalone output → leanest production image. The Dockerfile copies
   // .next/standalone and runs `node server.js` directly.
   output: 'standalone',
+  // Loaded at run time, not bundled: the Postgres client, and the embedded Postgres used for local work only.
+  serverExternalPackages: ['pg', '@electric-sql/pglite'],
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'images.unsplash.com' },

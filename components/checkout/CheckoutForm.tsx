@@ -17,6 +17,7 @@ import { lineTotal } from '@/store/cart';
 import { useOrders } from '@/store/orders';
 import { weightLabel } from '@/lib/weight';
 import { AddressSearch, type PickedAddress } from './AddressSearch';
+import { CustomerGate, customerReady, type SiteCustomer } from './CustomerGate';
 import { addressLine, addressLineEn, looksComplete, type DeliveryAddress } from '@/lib/address';
 
 const easeLuxe = [0.25, 0.46, 0.45, 0.94] as const;
@@ -97,6 +98,21 @@ export function CheckoutForm({ locale }: Props) {
   const pickup = fulfilment === 'pickup';
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  // Accounts: on when the site has its database and SMS. Then a customer signs in before ordering.
+  const [acct, setAcct] = useState<{ accounts: boolean; customer: SiteCustomer | null } | null>(null);
+  useEffect(() => {
+    fetch('/api/auth/me', { cache: 'no-store' })
+      .then((r) => r.json())
+      .then((j: { accounts: boolean; customer: SiteCustomer | null }) => setAcct(j))
+      .catch(() => setAcct({ accounts: false, customer: null }));
+  }, []);
+  const accounts = !!acct?.accounts;
+  const customer = acct?.customer && customerReady(acct.customer) ? acct.customer : null;
+  const needGate = accounts && !customer;
+  const signOut = async () => {
+    await fetch('/api/auth/me', { method: 'DELETE' }).catch(() => {});
+    setAcct({ accounts: true, customer: null });
+  };
   // Set when the address came from Google: its place ID and the English version.
   const [picked, setPicked] = useState<PickedAddress | null>(null);
   const [confirmIncomplete, setConfirmIncomplete] = useState(false);
@@ -188,6 +204,38 @@ export function CheckoutForm({ locale }: Props) {
 
     setSubmitting(true);
     try {
+      if (accounts) {
+        // The server prices the order from the catalog, saves it and tells the shop.
+        const r = await fetch('/api/orders', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            lines: items.map((i) => ({ productId: i.productId, quantity: i.quantity })),
+            fulfilment,
+            address: pickup || !delivery ? '' : delivery.local.full,
+            addressEn: delivery?.en ? addressLineEn(delivery) : undefined,
+            date: form.deliveryDate,
+            window: { morning: t('windowMorning'), noon: t('windowNoon'), evening: t('windowEvening') }[form.deliveryWindow],
+            notes: form.notes || undefined,
+          }),
+        });
+        const j = (await r.json().catch(() => null)) as { ref?: string; message?: string; error?: string } | null;
+        if (r.status === 401) {
+          setAcct({ accounts: true, customer: null });
+          return;
+        }
+        if (!r.ok || !j?.ref) {
+          setErrorMsg(j?.message || t('errSubmitFailed'));
+          return;
+        }
+        useCart.getState().clear();
+        close();
+        sessionStorage.setItem('lastOrderNumber', j.ref.replace('#', ''));
+        sessionStorage.setItem('lastOrderSent', '1');
+        sessionStorage.removeItem('lastOrderText');
+        router.push('/checkout/success');
+        return;
+      }
       if (wooCart(items)) {
         // Real WPGraphQL checkout, send to WordPress
         const lineItems = items.map((item) => ({
@@ -352,13 +400,28 @@ export function CheckoutForm({ locale }: Props) {
         </h1>
       </header>
 
+      {needGate && <CustomerGate ar={locale === 'ar'} customer={acct?.customer ?? null} onReady={(c) => setAcct({ accounts: true, customer: c })} />}
+
       {/* Form + summary grid */}
       <form
         onSubmit={handleSubmit}
-        className="relative mx-auto max-w-7xl px-5 md:px-10 grid lg:grid-cols-[1fr_360px] gap-10 lg:gap-14"
+        className={needGate || acct === null ? 'hidden' : 'relative mx-auto max-w-7xl px-5 md:px-10 grid lg:grid-cols-[1fr_360px] gap-10 lg:gap-14'}
       >
         {/* LEFT, form fields */}
         <div className="space-y-10">
+          {customer ? (
+          <Section title={t('customerInfo')} displayFont={displayFont}>
+            <div className="flex flex-wrap items-center justify-between gap-3 p-4 rounded-[10px] border border-gold/40 bg-gold/5">
+              <p className="text-lg text-heading">
+                <span className="font-bold">{customer.firstName} {customer.lastName}</span>
+                <bdi dir="ltr" className="ms-3 text-coffee-muted">{customer.phone}</bdi>
+              </p>
+              <button type="button" onClick={signOut} className="text-base underline text-gold">
+                {locale === 'ar' ? 'لست أنا، خروج' : 'זה לא אני, יציאה'}
+              </button>
+            </div>
+          </Section>
+          ) : (
           <Section title={t('customerInfo')} displayFont={displayFont}>
             <Row>
               <Field label={t('firstName')} required>
@@ -402,6 +465,7 @@ export function CheckoutForm({ locale }: Props) {
               </Field>
             </Row>
           </Section>
+          )}
 
           <Section title={locale === 'ar' ? 'التوصيل أو الاستلام' : 'משלוח או איסוף'} displayFont={displayFont}>
             <div className="grid sm:grid-cols-2 gap-3" role="radiogroup" aria-label={locale === 'ar' ? 'طريقة الاستلام' : 'אופן קבלת ההזמנה'}>

@@ -1,13 +1,10 @@
-import { setRequestLocale } from 'next-intl/server';
-import { AdminApp } from '@/components/admin/AdminApp';
-import type { Locale } from '@/i18n/locales';
+import type { Metadata } from 'next';
+import { Admin } from '@/components/admin/Admin';
 
 export const dynamic = 'force-dynamic';
+export const metadata: Metadata = { title: 'ניהול', robots: { index: false, follow: false } };
 
-export default async function AdminOrdersPage({
-  params,
-}: PageProps<'/[locale]/admin'>) {
-  const { locale } = await params;
-  setRequestLocale(locale);
-  return <AdminApp tab="orders" locale={locale as Locale} />;
+/** The shop's management screen. Signing in and every action are checked on the server (app/api/admin). */
+export default function AdminPage() {
+  return <Admin />;
 }
