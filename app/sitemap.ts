@@ -6,7 +6,7 @@ export const dynamic = 'force-dynamic';
 
 const BASE = process.env.NEXT_PUBLIC_BASE_URL ?? 'https://mamtaki-dalia-production.up.railway.app';
 
-const PAGES = ['', '/shop', '/delivery', '/events', '/terms', '/returns', '/privacy', '/accessibility'];
+const PAGES = ['', '/shop', '/delivery', '/events', '/faq', '/terms', '/returns', '/privacy', '/accessibility'];
 
 /** Every public page and product, in both languages. */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

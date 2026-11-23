@@ -14,6 +14,7 @@ import { MobileBar } from '@/components/layout/MobileBar';
 import { CartDrawer } from '@/components/cart/CartDrawer';
 import { ORDERING_MODE } from '@/lib/ordering';
 import { CatalogProvider } from '@/components/providers/CatalogProvider';
+import { FaqBot } from '@/components/faq/FaqBot';
 import { publicCatalog } from '@/lib/server/catalog';
 
 // Prices and stock come from the database on every request.
@@ -101,6 +102,7 @@ export default async function LocaleLayout({
             {children}
             <MobileBar />
             {ORDERING_MODE === 'site' && <CartDrawer />}
+            <FaqBot />
             <AccessibilityFAB />
             <SheenObserver />
             </CatalogProvider>

@@ -42,6 +42,7 @@ export function Header(_props: Props) {
     { href: '/#story', label: t('story') },
     { href: '/delivery', label: t('delivery') },
     { href: '/events', label: t('events') },
+    { href: '/faq', label: ar ? 'أسئلة وأجوبة' : 'שאלות ותשובות' },
     { href: '#contact', label: t('contact') },
   ];
 

@@ -28,6 +28,7 @@ export function Footer({ locale }: Props) {
   const infoLinks = [
     { label: t('shippingPolicy'), href: '/delivery' },
     { label: t('returns'), href: '/returns' },
+    { label: locale === 'ar' ? 'أسئلة وأجوبة' : 'שאלות ותשובות', href: '/faq' },
     { label: t('terms'), href: '/terms' },
     { label: t('privacy'), href: '/privacy' },
     { label: locale === 'ar' ? 'تصريح إتاحة الوصول' : 'הצהרת נגישות', href: '/accessibility' },
